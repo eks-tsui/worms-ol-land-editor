@@ -9,6 +9,7 @@ Supports map PNG import, spawn point editing, water resource previews, map resou
 ## Features
 
 - Load and edit maps numbered `1–999`.
+- Export a numbered map as a ZIP package and import it into another map number with overwrite confirmation.
 - Import fixed-size terrain PNGs and automatically generate collision and auxiliary masks.
 - Edit spawn points and choose open or closed maps.
 - Select water resources and preview water surface animations.
@@ -21,6 +22,10 @@ Supports map PNG import, spawn point editing, water resource previews, map resou
 - Save maps as `landNN.dat` and the corresponding `Mfx/TmapNN/Level.Dir`.
 - Export terrain PNGs with transparent backgrounds; export single-frame resources as PNG and multi-frame resources as GIF.
 - Provides compatibility import options for map formats associated with WA, WWP, and the Underwater edition. Compatibility depends on the specific file version and accompanying resources; not every IMG / DAT / WAM file is guaranteed to import.
+
+## Download
+
+Download the Windows x64 portable package from [GitHub Releases](https://github.com/eks-tsui/worms-ol-land-editor/releases). Extract it to a writable folder and run `WormsLandEditor.exe`. No map assets are included. Versions start at **1.0.0**.
 
 ## Requirements
 
@@ -40,7 +45,7 @@ The application automatically reads the system UI language at startup:
 
 Buttons, window titles, file dialog descriptions, prompts, errors, and status text are managed through resource files. File paths, resource names, extensions, command arguments, and format identifiers are not translated.
 
-To add a translation, create resource files for the corresponding culture alongside `Resources/UiStrings.resx`, `CoreStrings.resx`, and `CliStrings.resx`, and register the language selection rules in `Localization/LocalizationManager.cs`. Keys and format placeholders in each language should match the English base resources.
+To add a translation, create resource files for the corresponding culture alongside `Resources/UiStrings.resx`, `CoreStrings.resx`, `CliStrings.resx`, and `PackageStrings.resx`, and register the language selection rules in `Localization/LocalizationManager.cs`. Keys and format placeholders in each language should match the English base resources.
 
 ## Preparing map data
 
@@ -165,6 +170,18 @@ If the destination DAT or `Level.Dir` already exists, the GUI asks whether to ov
 The canvas “Export” button outputs only the terrain PNG. It does not include spawn point markers, the water surface preview, map options, or the resource archive. A PNG is not a complete map project file.
 
 “Delete” deletes the DAT for the current map number and the entire `Mfx/TmapNN` folder, including any extra files placed in that folder. Do not store your only copy of a file or unrelated files in the map resource folder.
+
+## Map ZIP packages
+
+Use **Export map package**, not the terrain PNG export button, to transfer a map together with its resource archive. After confirmation, the save dialog suggests `land01.zip`, `land100.zip`, or the filename for the current map number. You can change the filename and location.
+
+If the map is new or has unsaved changes, export requires saving the current map first. Cancelling or failing that save stops the export; existing edits are never silently replaced with an older saved copy.
+
+A package contains exactly a versioned `manifest.json`, `Data/landNN.dat`, and `Data/Mfx/TmapNN/Level.Dir`. The complete `Level.Dir` is included, not just the resource cards visible in the editor. Unrelated files in the map folder, other maps, and shared water resources are not included. The water resource remains an external dependency identified in the manifest and confirmation; the destination needs the corresponding `Data/Water/<name>/Water.dir` for its preview.
+
+Choose **Import map** and select a ZIP produced by this editor. The editor validates the package before asking to replace the currently selected map number. For example, importing `land01.zip` while map 100 is selected writes `land100.dat` and `Mfx/Tmap100/Level.Dir`, and rewrites the DAT's internal terrain resource path to `data\mfx\Tmap100`. The external water reference is preserved. Cancelling leaves the destination files unchanged.
+
+The importer stages both files and uses backups for failure recovery. It does not extract arbitrary archive paths or overwrite other maps. As with ordinary saving, recovery cannot guarantee atomicity across crashes, power loss, or a failure while restoring backups. Keep independent backups. See [the package format and limits](docs/map-packages.md).
 
 ## Compatibility map import
 

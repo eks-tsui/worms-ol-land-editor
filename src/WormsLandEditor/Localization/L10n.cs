@@ -9,10 +9,12 @@ public static class L10n
     private static readonly ResourceManager UiResources = CreateManager("UiStrings");
     private static readonly ResourceManager CoreResources = CreateManager("CoreStrings");
     private static readonly ResourceManager CliResources = CreateManager("CliStrings");
+    private static readonly ResourceManager PackageResources = CreateManager("PackageStrings");
 
     public static string Ui(string key, params object?[] args) => Get(UiResources, key, args);
     public static string Core(string key, params object?[] args) => Get(CoreResources, key, args);
     public static string Cli(string key, params object?[] args) => Get(CliResources, key, args);
+    public static string Package(string key, params object?[] args) => Get(PackageResources, key, args);
 
     private static ResourceManager CreateManager(string name) =>
         new($"WormsLandEditor.Resources.{name}", typeof(L10n).Assembly);

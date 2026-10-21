@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsLandEditor.Localizatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsLandEditor.PersistenceChecks", "tests\WormsLandEditor.PersistenceChecks\WormsLandEditor.PersistenceChecks.csproj", "{CA1A6896-9330-4532-AE3E-AFDD155049E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsLandEditor.PackageChecks", "tests\WormsLandEditor.PackageChecks\WormsLandEditor.PackageChecks.csproj", "{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,18 @@ Global
 		{CA1A6896-9330-4532-AE3E-AFDD155049E6}.Release|x64.Build.0 = Release|Any CPU
 		{CA1A6896-9330-4532-AE3E-AFDD155049E6}.Release|x86.ActiveCfg = Release|Any CPU
 		{CA1A6896-9330-4532-AE3E-AFDD155049E6}.Release|x86.Build.0 = Release|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Debug|x64.Build.0 = Debug|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Debug|x86.Build.0 = Debug|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Release|x64.ActiveCfg = Release|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Release|x64.Build.0 = Release|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Release|x86.ActiveCfg = Release|Any CPU
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,5 +81,6 @@ Global
 		{1DAB83CD-F731-4E64-A5B9-D8499BCCB212} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{7EFEE3D8-A8ED-4F07-8251-F91D00366D7B} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{CA1A6896-9330-4532-AE3E-AFDD155049E6} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal

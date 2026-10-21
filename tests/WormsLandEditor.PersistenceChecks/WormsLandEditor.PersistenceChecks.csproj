@@ -9,5 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../src/WormsLandEditor/Services/MapSaveService.cs" Link="MapSaveService.cs" />
+    <Compile Include="../../src/WormsLandEditor/Services/FileSetTransaction.cs" Link="FileSetTransaction.cs" />
   </ItemGroup>
 </Project>

@@ -8,21 +8,25 @@
 dotnet build WormsLandEditor.sln -c Release
 dotnet run --project tests/WormsLandEditor.LocalizationChecks/WormsLandEditor.LocalizationChecks.csproj -c Release
 dotnet run --project tests/WormsLandEditor.PersistenceChecks/WormsLandEditor.PersistenceChecks.csproj -c Release
+dotnet run --project tests/WormsLandEditor.PackageChecks/WormsLandEditor.PackageChecks.csproj -c Release
 dotnet publish src/WormsLandEditor/WormsLandEditor.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o artifacts/win-x64
 ```
 
 在限制进程间通信的构建环境中，可以给构建命令增加 `-m:1 -p:UseSharedCompilation=false -nodeReuse:false`，使用单节点、非共享编译。
 
-语言检查覆盖系统 culture 选择、261组英文/简体中文键、占位符、实际资源读取、英文资源中的中文残留、文件选择匹配式及源码中的字面量资源键。
+语言检查覆盖系统 culture 选择、298组英文/简体中文键、占位符、实际资源读取、英文资源中的中文残留、文件选择匹配式、源码中的字面量资源键及精确的中文地图包导出确认。
 
 保存协调检查直接使用 `MapSaveService`，但使用测试序列化器，不处理真实地图素材。它覆盖成功写入、序列化失败保留原件、第二文件提交失败后的旧文件恢复或本次新文件清理、无关文件保留及暂存清理。这些检查不是完整的格式往返测试。
+
+地图包检查使用程序生成的 DAT / IMG / SPR / DIR 二进制与真实 ZIP 读写，不使用编号映射的替身序列化器。它覆盖1→100→2编号往返、编号路径之外的字节保留、外部水引用、覆盖、确认取消零写入、第一/第二文件写入前和部分写入后故障恢复、恢复失败保留备份，以及路径、链接、尺寸、校验和、ZIP结构、二进制结构和预览解码预算的异常输入。
 
 ## 已验证范围
 
 - .NET SDK 10.0.402，Linux x64 构建环境。
 - Release 解决方案编译成功，零警告、零错误。
-- 1353项无界面语言检查通过。
-- 13项保存协调与故障注入检查通过。
+- 1542项无界面语言检查通过。
+- 13项保存协调断言通过。
+- 117项地图包检查通过，包括合成格式往返与异常输入。
 - Windows x64 自包含单文件产物构建成功。
 
 交叉编译成功不代表已经运行 Windows GUI。自包含产物及其界面仍需在 Windows 上验收。
@@ -42,5 +46,8 @@ dotnet publish src/WormsLandEditor/WormsLandEditor.csproj -c Release -r win-x64 
 9. 在独立副本上检查删除确认，确认明确涉及 DAT 和整个 Tmap 目录。
 10. 检查发布产物启动和GUI调用自身完成PNG转换的退出码、标准输出及标准错误。
 11. 检查文件占用、写权限不足与恢复失败场景；确认恢复提示保留了所需备份。
+12. 检查“导出地图包”的精确确认、默认编号文件名、可改保存路径与取消；未保存地图必须先保存成功，取消或失败不应导出旧文件。
+13. 将编号1的地图包导入当前编号100，检查目标文件和内部编号引用，确认取消不会更改磁盘及未保存编辑。
+14. 检查水引用使用正斜杠和反斜杠时选择一致；缺失水素材只影响预览，不应改写引用。地图包不应包含共享水资源或无关文件。
 
-当前尚未完成以上 Windows GUI、真实图片/模板与实际格式往返验收。兼容输入仅覆盖已实现的变体，不承诺任意素材可用。
+当前尚未完成以上 Windows GUI、真实图片/模板与实际素材格式往返验收。合成二进制地图包检查不包含图片渲染或真实游戏素材。兼容输入仅覆盖已实现的变体，不承诺任意素材可用。

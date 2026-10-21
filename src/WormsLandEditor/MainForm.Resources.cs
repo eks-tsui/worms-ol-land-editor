@@ -95,10 +95,12 @@ public sealed partial class MainForm
     private static string? TryGetWaterResourceName(string? path)
     {
         const string prefix = @"data\water\";
-        if (string.IsNullOrWhiteSpace(path) || !path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+        if (string.IsNullOrWhiteSpace(path))
             return null;
 
-        return path[prefix.Length..];
+        // Imported DAT paths may use either separator; parsing must not select another water resource.
+        string normalized = path.Replace('/', '\\');
+        return normalized.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ? normalized[prefix.Length..] : null;
     }
 
     private void RefreshWaterPreview(bool updatePalettePreview = true)

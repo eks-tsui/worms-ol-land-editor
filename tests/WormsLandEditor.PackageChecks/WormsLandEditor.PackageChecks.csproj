@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>WormsLandEditor.PackageChecks</AssemblyName>
+    <RootNamespace>WormsLandEditor</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/WormsLandEditor/Services/MapPackage*.cs" Link="Services/%(Filename)%(Extension)" />
+    <Compile Include="../../src/WormsLandEditor/Services/FileSetTransaction.cs" Link="Services/FileSetTransaction.cs" />
+    <Compile Include="../../src/WormsLandEditor/Localization/L10n.cs" Link="Localization/L10n.cs" />
+    <EmbeddedResource Include="../../src/WormsLandEditor/Resources/PackageStrings*.resx" Link="Resources/%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

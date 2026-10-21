@@ -57,7 +57,7 @@ public sealed partial class MainForm
         _waterResource.Margin = new Padding(4, 6, 16, 6);
         bar.Controls.Add(_waterResource, 3, 0);
         bar.Controls.Add(Button(L10n.Ui("ClearSpawns"), ClearSpawnPoints), 4, 0);
-        bar.Controls.Add(Button(L10n.Ui("ImportMap"), ImportLegacyMap), 5, 0);
+        bar.Controls.Add(Button(L10n.Ui("ImportMap"), ImportMap), 5, 0);
         bar.Controls.Add(Button(L10n.Ui("Save"), SaveMap, primary: true), 6, 0);
         bar.Controls.Add(Button(L10n.Ui("Delete"), DeleteMap, danger: true), 7, 0);
         _closedMap.Anchor = AnchorStyles.None;
@@ -85,20 +85,28 @@ public sealed partial class MainForm
         _canvas.Size = new Size(PreviewWidth, PreviewHeight);
         panel.Controls.Add(_canvas);
 
-        var clear = OverlayButton(L10n.Ui("Clear"), ClearMapPreview);
-        clear.Location = new Point(_canvas.Width - 237, _canvas.Height - 38);
-        clear.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-        _canvas.Controls.Add(clear);
+        var package = OverlayButton(L10n.Ui("ExportMapPackage"), ExportMapPackage);
+        package.BackColor = Color.FromArgb(37, 99, 235);
+        package.ForeColor = Color.White;
+        package.FlatAppearance.BorderColor = package.BackColor;
 
-        var export = OverlayButton(L10n.Ui("Export"), ExportMapPreview);
-        export.Location = new Point(_canvas.Width - 159, _canvas.Height - 38);
-        export.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-        _canvas.Controls.Add(export);
-
-        var replace = OverlayButton(L10n.Ui("Import"), ImportPng);
-        replace.Location = new Point(_canvas.Width - 81, _canvas.Height - 38);
-        replace.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-        _canvas.Controls.Add(replace);
+        // Size the localized labels independently of the already full main toolbar.
+        int right = _canvas.Width - 8;
+        foreach (Button action in new[]
+        {
+            package,
+            OverlayButton(L10n.Ui("ImportTerrainPng"), ImportPng),
+            OverlayButton(L10n.Ui("ExportTerrainPng"), ExportMapPreview),
+            OverlayButton(L10n.Ui("Clear"), ClearMapPreview)
+        })
+        {
+            action.Width = Math.Max(74, TextRenderer.MeasureText(action.Text, action.Font).Width + 28);
+            right -= action.Width;
+            action.Location = new Point(right, _canvas.Height - 38);
+            action.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            _canvas.Controls.Add(action);
+            right -= 8;
+        }
         return panel;
     }
 

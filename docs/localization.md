@@ -18,12 +18,14 @@ Resources/
 ├── CoreStrings.resx
 ├── CoreStrings.zh-CN.resx
 ├── CliStrings.resx
-└── CliStrings.zh-CN.resx
+├── CliStrings.zh-CN.resx
+├── PackageStrings.resx
+└── PackageStrings.zh-CN.resx
 ```
 
-英文 `.resx` 是基底；`.zh-CN.resx` 是简体中文。代码分别通过 `L10n.Ui`、`L10n.Core`、`L10n.Cli` 读取文本，使用稳定键及复合格式占位符。
+英文 `.resx` 是基底；`.zh-CN.resx` 是简体中文。代码分别通过 `L10n.Ui`、`L10n.Core`、`L10n.Cli`、`L10n.Package` 读取文本，使用稳定键及复合格式占位符。
 
-新增语言时，为三个资源组添加相同键的目标 culture 文件，并更新 `LocalizationManager.ResolveCulture` 的支持规则。不要翻译路径、资源条目名、文件魔数、扩展名或命令参数。
+新增语言时，为四个资源组添加相同键的目标 culture 文件，并更新 `LocalizationManager.ResolveCulture` 的支持规则。不要翻译路径、资源条目名、文件魔数、扩展名或命令参数。
 
 应用自身的提示、错误、报告和状态需要资源化。Windows 系统对话框内置按钮，以及系统或运行时产生的错误细节，可能遵循操作系统或其运行时语言，不属于本项目翻译资源。
 

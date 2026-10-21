@@ -9,6 +9,7 @@
 ## 功能
 
 - 按 `1–999` 的地图编号加载和编辑地图。
+- 导出编号地图 ZIP 包，并经覆盖确认导入到另一个地图编号。
 - 导入固定尺寸的 PNG 地形图，自动生成碰撞和辅助遮罩。
 - 编辑出生点，设置开放或封闭地图。
 - 选择水资源并预览水面动画。
@@ -21,6 +22,10 @@
 - 将地图保存为 `landNN.dat` 和对应的 `Mfx/TmapNN/Level.Dir`。
 - 导出透明背景的地形 PNG；单帧资源导出 PNG，多帧资源导出 GIF。
 - 提供 WA、WWP 与海底版相关地图格式的兼容导入入口。兼容性取决于具体文件版本及配套资源，不能保证任意 IMG / DAT / WAM 文件都可导入。
+
+## 下载
+
+在 [GitHub Releases](https://github.com/eks-tsui/worms-ol-land-editor/releases) 获取 Windows x64 便携包。解压到可写目录后运行 `WormsLandEditor.exe`；便携包不包含地图素材。版本从 **1.0.0** 开始。
 
 ## 环境要求
 
@@ -40,7 +45,7 @@
 
 按钮、窗口标题、文件对话框说明、提示、错误和状态文本使用资源文件管理。文件路径、资源名、扩展名、命令参数和格式标识不会翻译。
 
-新增翻译时，为 `Resources/UiStrings.resx`、`CoreStrings.resx`、`CliStrings.resx` 增加对应 culture 的资源文件，并在 `Localization/LocalizationManager.cs` 中注册语言选择规则。各语言的键和格式占位符应与英文基底一致。
+新增翻译时，为 `Resources/UiStrings.resx`、`CoreStrings.resx`、`CliStrings.resx`、`PackageStrings.resx` 增加对应 culture 的资源文件，并在 `Localization/LocalizationManager.cs` 中注册语言选择规则。各语言的键和格式占位符应与英文基底一致。
 
 ## 准备地图数据
 
@@ -165,6 +170,18 @@ Data/Mfx/TmapNN/Level.Dir
 画布“导出”仅输出地形 PNG，不含出生点标记、水面预览、地图选项或资源包。PNG 不是完整地图工程文件。
 
 “删除”会删除当前编号的 DAT 和整个 `Mfx/TmapNN` 目录，包括该目录中额外放入的文件。不要把唯一副本或无关文件放在地图资源目录中。
+
+## 地图 ZIP 包
+
+使用 **“导出地图包”**，而不是地形 PNG 的“导出”按钮，来传递地图及其资源包。点击后会提示：**“是否确定导出本地图资源到 zip？”**。确定后显示保存对话框，按当前地图编号建议 `land01.zip`、`land100.zip` 等文件名，可以更改文件名和保存位置。
+
+如果地图尚未保存或存在未保存修改，导出前需要先保存当前地图。取消保存或保存失败都会停止导出，不会悄悄用旧的磁盘文件代替当前编辑内容。
+
+地图包严格包含带版本的 `manifest.json`、`Data/landNN.dat` 和 `Data/Mfx/TmapNN/Level.Dir`。其中 `Level.Dir` 完整保留，不限于界面显示的资源卡片。地图目录的其他文件、其他地图及共享水资源不会打包。水资源仍是外部依赖，其引用会记录在清单并显示于确认信息；目标目录需要对应的 `Data/Water/<name>/Water.dir` 才能预览该水资源。
+
+选择 **“导入地图”** 并打开本工具生成的 ZIP。编辑器完整校验后，提示是否覆盖当前所选地图编号。例如当前编号为100时导入 `land01.zip`，目标为 `land100.dat` 和 `Mfx/Tmap100/Level.Dir`，同时将 DAT 内部地形资源路径改为 `data\mfx\Tmap100`。外部水资源引用保持不变。取消操作不会更改目标文件。
+
+导入先暂存两个文件，再备份和替换；失败时尝试恢复。它不会按 ZIP 中的任意路径直接解压，也不会覆盖其他地图。与普通保存一样，断电、进程崩溃或恢复本身失败时，仍无法保证跨文件原子性，请保留独立备份。详见[地图包格式与限制](docs/map-packages.md)。
 
 ## 兼容地图导入
 

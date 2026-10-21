@@ -1,0 +1,85 @@
+# Map ZIP packages / 地图 ZIP 包
+
+## Scope / 范围
+
+A package transfers one saved map and its complete `Level.Dir` resource archive. It does not include shared water assets, unrelated files in the map folder, or any other map. Export requires saving pending changes first; cancelling that save cancels export.
+
+地图包用于传递一张已保存地图及完整 `Level.Dir`。不包含共享水素材、地图目录的其他文件或其他地图。存在未保存修改时必须先保存，取消保存即停止导出。
+
+The output filename must end in `.zip`. The outer ZIP filename is only a suggestion (`land01.zip`, `land100.zip`, etc.). The manifest and validated internal paths identify the source map; renaming the ZIP does not change its map number.
+
+输出文件名必须以 `.zip` 结尾。ZIP 外部文件名只是建议值，真正的来源编号由清单及内部路径共同确定。改名 ZIP 不会改变地图编号。
+
+## Version 1 layout / 第1版布局
+
+Exactly three regular-file entries are required, using `/` separators:
+
+必须且只能包含三个普通文件条目，路径分隔符为 `/`：
+
+```text
+manifest.json
+Data/land01.dat
+Data/Mfx/Tmap01/Level.Dir
+```
+
+The manifest has these fields:
+
+| Field | Meaning |
+| --- | --- |
+| `format` | `worms-ol-map-package` |
+| `version` | Integer `1`; independent of the application version |
+| `sourceMapNumber` | Source map number, `1–999` |
+| `width`, `height` | `1920`, `696` |
+| `land.path`, `resources.path` | Exact DAT and DIR paths matching the source number |
+| `land.length`, `resources.length` | Uncompressed byte lengths |
+| `land.sha256`, `resources.sha256` | SHA-256 digests of the payloads |
+| `water.path` | The DAT's external water resource reference |
+| `water.included` | Must be `false` |
+
+Payload lengths, hashes, dimensions, resource paths and binary structure are checked before asking to overwrite the destination. Hashes detect corruption, not trust: a malicious author can construct matching hashes. Only import packages from sources you trust.
+
+覆盖确认前会检查载荷长度、哈希、尺寸、资源路径和二进制结构。哈希用于检查完整性，不能证明来源可信，请仅导入可信来源的地图包。
+
+The DIR hash-table prefix is preserved, not semantically reinterpreted. Structural validation follows the sequential index entries and binary variants supported by this editor; it does not establish compatibility with every possible consumer.
+
+DIR 哈希表前缀原样保留，不重新解释其全部语义。结构校验针对编辑器读取的顺序索引条目和受支持二进制变体，不代表所有使用方的兼容性验收。
+
+## Number mapping / 编号映射
+
+Importing source map 1 into selected map 100 writes only:
+
+```text
+Data/land100.dat
+Data/Mfx/Tmap100/Level.Dir
+```
+
+The DAT's numbered terrain-resource reference (`NameA`) is rewritten to map 100 and its total-length field is adjusted if necessary. Terrain pixels, masks, spawn points, settings and the external water reference (`NameB`) are preserved. `Level.Dir` is copied intact; its indexed paths are relative resource names rather than map-number paths.
+
+导入时改写 DAT 的编号地形资源引用 `NameA`，必要时更新文件长度字段。地形像素、遮罩、出生点、地图选项和外部水引用 `NameB` 保持不变；`Level.Dir` 原样复制，其内部索引使用相对资源条目名，不是地图编号路径。
+
+No shared water directory is written or changed. If the referenced water is unavailable at the destination, its preview is unavailable until the user supplies the appropriate authorized resources. Files outside the two destination paths remain untouched, including extra files in the target Tmap folder.
+
+导入不会写入或修改共享水目录。目标缺少所引用的水资源时，需自行提供有权使用的对应素材才能预览。除了两个目标文件，不会修改其他文件，目标 Tmap 目录中的额外文件也会保留。
+
+## Limits / 限制
+
+- Three ZIP entries, with no extra directory entries; ZIP64 is unsupported.
+- Manifest: at most 16 KiB. DAT: at most 32 MiB. DIR: at most 64 MiB.
+- Total uncompressed size: at most 96 MiB plus the manifest. ZIP file: at most 97 MiB.
+- Entries over 1 MiB with a compression ratio over 2000 are rejected.
+- DAT images must use the fixed terrain and mask dimensions.
+- Resource images: at most 8192 pixels per axis and 16 Mi pixels. Sprites: at most 255 frames and 64 Mi cumulative frame pixels.
+- Expanded sprite canvases: at most 16 Mi pixels across all frames of one SPR. The complete DIR has a 32 Mi allocation-pixel budget: each sprite is charged the larger of its total raw frame pixels and expanded canvas pixels, including transparent canvas area.
+- DIR validation supports the editor's IMG, SPR and TXT resource entries. Unsupported binary variants are rejected rather than silently omitted or rewritten.
+
+只接受严格的本工具地图包，不支持导入任意游戏目录 ZIP。空目录条目、未知文件、超出限制或不支持的二进制变体会被拒绝。
+
+## Write safety / 写入安全
+
+Archive entries are read through bounded streams; their paths are never passed to a general directory-extraction routine. Absolute paths, traversal components, backslash archive paths, duplicate names, symbolic links/reparse points and unsafe destination ancestors are rejected.
+
+导入通过有上限的流读取 ZIP，不按归档路径直接解压。绝对路径、路径穿越、反斜杠归档路径、重复条目、符号链接/重解析点以及不安全的目标祖先路径都会被拒绝。
+
+Cancellation happens before destination writes. After confirmation, both payloads are staged, originals are backed up, and the two destinations are replaced. An ordinary commit failure triggers restoration; failed recovery retains backups and reports where they are. This is not a crash-proof filesystem transaction. A process interruption, power loss or recovery failure can require manual restoration from an independent backup.
+
+取消发生在任何目标写入之前。确认后先暂存两个文件、备份原件，再替换目标；普通提交失败会尝试恢复，恢复失败则保留备份并报告位置。这不是防断电的文件系统事务，进程中断、断电或恢复失败时仍可能需要手工恢复。

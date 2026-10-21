@@ -95,7 +95,7 @@ public sealed partial class MainForm
         }
     }
 
-    private bool LoadMapForCurrentNumber(bool confirmDiscard)
+    private bool LoadMapForCurrentNumber(bool confirmDiscard, string? failureContext = null)
     {
         if (confirmDiscard && !ConfirmDiscard())
             return false;
@@ -161,7 +161,7 @@ public sealed partial class MainForm
                 // The model is retained even when rendering the old preview also fails.
                 ex = new AggregateException(ex.Message + Environment.NewLine + previewError.Message, ex, previewError);
             }
-            ShowError(ex);
+            ShowError(failureContext is null ? ex : new InvalidOperationException(failureContext + Environment.NewLine + Environment.NewLine + ex.Message, ex));
             return false;
         }
     }

@@ -22,7 +22,7 @@
     <value>Choose the game folder to start editing. You can cancel and set it later.</value>
   </data>
   <data name="ChooseLegacyMap" xml:space="preserve">
-    <value>Choose an Online, WA, WWP or Underwater map (IMG/DAT/WAM) or Level.dir</value>
+    <value>Choose a ZIP map package or an Online, WA, WWP or Underwater map</value>
   </data>
   <data name="ChooseMapPng" xml:space="preserve">
     <value>Choose a map PNG image</value>
@@ -122,7 +122,7 @@ Unsaved changes to this map will also be discarded. This does not use the Recycl
     <value>legacy</value>
   </data>
   <data name="LegacyMapFilter" xml:space="preserve">
-    <value>Supported maps and resources (*.img;*.dat;*.wam;Level.dir)|*.img;*.dat;*.wam;Level.dir|All files (*.*)|*.*</value>
+    <value>Supported maps and resources (*.zip;*.img;*.dat;*.wam;Level.dir)|*.zip;*.img;*.dat;*.wam;Level.dir|ZIP map packages (*.zip)|*.zip|All files (*.*)|*.*</value>
   </data>
   <data name="LegacyMapImported" xml:space="preserve">
     <value>Imported {0} map: {1}</value>
@@ -272,5 +272,82 @@ Backups and staged files were kept in:
     <value>The map files were saved, but the saved resource preview could not be reloaded. Reopen the map to refresh it.
 
 {0}</value>
+  </data>
+  <data name="ExportMapPackage" xml:space="preserve">
+    <value>Export map package</value>
+  </data>
+  <data name="ExportTerrainPng" xml:space="preserve">
+    <value>Export PNG</value>
+  </data>
+  <data name="ImportTerrainPng" xml:space="preserve">
+    <value>Import PNG</value>
+  </data>
+  <data name="ConfirmExportMapPackage" xml:space="preserve">
+    <value>Export this map and its resources to a ZIP package?</value>
+  </data>
+  <data name="ConfirmExportMapPackageTitle" xml:space="preserve">
+    <value>Export map package (shared water excluded)</value>
+  </data>
+  <data name="MapPackageContents" xml:space="preserve">
+    <value>ZIP packages include the map DAT and Level.Dir. Shared water resources are external dependencies and are not included.</value>
+  </data>
+  <data name="MapPackageExportCancelled" xml:space="preserve">
+    <value>Map package export cancelled.</value>
+  </data>
+  <data name="MapPackageFilter" xml:space="preserve">
+    <value>ZIP map packages (*.zip)|*.zip</value>
+  </data>
+  <data name="MapPackageZipExtensionRequired" xml:space="preserve">
+    <value>Use a .zip filename for the map package. No package was exported.</value>
+  </data>
+  <data name="SaveBeforeMapPackageExport" xml:space="preserve">
+    <value>This map has unsaved changes or is missing saved map files. Save the current map before exporting?
+
+Saving writes land{0:00}.dat and Mfx\Tmap{0:00}\Level.Dir and requires at least 12 spawn points. Choose No to cancel export; older saved files will not be exported instead.</value>
+  </data>
+  <data name="ExportingMapPackage" xml:space="preserve">
+    <value>Exporting map package...</value>
+  </data>
+  <data name="MapPackageExported" xml:space="preserve">
+    <value>Exported map package: {0}. Shared water resources are not included.</value>
+  </data>
+  <data name="ValidatingMapPackage" xml:space="preserve">
+    <value>Validating map package before import...</value>
+  </data>
+  <data name="MapPackageImportCancelled" xml:space="preserve">
+    <value>Map package import cancelled. Map files and editor contents were not changed.</value>
+  </data>
+  <data name="MapPackageImported" xml:space="preserve">
+    <value>Imported map package as map {0:00}; its DAT and Level.Dir were replaced. Shared water resources were not imported.</value>
+  </data>
+  <data name="MapPackageImportedReloadFailed" xml:space="preserve">
+    <value>The files for map {0:00} were imported, but the editor could not reload them. Your previous editor contents were retained. Reopen this map before saving, so the old editor contents do not overwrite the imported files.</value>
+  </data>
+  <data name="MapPackageImportTitle" xml:space="preserve">
+    <value>Import map package</value>
+  </data>
+  <data name="MapPackageDiscardUnsavedChanges" xml:space="preserve">
+    <value>Your unsaved edits will be discarded only after a successful import. Cancel keeps your edits.</value>
+  </data>
+  <data name="MapPackageReloadAfterImport" xml:space="preserve">
+    <value>The editor will load the imported map after import succeeds.</value>
+  </data>
+  <data name="ConfirmImportMapPackage" xml:space="preserve">
+    <value>Import source map {0:00} from this ZIP as the currently selected map {1:00}?
+
+This will replace these target files and renumber the map resource paths:
+land{1:00}.dat
+Mfx\Tmap{1:00}\Level.Dir
+Other files in the target Tmap folder will be kept.
+
+External shared water resource reference: {2}
+Water resources are not included in the ZIP and must be supplied separately in your game data.
+
+{3}
+
+Continue?</value>
+  </data>
+  <data name="ImportingMapPackage" xml:space="preserve">
+    <value>Importing map package and replacing target map files...</value>
   </data>
 </root>

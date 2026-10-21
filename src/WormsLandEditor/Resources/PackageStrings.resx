@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="DataDirectoryMissing" xml:space="preserve">
+    <value>Select an existing Data directory before importing or exporting a map package.</value>
+  </data>
+  <data name="ExportCleanupWarning" xml:space="preserve">
+    <value>Export failed and its temporary file could not be removed: {0}</value>
+  </data>
+  <data name="ExportSourceConflict" xml:space="preserve">
+    <value>The ZIP output must not replace either source map file.</value>
+  </data>
+  <data name="ImportCleanupWarning" xml:space="preserve">
+    <value>The map was imported, but its temporary recovery folder could not be removed: {0}</value>
+  </data>
+  <data name="ImportRecoveryRequired" xml:space="preserve">
+    <value>The import failed and some files could not be restored:
+{0}
+Keep the recovery folder: {1}
+Original error: {2}</value>
+  </data>
+  <data name="ImportRestored" xml:space="preserve">
+    <value>The import failed. Original target files were restored: {0}</value>
+  </data>
+  <data name="InvalidDirectory" xml:space="preserve">
+    <value>Level.Dir has an invalid header, resource, or directory index.</value>
+  </data>
+  <data name="InvalidLand" xml:space="preserve">
+    <value>The DAT is invalid or is not a supported 1920 × 696 map.</value>
+  </data>
+  <data name="InvalidManifest" xml:space="preserve">
+    <value>The package manifest is missing, invalid, or inconsistent with its files.</value>
+  </data>
+  <data name="InvalidMapNumber" xml:space="preserve">
+    <value>The map number must be between 1 and 999.</value>
+  </data>
+  <data name="InvalidPackage" xml:space="preserve">
+    <value>The ZIP is not a valid version 1 map package.</value>
+  </data>
+  <data name="InvalidResourcePath" xml:space="preserve">
+    <value>The DAT map or external water resource path is unsafe or does not match the package.</value>
+  </data>
+  <data name="SizeLimit" xml:space="preserve">
+    <value>The package exceeds the supported size or compression limits.</value>
+  </data>
+  <data name="UnsafeEntry" xml:space="preserve">
+    <value>The package contains an unsafe, duplicate, or unexpected entry: {0}</value>
+  </data>
+  <data name="UnsafeFileSystemPath" xml:space="preserve">
+    <value>Symbolic links, reparse points, and conflicting path types are not supported: {0}</value>
+  </data>
+  <data name="ExportExtensionRequired" xml:space="preserve">
+    <value>The export filename must end in .zip.</value>
+  </data>
+</root>

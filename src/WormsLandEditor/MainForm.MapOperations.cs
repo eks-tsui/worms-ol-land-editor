@@ -69,9 +69,9 @@ public sealed partial class MainForm
         }
     }
 
-    private void ImportLegacyMap(object? sender, EventArgs e)
+    private void ImportMap(object? sender, EventArgs e)
     {
-        if (_operationInProgress || !ConfirmDiscard())
+        if (_operationInProgress)
             return;
 
         if (!EnsureGameDataDirectoryConfigured())
@@ -89,6 +89,14 @@ public sealed partial class MainForm
 
         try
         {
+            if (string.Equals(Path.GetExtension(dialog.FileName), ".zip", StringComparison.OrdinalIgnoreCase))
+            {
+                ImportMapPackage(dialog.FileName);
+                return;
+            }
+            if (!ConfirmDiscard())
+                return;
+
             int mapNumber = (int)_mapNumber.Value;
             LegacyMapKind kind = LegacyMapImporter.DetectKind(dialog.FileName);
             LegacyMapImportResult result = LegacyMapImporter.Import(kind, dialog.FileName, CurrentDataDirectory(), mapNumber, SelectedWaterResourcePath());
@@ -122,21 +130,26 @@ public sealed partial class MainForm
 
     private void SaveMap(object? sender, EventArgs e)
     {
+        TrySaveCurrentMap();
+    }
+
+    private bool TrySaveCurrentMap(bool showSuccessMessage = true)
+    {
         if (_operationInProgress)
-            return;
+            return false;
         try
         {
             if (!EnsureGameDataDirectoryConfigured())
-                return;
+                return false;
             if (_land is null)
             {
                 MessageBox.Show(this, L10n.Ui("MapRequired"), L10n.Ui("NoMapTitle"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return false;
             }
             if (_land.PrimaryPoints.Count < LandFile.MinimumSpawnPoints)
             {
                 MessageBox.Show(this, L10n.Ui("SpawnPointsRequired"), L10n.Ui("MissingSpawnsTitle"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return false;
             }
 
             int mapNumber = (int)_mapNumber.Value;
@@ -147,7 +160,7 @@ public sealed partial class MainForm
             string levelPath = Path.Combine(tmapDirectory, "Level.Dir");
             if ((File.Exists(landPath) || File.Exists(levelPath)) &&
                 MessageBox.Show(this, L10n.Ui("OverwriteFiles", landPath, levelPath), L10n.Ui("ConfirmOverwriteTitle"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
-                return;
+                return false;
 
             string? cleanupWarning = null;
             RunWithWait(L10n.Ui("SavingMap"), () =>
@@ -160,28 +173,31 @@ public sealed partial class MainForm
                 RemapCurrentLandToGamePalette();
                 cleanupWarning = MapSaveService.Save(_land, levelResources, landPath, levelPath);
                 _land.SourcePath = landPath;
+                _dirty = false;
+                _loadedMapNumber = mapNumber;
                 try
                 {
                     _levelResources = DirFile.Load(levelPath);
+                    _canvas.Land = _land;
+                    RefreshResourcePanel();
                 }
                 catch (Exception reloadError)
                 {
                     string warning = L10n.Ui("SavedResourceReloadFailed", reloadError.Message);
                     cleanupWarning = cleanupWarning is null ? warning : cleanupWarning + Environment.NewLine + warning;
                 }
-                _dirty = false;
-                _loadedMapNumber = mapNumber;
-                _canvas.Land = _land;
-                RefreshResourcePanel();
             });
             string message = L10n.Ui("SaveSucceeded", landName, mapNumber);
             UpdateStatus(message);
-            MessageBox.Show(this, cleanupWarning is null ? message : message + Environment.NewLine + Environment.NewLine + cleanupWarning,
-                L10n.Ui("SavedTitle"), MessageBoxButtons.OK, cleanupWarning is null ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+            if (showSuccessMessage || cleanupWarning is not null)
+                MessageBox.Show(this, cleanupWarning is null ? message : message + Environment.NewLine + Environment.NewLine + cleanupWarning,
+                    L10n.Ui("SavedTitle"), MessageBoxButtons.OK, cleanupWarning is null ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+            return true;
         }
         catch (Exception ex)
         {
             ShowError(ex);
+            return false;
         }
     }
 

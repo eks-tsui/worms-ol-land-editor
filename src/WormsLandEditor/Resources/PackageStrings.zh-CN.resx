@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="DataDirectoryMissing" xml:space="preserve">
+    <value>请先选择已有的 Data 目录，再导入或导出地图包。</value>
+  </data>
+  <data name="ExportCleanupWarning" xml:space="preserve">
+    <value>导出失败，且无法删除其临时文件：{0}</value>
+  </data>
+  <data name="ExportSourceConflict" xml:space="preserve">
+    <value>ZIP 输出不能覆盖任一源地图文件。</value>
+  </data>
+  <data name="ImportCleanupWarning" xml:space="preserve">
+    <value>地图已导入，但无法删除临时恢复目录：{0}</value>
+  </data>
+  <data name="ImportRecoveryRequired" xml:space="preserve">
+    <value>导入失败，部分文件无法恢复：
+{0}
+请保留恢复目录：{1}
+原始错误：{2}</value>
+  </data>
+  <data name="ImportRestored" xml:space="preserve">
+    <value>导入失败，已恢复目标原文件：{0}</value>
+  </data>
+  <data name="InvalidDirectory" xml:space="preserve">
+    <value>Level.Dir 的文件头、资源或目录索引无效。</value>
+  </data>
+  <data name="InvalidLand" xml:space="preserve">
+    <value>DAT 无效，或不是支持的 1920 × 696 地图。</value>
+  </data>
+  <data name="InvalidManifest" xml:space="preserve">
+    <value>地图包清单缺失、无效，或与包内文件不一致。</value>
+  </data>
+  <data name="InvalidMapNumber" xml:space="preserve">
+    <value>地图编号必须介于 1 和 999 之间。</value>
+  </data>
+  <data name="InvalidPackage" xml:space="preserve">
+    <value>该 ZIP 不是有效的第 1 版地图包。</value>
+  </data>
+  <data name="InvalidResourcePath" xml:space="preserve">
+    <value>DAT 地图资源或外部水资源路径不安全，或与地图包不匹配。</value>
+  </data>
+  <data name="SizeLimit" xml:space="preserve">
+    <value>地图包超出支持的大小或压缩限制。</value>
+  </data>
+  <data name="UnsafeEntry" xml:space="preserve">
+    <value>地图包包含不安全、重复或非预期的条目：{0}</value>
+  </data>
+  <data name="UnsafeFileSystemPath" xml:space="preserve">
+    <value>不支持符号链接、重解析点或路径类型冲突：{0}</value>
+  </data>
+  <data name="ExportExtensionRequired" xml:space="preserve">
+    <value>导出文件名必须以 .zip 结尾。</value>
+  </data>
+</root>

@@ -35,7 +35,8 @@ try
     [
         ("UiStrings", (key, args) => L10n.Ui(key, args)),
         ("CoreStrings", (key, args) => L10n.Core(key, args)),
-        ("CliStrings", (key, args) => L10n.Cli(key, args))
+        ("CliStrings", (key, args) => L10n.Cli(key, args)),
+        ("PackageStrings", (key, args) => L10n.Package(key, args))
     ];
     var resourceKeys = new Dictionary<string, HashSet<string>>();
 
@@ -88,13 +89,15 @@ try
         string relative = Path.GetRelativePath(sourceDirectory, path);
         if (relative.Split(Path.DirectorySeparatorChar).Any(part => part is "obj" or "bin"))
             continue;
-        foreach (Match match in Regex.Matches(File.ReadAllText(path), "L10n\\.(Ui|Core|Cli)\\(\\s*\"([^\"]+)\""))
+        foreach (Match match in Regex.Matches(File.ReadAllText(path), "L10n\\.(Ui|Core|Cli|Package)\\(\\s*\"([^\"]+)\""))
         {
             string catalog = match.Groups[1].Value;
             string key = match.Groups[2].Value;
             Check(resourceKeys[catalog].Contains(key), $"Unknown resource key in {relative}: {catalog}/{key}");
         }
     }
+    LocalizationManager.Initialize(CultureInfo.GetCultureInfo("zh-CN"));
+    Check(L10n.Ui("ConfirmExportMapPackage") == "是否确定导出本地图资源到 zip？", "Exact Chinese map-package confirmation");
     Console.WriteLine($"PASS {checks} localization checks (headless; not a WinForms UI test)");
     return 0;
 }
