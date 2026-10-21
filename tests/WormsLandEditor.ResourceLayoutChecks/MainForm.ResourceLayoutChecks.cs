@@ -208,7 +208,7 @@ public sealed partial class MainForm
                 return malformed;
             }, state => editor.InstallPreparedEditorView(malformedView!, state));
         }
-        catch (InvalidDataException) { badPreviewRejected = true; }
+        catch (EndOfStreamException) { badPreviewRejected = true; }
         finally { malformedView?.Dispose(); }
         Check(badPreviewRejected && ReferenceEquals(editor._session.Current, beforeBadPreview)
             && Cards().SequenceEqual(beforeBadPreviewCards),
