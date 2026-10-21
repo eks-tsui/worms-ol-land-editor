@@ -15,7 +15,7 @@ dotnet publish src/WormsLandEditor/WormsLandEditor.csproj -c Release -r win-x64 
 
 在限制进程间通信的构建环境中，可以给构建命令增加 `-m:1 -p:UseSharedCompilation=false -nodeReuse:false`，使用单节点、非共享编译。
 
-语言检查覆盖系统 culture 选择、297组英文/简体中文键、占位符、实际资源读取、英文资源中的中文残留、文件选择匹配式、源码中的字面量资源键及精确的中文地图包导出确认。
+语言检查覆盖系统 culture 选择、297组英文/简体中文键、占位符、实际资源读取、英文资源中的中文残留、文件选择匹配式、源码中的字面量资源键、精确的中文地图包导出确认及精简的中英文导入确认。
 
 保存协调检查直接使用 `MapSaveService`，但使用测试序列化器，不处理真实地图素材。它覆盖成功写入、序列化失败保留原件、第二文件提交失败后的旧文件恢复或本次新文件清理、无关文件保留及暂存清理。它还覆盖保存目标和父目录的符号链接保护。这些检查不是完整的格式往返测试。
 
@@ -27,13 +27,25 @@ dotnet publish src/WormsLandEditor/WormsLandEditor.csproj -c Release -r win-x64 
 
 - .NET SDK 10.0.402，Linux x64 构建环境。
 - Release 解决方案编译成功，零警告、零错误。
-- 1529项无界面语言检查通过。
+- 1541项无界面语言检查通过。
 - 21项保存协调断言通过。
 - 137项地图包检查通过，包括合成格式往返、短 TXT 共享引用及异常输入。
 - 31项编辑会话状态检查通过，包括取消、准备失败、视图安装失败与原始字节快照失效。
 - Windows x64 自包含单文件产物构建成功。
 
 交叉编译成功不代表已经运行 Windows GUI。自包含产物及其界面仍需在 Windows 上验收。
+
+## Windows 控件回归
+
+仅在 Windows 上运行：
+
+```powershell
+dotnet run --project tests/WormsLandEditor.ResourceLayoutChecks/WormsLandEditor.ResourceLayoutChecks.csproj -c Release
+```
+
+该检查直接编译生产界面代码，创建真实 WinForms 控件，并使用合成资源检查五张资源卡的位置、重复替换、布局失败回滚以及旧/新控件的释放。它不读取用户地图，不代替人工检查 DPI、真实素材显示或目标游戏运行。
+
+仓库的 Windows checks 工作流在 `main` 推送时运行相同检查。请以对应提交的工作流结果区分“测试已编译”和“已在 Windows 执行通过”。
 
 ## Windows 验收清单
 
@@ -57,4 +69,4 @@ dotnet publish src/WormsLandEditor/WormsLandEditor.csproj -c Release -r win-x64 
 
 已对一个旧 DIR 资源包执行12项私下实际程序集回归：ZIP 导出及纯内存导入保持完整 DIR 不变；实际 DAT/DIR 字节加载器保留全部资源和 TXT 条目；取消、失败及成功导入均不写目标文件；删除源 ZIP 后，明确保存仍写入已映射 DAT 与逐字节相同的原始 DIR。另已检查实际 DIR 保存器的资源载荷及目录哈希前缀保留行为。该样本不随源码或发布包分发。
 
-当前尚未完成以上 Windows GUI、GUI 调色板重映射、真实图片渲染及目标游戏运行验收。合成二进制检查与有限 DIR 样本回归不能证明所有素材均兼容。
+当前尚未完整完成以上人工 Windows GUI、GUI 调色板重映射、真实图片渲染及目标游戏运行验收。合成二进制检查与有限 DIR 样本回归不能证明所有素材均兼容。

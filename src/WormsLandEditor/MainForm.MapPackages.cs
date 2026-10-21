@@ -109,7 +109,7 @@ public sealed partial class MainForm
     {
         string editorChanges = L10n.Ui(_dirty ? "MapPackageDiscardUnsavedChanges" : "MapPackageReplaceEditor");
         string message = L10n.Ui("ConfirmImportMapPackage", package.SourceMapNumber, package.TargetMapNumber,
-            package.WaterResourcePath, editorChanges);
+            editorChanges);
         UseWaitCursor = false;
         try
         {

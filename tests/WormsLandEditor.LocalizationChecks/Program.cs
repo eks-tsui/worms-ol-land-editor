@@ -98,6 +98,26 @@ try
     }
     LocalizationManager.Initialize(CultureInfo.GetCultureInfo("zh-CN"));
     Check(L10n.Ui("ConfirmExportMapPackage") == "是否确定导出本地图资源到 zip？", "Exact Chinese map-package confirmation");
+    foreach (string culture in new[] { "en", "zh-CN" })
+    {
+        LocalizationManager.Initialize(CultureInfo.GetCultureInfo(culture));
+        bool chinese = culture == "zh-CN";
+        foreach (bool unsaved in new[] { false, true })
+        {
+            string warning = L10n.Ui(unsaved ? "MapPackageDiscardUnsavedChanges" : "MapPackageReplaceEditor");
+            string prompt = L10n.Ui("ConfirmImportMapPackage", 1, 105, warning);
+            string question = chinese
+                ? "是否将 ZIP 中的源地图 01 加载到当前选中的 105 号地图？"
+                : "Load source map 01 from this ZIP into the currently selected map 105?";
+            string continuation = chinese ? "是否继续？" : "Continue?";
+            Check(prompt == $"{question}\n\n{warning}\n\n{continuation}",
+                $"Concise import confirmation: {culture}, unsaved={unsaved}");
+            Check(warning.Contains(chinese ? "未保存" : "unsaved", StringComparison.Ordinal),
+                $"Import confirmation retains unsaved warning: {culture}, unsaved={unsaved}");
+            Check(!prompt.Contains(chinese ? "水资源" : "water", StringComparison.OrdinalIgnoreCase),
+                $"Import confirmation omits water explanation: {culture}, unsaved={unsaved}");
+        }
+    }
     Console.WriteLine($"PASS {checks} localization checks (headless; not a WinForms UI test)");
     return 0;
 }

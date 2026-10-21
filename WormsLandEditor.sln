@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsLandEditor.PackageChec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsLandEditor.EditorSessionChecks", "tests\WormsLandEditor.EditorSessionChecks\WormsLandEditor.EditorSessionChecks.csproj", "{B0F77921-D622-4529-9CD7-5A2AF07A60B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WormsLandEditor.ResourceLayoutChecks", "tests\WormsLandEditor.ResourceLayoutChecks\WormsLandEditor.ResourceLayoutChecks.csproj", "{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,18 @@ Global
 		{B0F77921-D622-4529-9CD7-5A2AF07A60B7}.Release|x64.Build.0 = Release|Any CPU
 		{B0F77921-D622-4529-9CD7-5A2AF07A60B7}.Release|x86.ActiveCfg = Release|Any CPU
 		{B0F77921-D622-4529-9CD7-5A2AF07A60B7}.Release|x86.Build.0 = Release|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Debug|x64.Build.0 = Debug|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Debug|x86.Build.0 = Debug|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Release|x64.ActiveCfg = Release|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Release|x64.Build.0 = Release|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Release|x86.ActiveCfg = Release|Any CPU
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,5 +111,6 @@ Global
 		{CA1A6896-9330-4532-AE3E-AFDD155049E6} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{5269E9CD-CA27-4621-B05F-3D0EB8CA1A0C} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{B0F77921-D622-4529-9CD7-5A2AF07A60B7} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{CCB62BD9-5326-4737-90CE-CB3A604EC8B8} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal

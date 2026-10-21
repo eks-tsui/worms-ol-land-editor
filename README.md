@@ -177,7 +177,7 @@ Use **Export map package**, not the terrain PNG export button, to transfer a map
 
 If the map is new or has unsaved changes, export requires saving the current map first. Cancelling or failing that save stops the export; existing edits are never silently replaced with an older saved copy.
 
-A package contains exactly a versioned `manifest.json`, `Data/landNN.dat`, and `Data/Mfx/TmapNN/Level.Dir`. The complete `Level.Dir` is included, not just the resource cards visible in the editor. Unrelated files in the map folder, other maps, and shared water resources are not included. The water resource remains an external dependency identified in the manifest and confirmation; the destination needs the corresponding `Data/Water/<name>/Water.dir` for its preview.
+A package contains exactly a versioned `manifest.json`, `Data/landNN.dat`, and `Data/Mfx/TmapNN/Level.Dir`. The complete `Level.Dir` is included, not just the resource cards visible in the editor. Unrelated files in the map folder, other maps, and shared water resources are not included. The water resource remains an external dependency identified in the manifest; the destination needs the corresponding `Data/Water/<name>/Water.dir` for its preview.
 
 Choose **Import map** and select a ZIP produced by this editor. After validation, confirm replacing the current editing contents. Import loads the map and its complete resource archive into memory at the currently selected number and marks it as unsaved. It does not create, stage, or overwrite game files. Cancelling or a failed import keeps the previous editing state and files.
 

@@ -46,7 +46,6 @@ public sealed partial class MainForm
         bool canvasSwapped = false;
         _loadingWaterResources = true;
         _loadingMapOptions = true;
-        _resourcePanel.SuspendLayout();
         try
         {
             _waterResource.Items.Clear();
@@ -54,8 +53,7 @@ public sealed partial class MainForm
             _waterResource.SelectedIndex = candidate.WaterIndex;
             _closedMap.Enabled = state.Map is not null;
             _closedMap.Checked = state.Map?.IsClosedMap == true;
-            _resourcePanel.Controls.Clear();
-            _resourcePanel.Controls.AddRange(nextCards);
+            ReplaceResourceCards(nextCards);
             _canvas.SwapEditorState(candidate.Canvas);
             canvasSwapped = true;
             _canvas.Invalidate();
@@ -67,8 +65,7 @@ public sealed partial class MainForm
         {
             if (canvasSwapped)
                 _canvas.SwapEditorState(candidate.Canvas);
-            _resourcePanel.Controls.Clear();
-            _resourcePanel.Controls.AddRange(previousCardArray);
+            ReplaceResourceCards(previousCardArray);
             _waterResource.Items.Clear();
             _waterResource.Items.AddRange(previousWaterItems);
             _waterResource.SelectedIndex = previousWaterIndex;
@@ -81,7 +78,22 @@ public sealed partial class MainForm
         {
             _loadingWaterResources = previousLoadingWater;
             _loadingMapOptions = previousLoadingOptions;
-            _resourcePanel.ResumeLayout(performLayout: false);
+        }
+    }
+
+    private void ReplaceResourceCards(Control[] cards)
+    {
+        _resourcePanel.SuspendLayout();
+        try
+        {
+            _resourcePanel.Controls.Clear();
+            _resourcePanel.Controls.AddRange(cards);
+        }
+        finally
+        {
+            // New cards start at (0, 0). Finish flow layout inside the install/rollback
+            // transaction, before the candidate takes ownership of the old cards.
+            _resourcePanel.ResumeLayout(performLayout: true);
         }
     }
 

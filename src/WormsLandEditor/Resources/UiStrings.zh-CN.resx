@@ -324,7 +324,7 @@ DAT 文件：
     <value>导入地图包</value>
   </data>
   <data name="MapPackageDiscardUnsavedChanges" xml:space="preserve">
-    <value>导入成功会替换当前未保存的编辑内容；取消或失败会保留当前编辑内容和预览。</value>
+    <value>导入成功会替换当前未保存的编辑内容，并将地图标记为未保存。</value>
   </data>
   <data name="MapPackageReplaceEditor" xml:space="preserve">
     <value>导入成功会替换当前编辑内容，并将地图标记为未保存。</value>
@@ -332,12 +332,7 @@ DAT 文件：
   <data name="ConfirmImportMapPackage" xml:space="preserve">
     <value>是否将 ZIP 中的源地图 {0:00} 加载到当前选中的 {1:00} 号地图？
 
-此操作只更改编辑器内容，并在内存中按目标编号调整地图资源路径，当前选中编号不变。只有明确点击保存后，才会创建或覆盖游戏文件。
-
-外部共享水资源引用：{2}
-ZIP 中不包含水资源，需在游戏数据中另行提供。
-
-{3}
+{2}
 
 是否继续？</value>
   </data>

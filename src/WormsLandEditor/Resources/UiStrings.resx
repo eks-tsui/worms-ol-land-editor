@@ -324,7 +324,7 @@ Saving writes land{0:00}.dat and Mfx\Tmap{0:00}\Level.Dir and requires at least 
     <value>Import map package</value>
   </data>
   <data name="MapPackageDiscardUnsavedChanges" xml:space="preserve">
-    <value>A successful import replaces your unsaved editor changes. Cancel or failure keeps your current edits and previews.</value>
+    <value>Importing replaces your unsaved edits and marks the imported map as unsaved.</value>
   </data>
   <data name="MapPackageReplaceEditor" xml:space="preserve">
     <value>A successful import replaces the current editor contents and marks the map as unsaved.</value>
@@ -332,12 +332,7 @@ Saving writes land{0:00}.dat and Mfx\Tmap{0:00}\Level.Dir and requires at least 
   <data name="ConfirmImportMapPackage" xml:space="preserve">
     <value>Load source map {0:00} from this ZIP into the currently selected map {1:00}?
 
-This changes only the editor contents and renumbers the map resource paths in memory. The selected map number stays the same. No game files will be created or overwritten until you explicitly save.
-
-External shared water resource reference: {2}
-Water resources are not included in the ZIP and must be supplied separately in your game data.
-
-{3}
+{2}
 
 Continue?</value>
   </data>
