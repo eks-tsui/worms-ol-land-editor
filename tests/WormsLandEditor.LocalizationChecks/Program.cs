@@ -110,7 +110,7 @@ try
                 ? "是否将 ZIP 中的源地图 01 加载到当前选中的 105 号地图？"
                 : "Load source map 01 from this ZIP into the currently selected map 105?";
             string continuation = chinese ? "是否继续？" : "Continue?";
-            Check(prompt == $"{question}\n\n{warning}\n\n{continuation}",
+            Check(prompt.ReplaceLineEndings("\n") == $"{question}\n\n{warning}\n\n{continuation}",
                 $"Concise import confirmation: {culture}, unsaved={unsaved}");
             Check(warning.Contains(chinese ? "未保存" : "unsaved", StringComparison.Ordinal),
                 $"Import confirmation retains unsaved warning: {culture}, unsaved={unsaved}");

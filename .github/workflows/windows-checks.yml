@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          fetch-depth: 2
+          fetch-depth: 3
           persist-credentials: false
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
         with:
@@ -34,7 +34,7 @@ jobs:
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
       - name: Verify overlap regression is detected
-        if: github.event_name == 'push' && github.event.before == '9d6e18ced6605e4ba39e0d7e096fc12595d26e42'
+        if: github.event_name == 'push' && github.event.before == '5babbd13f6b216235b75489526812decd1a3b276'
         shell: pwsh
         run: |
           $path = "src/WormsLandEditor/MainForm.EditorTransitions.cs"
