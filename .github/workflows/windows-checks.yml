@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      verify_original_layout:
+        description: Verify that the original resource layout fails
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -19,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          fetch-depth: 3
+          fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
         with:
@@ -34,7 +39,7 @@ jobs:
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
       - name: Verify overlap regression is detected
-        if: github.event_name == 'push' && github.event.before == '5babbd13f6b216235b75489526812decd1a3b276'
+        if: inputs.verify_original_layout || (github.event_name == 'push' && github.event.before == '5babbd13f6b216235b75489526812decd1a3b276')
         shell: pwsh
         run: |
           $path = "src/WormsLandEditor/MainForm.EditorTransitions.cs"
