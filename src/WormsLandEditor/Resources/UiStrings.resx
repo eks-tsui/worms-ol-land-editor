@@ -1,0 +1,276 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>Worms OL Land Editor</value>
+  </data>
+  <data name="ChooseGameDirectory" xml:space="preserve">
+    <value>Choose a game folder containing Data\Mfx (or select Data).</value>
+  </data>
+  <data name="ChooseGameDirectoryPrompt" xml:space="preserve">
+    <value>Choose the game folder to start editing. You can cancel and set it later.</value>
+  </data>
+  <data name="ChooseLegacyMap" xml:space="preserve">
+    <value>Choose an Online, WA, WWP or Underwater map (IMG/DAT/WAM) or Level.dir</value>
+  </data>
+  <data name="ChooseMapPng" xml:space="preserve">
+    <value>Choose a map PNG image</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="ClearSpawns" xml:space="preserve">
+    <value>Clear spawns</value>
+  </data>
+  <data name="ClosedMap" xml:space="preserve">
+    <value>Closed map</value>
+  </data>
+  <data name="ConfirmDeleteTitle" xml:space="preserve">
+    <value>Confirm permanent deletion</value>
+  </data>
+  <data name="ConfirmOverwriteTitle" xml:space="preserve">
+    <value>Confirm overwrite</value>
+  </data>
+  <data name="ConversionTimeout" xml:space="preserve">
+    <value>PNG conversion exceeded 120 seconds. The editor attempted to stop the converter. Check the PNG and try again.</value>
+  </data>
+  <data name="ConverterFailed" xml:space="preserve">
+    <value>The PNG converter failed (exit code {0}).
+
+{1}</value>
+  </data>
+  <data name="ConverterNoDetails" xml:space="preserve">
+    <value>No diagnostic details were returned.</value>
+  </data>
+  <data name="CreatingFromPng" xml:space="preserve">
+    <value>Creating a map from PNG...</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteFilesWarning" xml:space="preserve">
+    <value>Permanently delete map {0:00}?
+
+DAT file:
+{1}
+
+Entire Tmap folder, including ALL files and subfolders:
+{2}
+
+Unsaved changes to this map will also be discarded. This does not use the Recycle Bin and cannot be undone.</value>
+  </data>
+  <data name="DeletingMap" xml:space="preserve">
+    <value>Deleting map...</value>
+  </data>
+  <data name="DiscardChanges" xml:space="preserve">
+    <value>Discard the unsaved changes to this map?</value>
+  </data>
+  <data name="EmptyMap" xml:space="preserve">
+    <value>Import a PNG to create a map</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Land editor error</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportMapPng" xml:space="preserve">
+    <value>Export map PNG</value>
+  </data>
+  <data name="ExportResource" xml:space="preserve">
+    <value>Export {0}</value>
+  </data>
+  <data name="GameDirectory" xml:space="preserve">
+    <value>Game folder</value>
+  </data>
+  <data name="GameDirectoryStatus" xml:space="preserve">
+    <value>Game folder: {0}</value>
+  </data>
+  <data name="GifFilter" xml:space="preserve">
+    <value>Animated GIF images (*.gif)|*.gif</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="ImportMap" xml:space="preserve">
+    <value>Import map</value>
+  </data>
+  <data name="ImportResource" xml:space="preserve">
+    <value>Import {0}</value>
+  </data>
+  <data name="ImportingPng" xml:space="preserve">
+    <value>Importing PNG...</value>
+  </data>
+  <data name="InvalidDirectoryTitle" xml:space="preserve">
+    <value>Invalid folder</value>
+  </data>
+  <data name="InvalidGameDirectory" xml:space="preserve">
+    <value>Choose a game folder containing Data\Mfx, or its Data folder.</value>
+  </data>
+  <data name="Legacy" xml:space="preserve">
+    <value>legacy</value>
+  </data>
+  <data name="LegacyMapFilter" xml:space="preserve">
+    <value>Supported maps and resources (*.img;*.dat;*.wam;Level.dir)|*.img;*.dat;*.wam;Level.dir|All files (*.*)|*.*</value>
+  </data>
+  <data name="LegacyMapImported" xml:space="preserve">
+    <value>Imported {0} map: {1}</value>
+  </data>
+  <data name="MapCleared" xml:space="preserve">
+    <value>Map cleared from the editor. No files were deleted.</value>
+  </data>
+  <data name="MapDeleted" xml:space="preserve">
+    <value>Deleted {0} and Mfx\Tmap{1:00}.</value>
+  </data>
+  <data name="MapLoaded" xml:space="preserve">
+    <value>Loaded land{0:00}.dat.</value>
+  </data>
+  <data name="MapNotCreated" xml:space="preserve">
+    <value>Map {0:00} has not been created yet.</value>
+  </data>
+  <data name="MapNumber" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="MapPngSize" xml:space="preserve">
+    <value>Map PNG size must be {0}x{1}; this image is {2}x{3}.</value>
+  </data>
+  <data name="MapRequired" xml:space="preserve">
+    <value>Import a map PNG first.</value>
+  </data>
+  <data name="MissingSpawnsTitle" xml:space="preserve">
+    <value>Not enough spawn points</value>
+  </data>
+  <data name="NoGameDirectory" xml:space="preserve">
+    <value>No game folder selected. Choose Game folder to start editing.</value>
+  </data>
+  <data name="NoMapTitle" xml:space="preserve">
+    <value>No map loaded</value>
+  </data>
+  <data name="OperationInProgress" xml:space="preserve">
+    <value>Please wait for the current operation to finish before closing the editor.</value>
+  </data>
+  <data name="OperationInProgressTitle" xml:space="preserve">
+    <value>Operation in progress</value>
+  </data>
+  <data name="OverwriteFiles" xml:space="preserve">
+    <value>Saving replaces any existing files at these paths:
+
+{0}
+{1}
+
+Continue? Other files in the Tmap folder will be kept.</value>
+  </data>
+  <data name="PngExported" xml:space="preserve">
+    <value>Exported PNG: {0}</value>
+  </data>
+  <data name="PngFilter" xml:space="preserve">
+    <value>PNG images (*.png)|*.png</value>
+  </data>
+  <data name="PngGifFilter" xml:space="preserve">
+    <value>PNG or GIF images (*.png;*.gif)|*.png;*.gif</value>
+  </data>
+  <data name="PngImported" xml:space="preserve">
+    <value>Imported PNG: {0}. Collision masks were generated.</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready.</value>
+  </data>
+  <data name="ResourceCleared" xml:space="preserve">
+    <value>Cleared {0}.</value>
+  </data>
+  <data name="ResourceDimensions" xml:space="preserve">
+    <value>{0}×{1} {2}</value>
+  </data>
+  <data name="ResourceExported" xml:space="preserve">
+    <value>Exported resource: {0}</value>
+  </data>
+  <data name="ResourceImported" xml:space="preserve">
+    <value>Imported resource: {0}</value>
+  </data>
+  <data name="ResourceLoadFailedTitle" xml:space="preserve">
+    <value>Unable to load Level.Dir</value>
+  </data>
+  <data name="ResourceNotFound" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="ResourceSize" xml:space="preserve">
+    <value>{0:0.#} KB</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveCleanupWarning" xml:space="preserve">
+    <value>The map was saved, but temporary files could not be removed from {0}.</value>
+  </data>
+  <data name="SaveRecoveryRequired" xml:space="preserve">
+    <value>Saving failed and some files could not be restored. Do not save again until you have checked these paths:
+{0}
+
+Backups and staged files were kept in:
+{1}
+
+{2}</value>
+  </data>
+  <data name="SaveRestored" xml:space="preserve">
+    <value>Saving failed. Files already replaced by this save were restored to their previous state.
+
+{0}</value>
+  </data>
+  <data name="SaveSucceeded" xml:space="preserve">
+    <value>Saved {0} and Mfx\Tmap{1:00}\Level.Dir.</value>
+  </data>
+  <data name="SavedTitle" xml:space="preserve">
+    <value>Map saved</value>
+  </data>
+  <data name="SavingMap" xml:space="preserve">
+    <value>Saving map...</value>
+  </data>
+  <data name="SettingsLoadFailed" xml:space="preserve">
+    <value>The saved game-folder setting could not be read. You can choose the folder again.
+
+{0}</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Editor settings</value>
+  </data>
+  <data name="SourcePngMissing" xml:space="preserve">
+    <value>The source PNG is missing, so collision masks cannot be rebuilt. Import the map PNG again before saving.</value>
+  </data>
+  <data name="SpawnPointsRequired" xml:space="preserve">
+    <value>Set at least 12 spawn points before saving.</value>
+  </data>
+  <data name="SpawnsCleared" xml:space="preserve">
+    <value>All spawn points cleared.</value>
+  </data>
+  <data name="Underwater" xml:space="preserve">
+    <value>Underwater</value>
+  </data>
+  <data name="UnsafeDeletePath" xml:space="preserve">
+    <value>The Tmap deletion path is outside the current Data\Mfx folder.</value>
+  </data>
+  <data name="UnsavedChangesTitle" xml:space="preserve">
+    <value>Unsaved changes</value>
+  </data>
+  <data name="Water" xml:space="preserve">
+    <value>Water</value>
+  </data>
+  <data name="WorldParty" xml:space="preserve">
+    <value>World Party</value>
+  </data>
+  <data name="SavedResourceReloadFailed" xml:space="preserve">
+    <value>The map files were saved, but the saved resource preview could not be reloaded. Reopen the map to refresh it.
+
+{0}</value>
+  </data>
+</root>

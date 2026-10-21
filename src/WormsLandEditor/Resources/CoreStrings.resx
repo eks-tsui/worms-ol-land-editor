@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data xml:space="preserve" name="AutoMaskNotOneBit">
+    <value>Auto mask targets must be 1-bit images.</value>
+  </data>
+  <data xml:space="preserve" name="BackgroundWidthMismatch">
+    <value>The width of {0} must be 640; the selected image is {1}x{2}.</value>
+  </data>
+  <data xml:space="preserve" name="BmpPackDecompressedLengthMismatch">
+    <value>BMP pack decompression produced {0} bytes; expected {1}.</value>
+  </data>
+  <data xml:space="preserve" name="CompressedDataTooLong">
+    <value>Compressed data expands beyond its declared size of {0} bytes.</value>
+  </data>
+  <data xml:space="preserve" name="DebrisSizeExceeded">
+    <value>The width and height of {0} must not exceed 80; the selected image is {1}x{2}.</value>
+  </data>
+  <data xml:space="preserve" name="DirDescription">
+    <value>DIR directory {0}..{1} ({2} bytes), {3}</value>
+  </data>
+  <data xml:space="preserve" name="DirTableTooSmall">
+    <value>DIR directory table is too small.</value>
+  </data>
+  <data xml:space="preserve" name="ExpectedImgAtOffset">
+    <value>Expected IMG block at 0x{0:X}, got {1}.</value>
+  </data>
+  <data xml:space="preserve" name="ExpectedImgBlock">
+    <value>Expected IMG block.</value>
+  </data>
+  <data xml:space="preserve" name="ExpectedSpriteBlock">
+    <value>Expected SPR block.</value>
+  </data>
+  <data xml:space="preserve" name="GifEncoderUnavailable">
+    <value>GIF encoding is not supported on this system.</value>
+  </data>
+  <data xml:space="preserve" name="GifHasNoFrames">
+    <value>GIF has no usable frames.</value>
+  </data>
+  <data xml:space="preserve" name="ImgPixelLengthMismatch">
+    <value>IMG {0}x{1}x{2} expects {3} bytes, block has {4}.</value>
+  </data>
+  <data xml:space="preserve" name="IncompleteDirTable">
+    <value>DIR directory table is incomplete.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidBmpPackOffset">
+    <value>Invalid BMP pack offset.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidDirDataRange">
+    <value>Invalid DIR data range.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidDirMagic">
+    <value>Not a DIR resource file.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidImageDimensions">
+    <value>Image dimensions {0}x{1} are invalid or too large.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidImgLength">
+    <value>Invalid IMG length {0} at 0x{1:X}.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLandMagic">
+    <value>Not a supported LND map file.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLandStringLength">
+    <value>Invalid LND string length {0}.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLegacyBlockLength">
+    <value>Invalid legacy data block length {0} at 0x{1:X}.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLegacySpriteFrameBounds">
+    <value>Invalid legacy SPR frame bounds.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLegacySpriteFramePixels">
+    <value>Invalid legacy SPR frame pixels.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLegacySpriteFrameTable">
+    <value>Invalid legacy SPR frame table.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidPointCount">
+    <value>Invalid point count {0}.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteBlockTable">
+    <value>SPR block table is incomplete.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteFrameBounds">
+    <value>Invalid SPR frame bounds.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteFramePixels">
+    <value>Invalid SPR frame pixels.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteFrameTable">
+    <value>Invalid SPR frame table.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteLength">
+    <value>Invalid SPR length.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpritePaletteCount">
+    <value>Invalid SPR palette color count.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidUnderwaterLandMagic">
+    <value>Not an Underwater LND map file.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidWwpLzOffset">
+    <value>Invalid WWP LZ offset.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidWwpSpriteFrameBounds">
+    <value>Invalid WWP SPR frame bounds.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidWwpSpriteFramePixels">
+    <value>Invalid WWP SPR frame pixels.</value>
+  </data>
+  <data xml:space="preserve" name="InvalidWwpSpriteFrameTable">
+    <value>Invalid WWP SPR frame table.</value>
+  </data>
+  <data xml:space="preserve" name="LandDescription">
+    <value>LND {0}x{1}, closed {2}, points {3}/{4}, terrain {5}bpp palette {6}, masks {7}x{8}/{9}x{10}/{11}x{12}</value>
+  </data>
+  <data xml:space="preserve" name="LandLengthMismatch">
+    <value>LND file length mismatch: header {0}, actual {1}.</value>
+  </data>
+  <data xml:space="preserve" name="LandStringLengthRange">
+    <value>LND string length must be between 1 and 127.</value>
+  </data>
+  <data xml:space="preserve" name="LandTrailingBytes">
+    <value>Trailing bytes after LND parse: {0}.</value>
+  </data>
+  <data xml:space="preserve" name="LegacyDataDirectoryNotFound">
+    <value>Cannot locate the legacy data directory from the selected file.</value>
+  </data>
+  <data xml:space="preserve" name="LegacyEmptyLandWithResourcesDescription">
+    <value>Empty main map + {0}</value>
+  </data>
+  <data xml:space="preserve" name="LegacyEmptyLandWithTemplateDescription">
+    <value>Empty main map + current template resources</value>
+  </data>
+  <data xml:space="preserve" name="LegacyLandWithTemplateDescription">
+    <value>{0} + current template resources</value>
+  </data>
+  <data xml:space="preserve" name="LegacyLevelDirNotFound">
+    <value>The corresponding Level.dir was not found.</value>
+  </data>
+  <data xml:space="preserve" name="LegacySourceUnrecognized">
+    <value>Cannot identify the selected map format automatically. Select an Underwater landNNN.dat, a legacy Level.dir, or WWP/WA IMG/DAT/WAM.</value>
+  </data>
+  <data xml:space="preserve" name="MapNumberOutOfRange">
+    <value>Map number must be between {0} and {1}.</value>
+  </data>
+  <data xml:space="preserve" name="MaskNotOneBit">
+    <value>Mask targets must be 1-bit images.</value>
+  </data>
+  <data xml:space="preserve" name="MaskTerrainSizeMismatch">
+    <value>Mask size does not match terrain size.</value>
+  </data>
+  <data xml:space="preserve" name="MatchingLegacyImgNotFound">
+    <value>No IMG map with the same base name as {0} was found.</value>
+  </data>
+  <data xml:space="preserve" name="MissingNullTerminator">
+    <value>Missing null terminator.</value>
+  </data>
+  <data xml:space="preserve" name="No">
+    <value>no</value>
+  </data>
+  <data xml:space="preserve" name="NoGifFramesToExport">
+    <value>There are no GIF frames to export.</value>
+  </data>
+  <data xml:space="preserve" name="NoNamedDirEntries">
+    <value>no named embedded entries</value>
+  </data>
+  <data xml:space="preserve" name="ResourceBlockTooShort">
+    <value>The data block for {0} is too short.</value>
+  </data>
+  <data xml:space="preserve" name="ResourceCannotBeCleared">
+    <value>{0} is not an image resource that can be cleared.</value>
+  </data>
+  <data xml:space="preserve" name="ResourceImportFormats">
+    <value>Resources can only import PNG; animated SPR resources also support GIF.</value>
+  </data>
+  <data xml:space="preserve" name="ResourceNotFound">
+    <value>Resource {0} does not exist in Level.Dir.</value>
+  </data>
+  <data xml:space="preserve" name="ResourceSizeMismatch">
+    <value>{0} must be {1}x{2}; the selected image is {3}x{4}.</value>
+  </data>
+  <data xml:space="preserve" name="SpriteFrameCountLimit">
+    <value>SPR must have fewer than 256 frames.</value>
+  </data>
+  <data xml:space="preserve" name="SpriteFrameCountRange">
+    <value>SPR frame count must be between 1 and 255.</value>
+  </data>
+  <data xml:space="preserve" name="SpriteHasNoFrames">
+    <value>SPR has no frames.</value>
+  </data>
+  <data xml:space="preserve" name="SpriteImportFormats">
+    <value>SPR resources can only import PNG or GIF.</value>
+  </data>
+  <data xml:space="preserve" name="SpritePaddingColorUnavailable">
+    <value>Cannot generate a unique SPR padding color.</value>
+  </data>
+  <data xml:space="preserve" name="SpritePaletteCountRange">
+    <value>SPR palette color count must be between 1 and 255.</value>
+  </data>
+  <data xml:space="preserve" name="TargetNotOneBitMask">
+    <value>Target image is not a 1-bit mask.</value>
+  </data>
+  <data xml:space="preserve" name="TemplateDataDirectoryRequired">
+    <value>Select a Data directory containing Mfx/Tmap01/Level.Dir before loading a resource template.</value>
+  </data>
+  <data xml:space="preserve" name="TemplateFileNotFound">
+    <value>The Level.Dir template was not found at {0}. Select a Data directory containing Mfx/Tmap01/Level.Dir.</value>
+  </data>
+  <data xml:space="preserve" name="TerrainNotEightBit">
+    <value>Target terrain image is not 8-bit.</value>
+  </data>
+  <data xml:space="preserve" name="UnderwaterSourceRequired">
+    <value>Select an Underwater landNNN.dat, or a Level.dir from which landNNN.dat can be located.</value>
+  </data>
+  <data xml:space="preserve" name="UnderwaterTerrainBlockMissing">
+    <value>No IMG block was found after the point table in the Underwater LND file.</value>
+  </data>
+  <data xml:space="preserve" name="UnexpectedEndOfFile">
+    <value>Unexpected end of file.</value>
+  </data>
+  <data xml:space="preserve" name="UnknownLegacyMapKind">
+    <value>Unsupported map source type: {0}.</value>
+  </data>
+  <data xml:space="preserve" name="UnsafeDirRewrite">
+    <value>Level.Dir contains an unsupported or invalid directory entry ({0}). Saving would risk losing data; use a supported, intact template.</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedCompressedSpriteFrames">
+    <value>Unsupported frame count in the compressed legacy SPR.</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedImgBitDepth">
+    <value>Unsupported IMG bit depth: {0}. Only 1-bit and 8-bit images are supported.</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedSpriteBitDepth">
+    <value>Unsupported SPR bit depth.</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedSpriteFlags">
+    <value>Unsupported SPR flags.</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedWwpSpriteHeader">
+    <value>Unsupported WWP SPR header.</value>
+  </data>
+  <data xml:space="preserve" name="UnterminatedDirEntry">
+    <value>unterminated entry name</value>
+  </data>
+  <data xml:space="preserve" name="WorldPartyImportFormats">
+    <value>World Party import currently supports 1920x696 IMG or compatible LND DAT files.</value>
+  </data>
+  <data xml:space="preserve" name="WorldPartyLandSizeMismatch">
+    <value>The selected World Party map is {0}x{1}, not {2}x{3}. Select the main map IMG/DAT, not a theme texture.</value>
+  </data>
+  <data xml:space="preserve" name="WwpDecompressedLengthMismatch">
+    <value>WWP decompression produced {0} bytes; expected {1}.</value>
+  </data>
+  <data xml:space="preserve" name="Yes">
+    <value>yes</value>
+  </data>
+</root>

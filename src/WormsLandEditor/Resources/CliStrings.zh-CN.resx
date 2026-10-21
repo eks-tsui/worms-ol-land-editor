@@ -1,0 +1,317 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="TerrainLabel" xml:space="preserve">
+    <value>地形</value>
+  </data>
+  <data name="CollisionLabel" xml:space="preserve">
+    <value>碰撞</value>
+  </data>
+  <data name="AuxiliaryLabel" xml:space="preserve">
+    <value>辅助</value>
+  </data>
+  <data name="PreviewLabel" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="PathsReport" xml:space="preserve">
+    <value>  资源路径：{0} | {1}</value>
+  </data>
+  <data name="SpritePaletteReport" xml:space="preserve">
+    <value>  {0}：SPR 帧数={1} 调色板颜色={2} 不同颜色={3} 使用索引数={4} 最大索引={5} 字节数={6}</value>
+  </data>
+  <data name="ResourceBytesReport" xml:space="preserve">
+    <value>  {0}：字节数={1}</value>
+  </data>
+  <data name="ResourceParseError" xml:space="preserve">
+    <value>  {0}：解析失败（{1}）：{2}；字节数={3}</value>
+  </data>
+  <data name="ImageReport" xml:space="preserve">
+    <value>  {0}：IMG {1}x{2} 位深={3} 调色板颜色={4} 不同颜色={5} 使用索引数={6} 最大索引={7}</value>
+  </data>
+  <data name="MaskEmptyEmpty" xml:space="preserve">
+    <value>  地形=0/碰撞=0：{0}</value>
+  </data>
+  <data name="MaskEmptySolid" xml:space="preserve">
+    <value>  地形=0/碰撞=1：{0}</value>
+  </data>
+  <data name="MaskSolidEmpty" xml:space="preserve">
+    <value>  地形非0/碰撞=0：{0}</value>
+  </data>
+  <data name="MaskSolidSolid" xml:space="preserve">
+    <value>  地形非0/碰撞=1：{0}</value>
+  </data>
+  <data name="ReversedMaskEmptyEmpty" xml:space="preserve">
+    <value>  字节内位序反转后 地形=0/碰撞=0：{0}</value>
+  </data>
+  <data name="ReversedMaskEmptySolid" xml:space="preserve">
+    <value>  字节内位序反转后 地形=0/碰撞=1：{0}</value>
+  </data>
+  <data name="ReversedMaskSolidEmpty" xml:space="preserve">
+    <value>  字节内位序反转后 地形非0/碰撞=0：{0}</value>
+  </data>
+  <data name="ReversedMaskSolidSolid" xml:space="preserve">
+    <value>  字节内位序反转后 地形非0/碰撞=1：{0}</value>
+  </data>
+  <data name="AuxiliaryDifference" xml:space="preserve">
+    <value>  辅助遮罩差异像素={0}</value>
+  </data>
+  <data name="PreviewNonZero" xml:space="preserve">
+    <value>  预览遮罩非零位={0}</value>
+  </data>
+  <data name="CollisionFirstBytes" xml:space="preserve">
+    <value>  碰撞遮罩开头字节={0}</value>
+  </data>
+  <data name="AuxiliaryFirstBytes" xml:space="preserve">
+    <value>  辅助遮罩开头字节={0}</value>
+  </data>
+  <data name="PreviewFirstBytes" xml:space="preserve">
+    <value>  预览遮罩开头字节={0}</value>
+  </data>
+  <data name="SurfaceReport" xml:space="preserve">
+    <value>具有表面的列={0}/{1}，8像素块等高数量={2}/{3}，表面纵坐标模8分布=[{4}]</value>
+  </data>
+  <data name="FileSummary" xml:space="preserve">
+    <value>{0}：{1}</value>
+  </data>
+  <data name="PointReport" xml:space="preserve">
+    <value>{0:00}：x={1}，y={2}，点位实体={3}，下方实体纵坐标={4}，净空={5}，附近实体数={6}，上方实体数={7}</value>
+  </data>
+  <data name="PalettePathTotal" xml:space="preserve">
+    <value>  本路径新增={0} 累计不同颜色={1}</value>
+  </data>
+  <data name="PaletteColors" xml:space="preserve">
+    <value>{0}：调色板颜色={1} 新增={2} 累计不同颜色={3}</value>
+  </data>
+  <data name="LandPaletteSize" xml:space="preserve">
+    <value>地图调色板颜色={0}</value>
+  </data>
+  <data name="SlotConflictReport" xml:space="preserve">
+    <value>{0}：调色板颜色={1} 已比较槽位={2} 冲突槽位={3} 首个冲突槽位={4}</value>
+  </data>
+  <data name="SpriteReport" xml:space="preserve">
+    <value>{0}：标志=0x{1:X4} 调色板颜色={2} 不同颜色={3} 块表字节数={4} 速率={5} A={6} B={7} C={8} 帧数={9} 字节数={10} 零像素={11} 含零像素帧数={12} 非零像素={13} 最小索引={14} 最大索引={15}</value>
+  </data>
+  <data name="SpriteFrameReport" xml:space="preserve">
+    <value>  帧 {0}：左={1} 上={2} 右={3} 下={4} 尺寸={5}x{6} 像素数={7}</value>
+  </data>
+  <data name="LegacySpriteReport" xml:space="preserve">
+    <value>{0}：原始字节数={1} 声明长度={2} 位深={3} 标志=0x{4:X2} 颜色={5} 调色板结束偏移={6}</value>
+  </data>
+  <data name="CompressedBlocks" xml:space="preserve">
+    <value>  压缩块数={0}</value>
+  </data>
+  <data name="LegacySpriteFields" xml:space="preserve">
+    <value>  A={0} 帧数={1} 速率={2} B={3} C={4} 帧表偏移={5} 像素偏移={6}</value>
+  </data>
+  <data name="LegacyFrameBytes" xml:space="preserve">
+    <value>  帧 {0}：原始偏移=0x{1:X8} 小端右移8位={2} 大端右移8位={3} 小端边界=({4},{5},{6},{7}) 大端边界=({8},{9},{10},{11}) 字节={12}</value>
+  </data>
+  <data name="LegacyFirstFrame" xml:space="preserve">
+    <value>{0}：首帧={1}x{2} 边界=({3},{4},{5},{6}) 颜色={7}</value>
+  </data>
+  <data name="PixelIndexReport" xml:space="preserve">
+    <value>  索引={0} 数量={1} 颜色={2}</value>
+  </data>
+  <data name="TransparentOrOutside" xml:space="preserve">
+    <value>透明或超出调色板</value>
+  </data>
+  <data name="ResourceNotFound" xml:space="preserve">
+    <value>在 {0} 中未找到资源 {1}。</value>
+  </data>
+  <data name="PaletteReportIncomplete" xml:space="preserve">
+    <value>{0} 中部分资源无法解析，报告不完整。</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="LandSummary" xml:space="preserve">
+    <value>LND {0}x{1}，封闭 {2}，出生点 {3}/{4}，地形 {5}位 调色板 {6}色，遮罩 {7}x{8}/{9}x{10}/{11}x{12}</value>
+  </data>
+  <data name="NoNamedEntries" xml:space="preserve">
+    <value>没有具名内嵌条目</value>
+  </data>
+  <data name="DirectorySummary" xml:space="preserve">
+    <value>DIR 目录范围 {0}..{1}（{2}字节），{3}</value>
+  </data>
+  <data name="PaletteUnionTotal" xml:space="preserve">
+    <value>合计不同 RGB 颜色={0}</value>
+  </data>
+  <data name="NoExportableResource" xml:space="preserve">
+    <value>在 {0} 中没有可导出的资源 {1}。</value>
+  </data>
+  <data name="ImageExported" xml:space="preserve">
+    <value>{0}：{1}x{2}</value>
+  </data>
+  <data name="AnimationExported" xml:space="preserve">
+    <value>{0}：{1}x{2}，帧数={3}</value>
+  </data>
+  <data name="CanvasWidth" xml:space="preserve">
+    <value>画布宽度</value>
+  </data>
+  <data name="CanvasHeight" xml:space="preserve">
+    <value>画布高度</value>
+  </data>
+  <data name="FileWritten" xml:space="preserve">
+    <value>已写入：{0}</value>
+  </data>
+  <data name="InvalidMapSize" xml:space="preserve">
+    <value>地图 PNG 尺寸必须为 {0}x{1}，当前图片为 {2}x{3}。</value>
+  </data>
+  <data name="FromPngScope" xml:space="preserve">
+    <value>此命令仅生成 DAT，不生成 Level.Dir、不添加出生点，也不设置最终地图资源路径。</value>
+  </data>
+  <data name="InvalidClosedMapValue" xml:space="preserve">
+    <value>无效的封闭地图参数“{0}”。请使用 true、false、1、0、yes 或 no（小写）。</value>
+  </data>
+  <data name="IgnoredWaterArgument" xml:space="preserve">
+    <value>兼容提示：旧参数 waterDir“{0}”被忽略，不会修改水资源。建议使用 --remap-land-palette &lt;输入.dat&gt; &lt;输出.dat&gt; &lt;Level.Dir&gt;。</value>
+  </data>
+  <data name="InvalidLegacyKind" xml:space="preserve">
+    <value>未知导入类型“{0}”。请使用 auto、underwater、wa、armageddon 或 wwp。</value>
+  </data>
+  <data name="MapNumber" xml:space="preserve">
+    <value>地图编号</value>
+  </data>
+  <data name="InvalidWaterPath" xml:space="preserve">
+    <value>水资源路径必须为1–127个 ASCII 字符，且不能包含 NUL 字符。</value>
+  </data>
+  <data name="LegacyImportDefaults" xml:space="preserve">
+    <value>兼容默认值：地图编号={0}，水资源路径={1}。可用 [地图编号 [水资源路径]] 覆盖；输出文件名不会设置这些资源路径。</value>
+  </data>
+  <data name="ImportedSource" xml:space="preserve">
+    <value>已导入源文件：{0}（适配类型：{1}）</value>
+  </data>
+  <data name="UnknownCommand" xml:space="preserve">
+    <value>未知命令：{0}</value>
+  </data>
+  <data name="InvalidArguments" xml:space="preserve">
+    <value>命令 {0} 的参数数量不正确。</value>
+  </data>
+  <data name="HelpHint" xml:space="preserve">
+    <value>使用 --help 查看完整命令列表。</value>
+  </data>
+  <data name="ArgumentError" xml:space="preserve">
+    <value>参数错误：{0}</value>
+  </data>
+  <data name="CommandFailed" xml:space="preserve">
+    <value>命令 {0} 失败（{1}）：{2}</value>
+  </data>
+  <data name="FailureWriteWarning" xml:space="preserve">
+    <value>若执行的是写入命令，部分输出可能已经存在。请先检查报告的目标文件，再决定是否重试。</value>
+  </data>
+  <data name="InvalidInteger" xml:space="preserve">
+    <value>{0}必须为 {1} 到 {2} 的整数；当前值为“{3}”。</value>
+  </data>
+  <data name="WriteWarning" xml:space="preserve">
+    <value>写入提示：将直接创建或覆盖目标文件，不另行确认，也不自动备份。</value>
+  </data>
+  <data name="WriteTarget" xml:space="preserve">
+    <value>  目标：{0}</value>
+  </data>
+  <data name="NonTransactionalWarning" xml:space="preserve">
+    <value>多文件写入不是事务操作，后续失败不会撤销已经写入的文件。</value>
+  </data>
+  <data name="HelpIntroduction" xml:space="preserve">
+    <value>地图编辑器
+用法：WormsLandEditor.exe [命令]
+不带参数：打开图形界面。--help：显示帮助。
+命令名称区分大小写；含空格路径必须加引号。
+退出码：0 成功，1 执行失败，2 参数错误。
+
+命令列表：</value>
+  </data>
+  <data name="HelpFooter" xml:space="preserve">
+    <value>
+所有写入/导出命令都可能直接覆盖文件，不确认、不自动备份。保存 DAT 可能量化颜色。资源保存总是在指定目录生成 Level.Dir，并规范化 SPR 数据。多文件写入不是事务操作。
+诊断命令属于高级工具，不代表兼容性保证。详见 docs/cli.md。</value>
+  </data>
+  <data name="HelpInspect" xml:space="preserve">
+    <value>  --inspect &lt;地图.dat&gt; [Level.Dir]  读取地图及可选的资源目录摘要。</value>
+  </data>
+  <data name="HelpPaletteReport" xml:space="preserve">
+    <value>  --palette-report &lt;地图.dat|Level.Dir&gt; ...  报告调色板。</value>
+  </data>
+  <data name="HelpPointsReport" xml:space="preserve">
+    <value>  --points-report &lt;地图.dat&gt;  诊断出生点。</value>
+  </data>
+  <data name="HelpMaskTerrainReport" xml:space="preserve">
+    <value>  --mask-terrain-report &lt;地图.dat&gt; ...  诊断地形与遮罩一致性。</value>
+  </data>
+  <data name="HelpRepairSpawns" xml:space="preserve">
+    <value>  --repair-spawns &lt;输入.dat&gt; &lt;输出.dat&gt;  规范化并尝试补充出生点。</value>
+  </data>
+  <data name="HelpNormalizeMasks" xml:space="preserve">
+    <value>  --normalize-masks &lt;输入.dat&gt; &lt;输出.dat&gt;  根据地形索引重建遮罩，并清空预览遮罩。</value>
+  </data>
+  <data name="HelpNormalizeLevelDir" xml:space="preserve">
+    <value>  --normalize-level-dir &lt;Level.Dir&gt;  在原目录重写 Level.Dir 并规范化 SPR 资源。</value>
+  </data>
+  <data name="HelpCopyResource" xml:space="preserve">
+    <value>  --copy-resource &lt;源-Level.Dir&gt; &lt;资源名称&gt; &lt;目标-Level.Dir&gt;  替换目标已有条目，并重写目标 Level.Dir。</value>
+  </data>
+  <data name="HelpSetClosedMap" xml:space="preserve">
+    <value>  --set-closed-map &lt;输入.dat&gt; &lt;输出.dat&gt; &lt;true|false|1|0|yes|no&gt;  设置封闭地图标志。</value>
+  </data>
+  <data name="HelpReplaceResource" xml:space="preserve">
+    <value>  --replace-resource &lt;Level.Dir&gt; &lt;资源名称&gt; &lt;替换.png|替换.gif&gt;  替换已有 IMG/SPR 条目，并重写 Level.Dir。</value>
+  </data>
+  <data name="HelpPaletteUnion" xml:space="preserve">
+    <value>  --palette-union &lt;地图.dat|Level.Dir&gt; ...  汇总调色板不同 RGB 颜色。</value>
+  </data>
+  <data name="HelpSlotConflicts" xml:space="preserve">
+    <value>  --slot-conflicts &lt;地图.dat&gt; &lt;Level.Dir&gt;  诊断调色板槽位冲突。</value>
+  </data>
+  <data name="HelpSpriteInfo" xml:space="preserve">
+    <value>  --spr-info &lt;Level.Dir&gt; &lt;资源.spr&gt;  报告 SPR 元数据。</value>
+  </data>
+  <data name="HelpSetSpriteCanvas" xml:space="preserve">
+    <value>  --set-spr-canvas &lt;Level.Dir&gt; &lt;资源.spr&gt; &lt;宽&gt; &lt;高&gt;  修改 SPR 画布头字段（0..65535），不重采样像素。</value>
+  </data>
+  <data name="HelpExportResource" xml:space="preserve">
+    <value>  --export-resource &lt;Level.Dir&gt; &lt;资源名称&gt; &lt;输出路径&gt;  单帧导出 PNG，多帧导出 GIF（120毫秒/帧）。</value>
+  </data>
+  <data name="HelpExportResourceFrame" xml:space="preserve">
+    <value>  --export-resource-frame &lt;Level.Dir&gt; &lt;资源名称&gt; &lt;输出.png&gt;  仅导出首帧。</value>
+  </data>
+  <data name="HelpLegacySpriteInfo" xml:space="preserve">
+    <value>  --legacy-spr-info &lt;Level.Dir&gt; &lt;资源.spr&gt;  兼容格式原始数据高级诊断。</value>
+  </data>
+  <data name="HelpLegacySpritePixels" xml:space="preserve">
+    <value>  --legacy-spr-pixels &lt;Level.Dir&gt; &lt;资源.spr&gt;  兼容格式首帧像素高级诊断。</value>
+  </data>
+  <data name="HelpRoundtrip" xml:space="preserve">
+    <value>  --roundtrip &lt;输入.dat&gt; &lt;输出.dat&gt;  保存并重读 DAT；不保证逐字节相同。</value>
+  </data>
+  <data name="HelpFromPng" xml:space="preserve">
+    <value>  --frompng &lt;输入.png&gt; &lt;输出.dat&gt;  从1920x696 PNG创建 DAT；不生成 Level.Dir 或出生点。</value>
+  </data>
+  <data name="HelpReplacePng" xml:space="preserve">
+    <value>  --replacepng &lt;输入.dat&gt; &lt;输入.png&gt; &lt;输出.dat&gt;  替换地形并重建遮罩。</value>
+  </data>
+  <data name="HelpRemapLandPalette" xml:space="preserve">
+    <value>  --remap-land-palette &lt;输入.dat&gt; &lt;输出.dat&gt; &lt;Level.Dir&gt; [未使用的waterDir]  将地图和 Level.Dir 重映射到最多96色地形调色板；不修改水资源。</value>
+  </data>
+  <data name="HelpExportPng" xml:space="preserve">
+    <value>  --exportpng &lt;输入.dat&gt; &lt;输出.png&gt;  导出地形，将调色板索引0设为透明。</value>
+  </data>
+  <data name="HelpExportLandDebug" xml:space="preserve">
+    <value>  --export-land-debug &lt;输入.dat&gt; &lt;输出目录&gt;  写入5张诊断PNG；terrain.png不透明。</value>
+  </data>
+  <data name="HelpImportLegacy" xml:space="preserve">
+    <value>  --import-legacy &lt;auto|underwater|wa|armageddon|wwp&gt; &lt;源路径&gt; &lt;模板Data目录&gt; &lt;输出.dat&gt; &lt;输出Level目录&gt; [地图编号 [水资源路径]]  导入兼容地图。默认：编号45、data\water\Red。</value>
+  </data>
+</root>

@@ -1,0 +1,317 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="TerrainLabel" xml:space="preserve">
+    <value>terrain</value>
+  </data>
+  <data name="CollisionLabel" xml:space="preserve">
+    <value>collision</value>
+  </data>
+  <data name="AuxiliaryLabel" xml:space="preserve">
+    <value>auxiliary</value>
+  </data>
+  <data name="PreviewLabel" xml:space="preserve">
+    <value>preview</value>
+  </data>
+  <data name="PathsReport" xml:space="preserve">
+    <value>  paths: {0} | {1}</value>
+  </data>
+  <data name="SpritePaletteReport" xml:space="preserve">
+    <value>  {0}: SPR frames={1} palette={2} uniquePalette={3} used={4} maxIndex={5} bytes={6}</value>
+  </data>
+  <data name="ResourceBytesReport" xml:space="preserve">
+    <value>  {0}: bytes={1}</value>
+  </data>
+  <data name="ResourceParseError" xml:space="preserve">
+    <value>  {0}: parse error ({1}): {2}; bytes={3}</value>
+  </data>
+  <data name="ImageReport" xml:space="preserve">
+    <value>  {0}: IMG {1}x{2} bpp={3} palette={4} uniquePalette={5} used={6} maxIndex={7}</value>
+  </data>
+  <data name="MaskEmptyEmpty" xml:space="preserve">
+    <value>  terrain=0/collision=0: {0}</value>
+  </data>
+  <data name="MaskEmptySolid" xml:space="preserve">
+    <value>  terrain=0/collision=1: {0}</value>
+  </data>
+  <data name="MaskSolidEmpty" xml:space="preserve">
+    <value>  terrain!=0/collision=0: {0}</value>
+  </data>
+  <data name="MaskSolidSolid" xml:space="preserve">
+    <value>  terrain!=0/collision=1: {0}</value>
+  </data>
+  <data name="ReversedMaskEmptyEmpty" xml:space="preserve">
+    <value>  byte-reversed terrain=0/collision=0: {0}</value>
+  </data>
+  <data name="ReversedMaskEmptySolid" xml:space="preserve">
+    <value>  byte-reversed terrain=0/collision=1: {0}</value>
+  </data>
+  <data name="ReversedMaskSolidEmpty" xml:space="preserve">
+    <value>  byte-reversed terrain!=0/collision=0: {0}</value>
+  </data>
+  <data name="ReversedMaskSolidSolid" xml:space="preserve">
+    <value>  byte-reversed terrain!=0/collision=1: {0}</value>
+  </data>
+  <data name="AuxiliaryDifference" xml:space="preserve">
+    <value>  auxiliary different pixels={0}</value>
+  </data>
+  <data name="PreviewNonZero" xml:space="preserve">
+    <value>  preview nonzero bits={0}</value>
+  </data>
+  <data name="CollisionFirstBytes" xml:space="preserve">
+    <value>  collision first bytes={0}</value>
+  </data>
+  <data name="AuxiliaryFirstBytes" xml:space="preserve">
+    <value>  auxiliary first bytes={0}</value>
+  </data>
+  <data name="PreviewFirstBytes" xml:space="preserve">
+    <value>  preview first bytes={0}</value>
+  </data>
+  <data name="SurfaceReport" xml:space="preserve">
+    <value>surface columns={0}/{1}, sameYIn8pxBlocks={2}/{3}, yMod8=[{4}]</value>
+  </data>
+  <data name="FileSummary" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="PointReport" xml:space="preserve">
+    <value>{0:00}: x={1}, y={2}, solidAt={3}, solidBelow={4}, clearance={5}, solidNear={6}, solidAbove={7}</value>
+  </data>
+  <data name="PalettePathTotal" xml:space="preserve">
+    <value>  path total +{0} unique={1}</value>
+  </data>
+  <data name="PaletteColors" xml:space="preserve">
+    <value>{0}: palette={1} new={2} unique={3}</value>
+  </data>
+  <data name="LandPaletteSize" xml:space="preserve">
+    <value>land palette={0}</value>
+  </data>
+  <data name="SlotConflictReport" xml:space="preserve">
+    <value>{0}: palette={1} compared={2} conflicts={3} first={4}</value>
+  </data>
+  <data name="SpriteReport" xml:space="preserve">
+    <value>{0}: flags=0x{1:X4} palette={2} uniquePalette={3} blockBytes={4} rate={5} A={6} B={7} C={8} frames={9} bytes={10} zeroPixels={11} zeroFrames={12} nonZeroPixels={13} minIndex={14} maxIndex={15}</value>
+  </data>
+  <data name="SpriteFrameReport" xml:space="preserve">
+    <value>  frame {0}: left={1} top={2} right={3} bottom={4} size={5}x{6} pixels={7}</value>
+  </data>
+  <data name="LegacySpriteReport" xml:space="preserve">
+    <value>{0}: raw bytes={1} length={2} bpp={3} flags=0x{4:X2} colors={5} afterPalette={6}</value>
+  </data>
+  <data name="CompressedBlocks" xml:space="preserve">
+    <value>  compressed block count={0}</value>
+  </data>
+  <data name="LegacySpriteFields" xml:space="preserve">
+    <value>  A={0} frames={1} rate={2} B={3} C={4} table={5} pixel={6}</value>
+  </data>
+  <data name="LegacyFrameBytes" xml:space="preserve">
+    <value>  frame {0}: rawOff=0x{1:X8} le&gt;&gt;8={2} be&gt;&gt;8={3} LE=({4},{5},{6},{7}) BE=({8},{9},{10},{11}) bytes={12}</value>
+  </data>
+  <data name="LegacyFirstFrame" xml:space="preserve">
+    <value>{0}: first frame={1}x{2} bounds=({3},{4},{5},{6}) colors={7}</value>
+  </data>
+  <data name="PixelIndexReport" xml:space="preserve">
+    <value>  index={0} count={1} color={2}</value>
+  </data>
+  <data name="TransparentOrOutside" xml:space="preserve">
+    <value>transparent/outside palette</value>
+  </data>
+  <data name="ResourceNotFound" xml:space="preserve">
+    <value>Resource {1} was not found in {0}.</value>
+  </data>
+  <data name="PaletteReportIncomplete" xml:space="preserve">
+    <value>Some resources in {0} could not be parsed; the report is incomplete.</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>no</value>
+  </data>
+  <data name="LandSummary" xml:space="preserve">
+    <value>LND {0}x{1}, closed {2}, points {3}/{4}, terrain {5}bpp palette {6}, masks {7}x{8}/{9}x{10}/{11}x{12}</value>
+  </data>
+  <data name="NoNamedEntries" xml:space="preserve">
+    <value>no named embedded entries</value>
+  </data>
+  <data name="DirectorySummary" xml:space="preserve">
+    <value>DIR directory {0}..{1} ({2} bytes), {3}</value>
+  </data>
+  <data name="PaletteUnionTotal" xml:space="preserve">
+    <value>TOTAL unique RGB colors={0}</value>
+  </data>
+  <data name="NoExportableResource" xml:space="preserve">
+    <value>No exportable resource {1} was found in {0}.</value>
+  </data>
+  <data name="ImageExported" xml:space="preserve">
+    <value>{0}: {1}x{2}</value>
+  </data>
+  <data name="AnimationExported" xml:space="preserve">
+    <value>{0}: {1}x{2}, frames={3}</value>
+  </data>
+  <data name="CanvasWidth" xml:space="preserve">
+    <value>canvas width</value>
+  </data>
+  <data name="CanvasHeight" xml:space="preserve">
+    <value>canvas height</value>
+  </data>
+  <data name="FileWritten" xml:space="preserve">
+    <value>Written: {0}</value>
+  </data>
+  <data name="InvalidMapSize" xml:space="preserve">
+    <value>Map PNG must be {0}x{1}; the supplied image is {2}x{3}.</value>
+  </data>
+  <data name="FromPngScope" xml:space="preserve">
+    <value>This creates only a DAT file. It does not create Level.Dir, add spawn points, or set final map resource paths.</value>
+  </data>
+  <data name="InvalidClosedMapValue" xml:space="preserve">
+    <value>Invalid closed-map value "{0}". Use true, false, 1, 0, yes, or no (lowercase).</value>
+  </data>
+  <data name="IgnoredWaterArgument" xml:space="preserve">
+    <value>Compatibility warning: waterDir "{0}" is ignored and no water resources are changed. Prefer --remap-land-palette &lt;input.dat&gt; &lt;output.dat&gt; &lt;Level.Dir&gt;.</value>
+  </data>
+  <data name="InvalidLegacyKind" xml:space="preserve">
+    <value>Unknown import kind "{0}". Use auto, underwater, wa, armageddon, or wwp.</value>
+  </data>
+  <data name="MapNumber" xml:space="preserve">
+    <value>map number</value>
+  </data>
+  <data name="InvalidWaterPath" xml:space="preserve">
+    <value>Water resource path must contain 1–127 ASCII characters and no NUL characters.</value>
+  </data>
+  <data name="LegacyImportDefaults" xml:space="preserve">
+    <value>Compatibility defaults: map number={0}, water resource path={1}. Override with [map-number [water-resource-path]]; output file names do not set these paths.</value>
+  </data>
+  <data name="ImportedSource" xml:space="preserve">
+    <value>Imported source: {0} (adapter: {1})</value>
+  </data>
+  <data name="UnknownCommand" xml:space="preserve">
+    <value>Unknown command: {0}</value>
+  </data>
+  <data name="InvalidArguments" xml:space="preserve">
+    <value>Incorrect number of arguments for {0}.</value>
+  </data>
+  <data name="HelpHint" xml:space="preserve">
+    <value>Use --help to list all commands.</value>
+  </data>
+  <data name="ArgumentError" xml:space="preserve">
+    <value>Argument error: {0}</value>
+  </data>
+  <data name="CommandFailed" xml:space="preserve">
+    <value>Command {0} failed ({1}): {2}</value>
+  </data>
+  <data name="FailureWriteWarning" xml:space="preserve">
+    <value>If this was a write command, some output may already exist. Check the reported targets before retrying.</value>
+  </data>
+  <data name="InvalidInteger" xml:space="preserve">
+    <value>{0} must be an integer from {1} to {2}; received "{3}".</value>
+  </data>
+  <data name="WriteWarning" xml:space="preserve">
+    <value>Write notice: target files are created or overwritten without confirmation or automatic backup.</value>
+  </data>
+  <data name="WriteTarget" xml:space="preserve">
+    <value>  Target: {0}</value>
+  </data>
+  <data name="NonTransactionalWarning" xml:space="preserve">
+    <value>These writes are not transactional. A later failure does not undo files already written.</value>
+  </data>
+  <data name="HelpIntroduction" xml:space="preserve">
+    <value>Worms Map Editor
+Usage: WormsLandEditor.exe [command]
+No arguments: open the graphical editor. --help: print this help.
+Command names are case-sensitive; quote paths that contain spaces.
+Exit codes: 0 success, 1 execution failure, 2 invalid arguments.
+
+Commands:</value>
+  </data>
+  <data name="HelpFooter" xml:space="preserve">
+    <value>
+All write/export commands may overwrite files without confirmation or backups. DAT saves may quantize colors. Resource writes always produce Level.Dir in the indicated directory and normalize SPR data. Multiple-file writes are not transactional.
+Diagnostics are advanced tools, not compatibility guarantees. See docs/cli.md.</value>
+  </data>
+  <data name="HelpInspect" xml:space="preserve">
+    <value>  --inspect &lt;map.dat&gt; [Level.Dir]  Read map and optional resource-directory summaries.</value>
+  </data>
+  <data name="HelpPaletteReport" xml:space="preserve">
+    <value>  --palette-report &lt;map.dat|Level.Dir&gt; ...  Report palettes.</value>
+  </data>
+  <data name="HelpPointsReport" xml:space="preserve">
+    <value>  --points-report &lt;map.dat&gt;  Diagnose spawn points.</value>
+  </data>
+  <data name="HelpMaskTerrainReport" xml:space="preserve">
+    <value>  --mask-terrain-report &lt;map.dat&gt; ...  Diagnose terrain and mask consistency.</value>
+  </data>
+  <data name="HelpRepairSpawns" xml:space="preserve">
+    <value>  --repair-spawns &lt;input.dat&gt; &lt;output.dat&gt;  Normalize and try to supplement spawn points.</value>
+  </data>
+  <data name="HelpNormalizeMasks" xml:space="preserve">
+    <value>  --normalize-masks &lt;input.dat&gt; &lt;output.dat&gt;  Rebuild masks from indexed terrain; clear preview mask.</value>
+  </data>
+  <data name="HelpNormalizeLevelDir" xml:space="preserve">
+    <value>  --normalize-level-dir &lt;Level.Dir&gt;  Rewrite Level.Dir in its directory; normalize SPR resources.</value>
+  </data>
+  <data name="HelpCopyResource" xml:space="preserve">
+    <value>  --copy-resource &lt;source-Level.Dir&gt; &lt;resource-name&gt; &lt;target-Level.Dir&gt;  Replace an existing target entry and rewrite target Level.Dir.</value>
+  </data>
+  <data name="HelpSetClosedMap" xml:space="preserve">
+    <value>  --set-closed-map &lt;input.dat&gt; &lt;output.dat&gt; &lt;true|false|1|0|yes|no&gt;  Set the closed-map flag.</value>
+  </data>
+  <data name="HelpReplaceResource" xml:space="preserve">
+    <value>  --replace-resource &lt;Level.Dir&gt; &lt;resource-name&gt; &lt;replacement.png|replacement.gif&gt;  Replace an existing IMG/SPR entry and rewrite Level.Dir.</value>
+  </data>
+  <data name="HelpPaletteUnion" xml:space="preserve">
+    <value>  --palette-union &lt;map.dat|Level.Dir&gt; ...  Count distinct palette RGB colors.</value>
+  </data>
+  <data name="HelpSlotConflicts" xml:space="preserve">
+    <value>  --slot-conflicts &lt;map.dat&gt; &lt;Level.Dir&gt;  Diagnose palette-slot conflicts.</value>
+  </data>
+  <data name="HelpSpriteInfo" xml:space="preserve">
+    <value>  --spr-info &lt;Level.Dir&gt; &lt;resource.spr&gt;  Report SPR metadata.</value>
+  </data>
+  <data name="HelpSetSpriteCanvas" xml:space="preserve">
+    <value>  --set-spr-canvas &lt;Level.Dir&gt; &lt;resource.spr&gt; &lt;width&gt; &lt;height&gt;  Rewrite SPR canvas header fields (0..65535); no pixel resampling.</value>
+  </data>
+  <data name="HelpExportResource" xml:space="preserve">
+    <value>  --export-resource &lt;Level.Dir&gt; &lt;resource-name&gt; &lt;output-path&gt;  Export one frame as PNG or multiple frames as GIF (120 ms/frame).</value>
+  </data>
+  <data name="HelpExportResourceFrame" xml:space="preserve">
+    <value>  --export-resource-frame &lt;Level.Dir&gt; &lt;resource-name&gt; &lt;output.png&gt;  Export the first frame only.</value>
+  </data>
+  <data name="HelpLegacySpriteInfo" xml:space="preserve">
+    <value>  --legacy-spr-info &lt;Level.Dir&gt; &lt;resource.spr&gt;  Advanced raw compatibility-format diagnostic.</value>
+  </data>
+  <data name="HelpLegacySpritePixels" xml:space="preserve">
+    <value>  --legacy-spr-pixels &lt;Level.Dir&gt; &lt;resource.spr&gt;  Advanced raw first-frame pixel diagnostic.</value>
+  </data>
+  <data name="HelpRoundtrip" xml:space="preserve">
+    <value>  --roundtrip &lt;input.dat&gt; &lt;output.dat&gt;  Save and reread DAT; not a byte-identical roundtrip.</value>
+  </data>
+  <data name="HelpFromPng" xml:space="preserve">
+    <value>  --frompng &lt;input.png&gt; &lt;output.dat&gt;  Create DAT from a 1920x696 PNG; no Level.Dir or spawn points.</value>
+  </data>
+  <data name="HelpReplacePng" xml:space="preserve">
+    <value>  --replacepng &lt;input.dat&gt; &lt;input.png&gt; &lt;output.dat&gt;  Replace terrain and rebuild masks.</value>
+  </data>
+  <data name="HelpRemapLandPalette" xml:space="preserve">
+    <value>  --remap-land-palette &lt;input.dat&gt; &lt;output.dat&gt; &lt;Level.Dir&gt; [unused-waterDir]  Remap land and Level.Dir to up to 96 terrain colors; water resources are unchanged.</value>
+  </data>
+  <data name="HelpExportPng" xml:space="preserve">
+    <value>  --exportpng &lt;input.dat&gt; &lt;output.png&gt;  Export terrain with transparent palette index zero.</value>
+  </data>
+  <data name="HelpExportLandDebug" xml:space="preserve">
+    <value>  --export-land-debug &lt;input.dat&gt; &lt;output-directory&gt;  Write five diagnostic PNGs; terrain.png is opaque.</value>
+  </data>
+  <data name="HelpImportLegacy" xml:space="preserve">
+    <value>  --import-legacy &lt;auto|underwater|wa|armageddon|wwp&gt; &lt;source&gt; &lt;template-Data-directory&gt; &lt;output.dat&gt; &lt;output-Level-directory&gt; [map-number [water-resource-path]]  Import compatible map data. Defaults: map 45, data\water\Red.</value>
+  </data>
+</root>

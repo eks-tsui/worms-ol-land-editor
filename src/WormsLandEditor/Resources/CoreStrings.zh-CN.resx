@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data xml:space="preserve" name="AutoMaskNotOneBit">
+    <value>自动遮罩目标必须为 1 位图片。</value>
+  </data>
+  <data xml:space="preserve" name="BackgroundWidthMismatch">
+    <value>{0} 宽度必须为 640，当前图片为 {1}x{2}。</value>
+  </data>
+  <data xml:space="preserve" name="BmpPackDecompressedLengthMismatch">
+    <value>BMP pack 解压得到 {0} 字节，预期 {1} 字节。</value>
+  </data>
+  <data xml:space="preserve" name="CompressedDataTooLong">
+    <value>压缩数据解压后超出声明的 {0} 字节。</value>
+  </data>
+  <data xml:space="preserve" name="DebrisSizeExceeded">
+    <value>{0} 宽高不能超过 80，当前图片为 {1}x{2}。</value>
+  </data>
+  <data xml:space="preserve" name="DirDescription">
+    <value>DIR 目录 {0}..{1}（{2} 字节），{3}</value>
+  </data>
+  <data xml:space="preserve" name="DirTableTooSmall">
+    <value>DIR 目录表过短。</value>
+  </data>
+  <data xml:space="preserve" name="ExpectedImgAtOffset">
+    <value>偏移 0x{0:X} 处应为 IMG 数据块，实际为 {1}。</value>
+  </data>
+  <data xml:space="preserve" name="ExpectedImgBlock">
+    <value>应为 IMG 数据块。</value>
+  </data>
+  <data xml:space="preserve" name="ExpectedSpriteBlock">
+    <value>应为 SPR 数据块。</value>
+  </data>
+  <data xml:space="preserve" name="GifEncoderUnavailable">
+    <value>当前系统不支持 GIF 编码。</value>
+  </data>
+  <data xml:space="preserve" name="GifHasNoFrames">
+    <value>GIF 没有可用帧。</value>
+  </data>
+  <data xml:space="preserve" name="ImgPixelLengthMismatch">
+    <value>IMG {0}x{1}x{2} 应包含 {3} 字节，数据块实际包含 {4} 字节。</value>
+  </data>
+  <data xml:space="preserve" name="IncompleteDirTable">
+    <value>DIR 目录表不完整。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidBmpPackOffset">
+    <value>BMP pack 偏移无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidDirDataRange">
+    <value>DIR 数据范围无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidDirMagic">
+    <value>不是有效的 DIR 资源文件。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidImageDimensions">
+    <value>图片尺寸 {0}x{1} 无效或过大。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidImgLength">
+    <value>偏移 0x{1:X} 处的 IMG 长度 {0} 无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLandMagic">
+    <value>不是受支持的 LND 地图文件。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLandStringLength">
+    <value>LND 字符串长度无效：{0}。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLegacyBlockLength">
+    <value>偏移 0x{1:X} 处的兼容数据块长度 {0} 无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLegacySpriteFrameBounds">
+    <value>兼容 SPR 帧边界无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLegacySpriteFramePixels">
+    <value>兼容 SPR 帧像素数据无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidLegacySpriteFrameTable">
+    <value>兼容 SPR 帧表无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidPointCount">
+    <value>出生点数量无效：{0}。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteBlockTable">
+    <value>SPR 数据块表不完整。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteFrameBounds">
+    <value>SPR 帧边界无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteFramePixels">
+    <value>SPR 帧像素数据无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteFrameTable">
+    <value>SPR 帧表无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpriteLength">
+    <value>SPR 长度无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidSpritePaletteCount">
+    <value>SPR 调色板颜色数量无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidUnderwaterLandMagic">
+    <value>不是海底版 LND 文件。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidWwpLzOffset">
+    <value>WWP LZ 偏移无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidWwpSpriteFrameBounds">
+    <value>WWP SPR 帧边界无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidWwpSpriteFramePixels">
+    <value>WWP SPR 帧像素数据无效。</value>
+  </data>
+  <data xml:space="preserve" name="InvalidWwpSpriteFrameTable">
+    <value>WWP SPR 帧表无效。</value>
+  </data>
+  <data xml:space="preserve" name="LandDescription">
+    <value>LND {0}x{1}，封闭 {2}，出生点 {3}/{4}，地形 {5}bpp 调色板 {6} 色，遮罩 {7}x{8}/{9}x{10}/{11}x{12}</value>
+  </data>
+  <data xml:space="preserve" name="LandLengthMismatch">
+    <value>LND 文件长度不符：头部声明 {0}，实际 {1}。</value>
+  </data>
+  <data xml:space="preserve" name="LandStringLengthRange">
+    <value>LND 字符串长度必须在 1 和 127 之间。</value>
+  </data>
+  <data xml:space="preserve" name="LandTrailingBytes">
+    <value>LND 解析后存在 {0} 个多余字节。</value>
+  </data>
+  <data xml:space="preserve" name="LegacyDataDirectoryNotFound">
+    <value>无法根据所选文件定位兼容地图的 data 目录。</value>
+  </data>
+  <data xml:space="preserve" name="LegacyEmptyLandWithResourcesDescription">
+    <value>空主地图 + {0}</value>
+  </data>
+  <data xml:space="preserve" name="LegacyEmptyLandWithTemplateDescription">
+    <value>空主地图 + 当前模板资源</value>
+  </data>
+  <data xml:space="preserve" name="LegacyLandWithTemplateDescription">
+    <value>{0} + 当前模板资源</value>
+  </data>
+  <data xml:space="preserve" name="LegacyLevelDirNotFound">
+    <value>未找到对应的 Level.dir。</value>
+  </data>
+  <data xml:space="preserve" name="LegacySourceUnrecognized">
+    <value>无法自动判断所选地图来源版本。请选择海底版 landNNN.dat、旧版 Level.dir、WWP/WA IMG/DAT/WAM。</value>
+  </data>
+  <data xml:space="preserve" name="MapNumberOutOfRange">
+    <value>地图编号必须在 {0} 和 {1} 之间。</value>
+  </data>
+  <data xml:space="preserve" name="MaskNotOneBit">
+    <value>遮罩目标必须为 1 位图片。</value>
+  </data>
+  <data xml:space="preserve" name="MaskTerrainSizeMismatch">
+    <value>遮罩尺寸与地形尺寸不一致。</value>
+  </data>
+  <data xml:space="preserve" name="MatchingLegacyImgNotFound">
+    <value>未找到与 {0} 同名的 IMG 地图。</value>
+  </data>
+  <data xml:space="preserve" name="MissingNullTerminator">
+    <value>缺少字符串结束标记。</value>
+  </data>
+  <data xml:space="preserve" name="No">
+    <value>否</value>
+  </data>
+  <data xml:space="preserve" name="NoGifFramesToExport">
+    <value>没有可导出的 GIF 帧。</value>
+  </data>
+  <data xml:space="preserve" name="NoNamedDirEntries">
+    <value>无命名的内嵌条目</value>
+  </data>
+  <data xml:space="preserve" name="ResourceBlockTooShort">
+    <value>{0} 数据块过短。</value>
+  </data>
+  <data xml:space="preserve" name="ResourceCannotBeCleared">
+    <value>{0} 不是可清空的图片资源。</value>
+  </data>
+  <data xml:space="preserve" name="ResourceImportFormats">
+    <value>资源只能导入 PNG；SPR 动画资源也支持 GIF。</value>
+  </data>
+  <data xml:space="preserve" name="ResourceNotFound">
+    <value>Level.Dir 中不存在资源 {0}。</value>
+  </data>
+  <data xml:space="preserve" name="ResourceSizeMismatch">
+    <value>{0} 尺寸必须为 {1}x{2}，当前图片为 {3}x{4}。</value>
+  </data>
+  <data xml:space="preserve" name="SpriteFrameCountLimit">
+    <value>SPR 帧数必须小于 256。</value>
+  </data>
+  <data xml:space="preserve" name="SpriteFrameCountRange">
+    <value>SPR 帧数必须在 1 和 255 之间。</value>
+  </data>
+  <data xml:space="preserve" name="SpriteHasNoFrames">
+    <value>SPR 没有可用帧。</value>
+  </data>
+  <data xml:space="preserve" name="SpriteImportFormats">
+    <value>SPR 资源只能导入 PNG 或 GIF。</value>
+  </data>
+  <data xml:space="preserve" name="SpritePaddingColorUnavailable">
+    <value>无法为 SPR 生成唯一填充色。</value>
+  </data>
+  <data xml:space="preserve" name="SpritePaletteCountRange">
+    <value>SPR 调色板颜色数量必须在 1 和 255 之间。</value>
+  </data>
+  <data xml:space="preserve" name="TargetNotOneBitMask">
+    <value>目标图片不是 1 位遮罩。</value>
+  </data>
+  <data xml:space="preserve" name="TemplateDataDirectoryRequired">
+    <value>请先选择包含 Mfx/Tmap01/Level.Dir 的 Data 目录，再加载资源模板。</value>
+  </data>
+  <data xml:space="preserve" name="TemplateFileNotFound">
+    <value>未找到 Level.Dir 模板：{0}。请选择包含 Mfx/Tmap01/Level.Dir 的 Data 目录。</value>
+  </data>
+  <data xml:space="preserve" name="TerrainNotEightBit">
+    <value>目标地形图片不是 8 位图片。</value>
+  </data>
+  <data xml:space="preserve" name="UnderwaterSourceRequired">
+    <value>请选择海底版 landNNN.dat，或选择可推断出 landNNN.dat 的 Level.dir。</value>
+  </data>
+  <data xml:space="preserve" name="UnderwaterTerrainBlockMissing">
+    <value>海底版 LND 点表后未找到 IMG。</value>
+  </data>
+  <data xml:space="preserve" name="UnexpectedEndOfFile">
+    <value>文件意外结束，数据不完整。</value>
+  </data>
+  <data xml:space="preserve" name="UnknownLegacyMapKind">
+    <value>不支持的地图来源类型：{0}。</value>
+  </data>
+  <data xml:space="preserve" name="UnsafeDirRewrite">
+    <value>Level.Dir 包含不支持或无效的目录条目（{0}）。保存可能导致数据丢失，请使用受支持且完整的模板。</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedCompressedSpriteFrames">
+    <value>不支持此压缩兼容 SPR 的帧数。</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedImgBitDepth">
+    <value>不支持 IMG 位深度 {0}，仅支持 1 位和 8 位图片。</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedSpriteBitDepth">
+    <value>不支持此 SPR 位深度。</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedSpriteFlags">
+    <value>不支持此 SPR 标志。</value>
+  </data>
+  <data xml:space="preserve" name="UnsupportedWwpSpriteHeader">
+    <value>不支持此 WWP SPR 头部。</value>
+  </data>
+  <data xml:space="preserve" name="UnterminatedDirEntry">
+    <value>条目名称缺少结束标记</value>
+  </data>
+  <data xml:space="preserve" name="WorldPartyImportFormats">
+    <value>世界派对导入目前支持 1920x696 IMG，或兼容 LND DAT。</value>
+  </data>
+  <data xml:space="preserve" name="WorldPartyLandSizeMismatch">
+    <value>所选世界派对地图尺寸为 {0}x{1}，不是 {2}x{3}。请选择主地图 IMG/DAT，而不是主题贴图。</value>
+  </data>
+  <data xml:space="preserve" name="WwpDecompressedLengthMismatch">
+    <value>WWP 解压得到 {0} 字节，预期 {1} 字节。</value>
+  </data>
+  <data xml:space="preserve" name="Yes">
+    <value>是</value>
+  </data>
+</root>

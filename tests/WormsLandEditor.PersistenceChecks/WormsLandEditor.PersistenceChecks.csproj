@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>WormsLandEditor.PersistenceChecks</AssemblyName>
+    <RootNamespace>WormsLandEditor.PersistenceChecks</RootNamespace>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/WormsLandEditor/Services/MapSaveService.cs" Link="MapSaveService.cs" />
+  </ItemGroup>
+</Project>

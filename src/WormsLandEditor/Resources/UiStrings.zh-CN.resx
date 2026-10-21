@@ -1,0 +1,276 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>百战天虫 OL 地图编辑器</value>
+  </data>
+  <data name="ChooseGameDirectory" xml:space="preserve">
+    <value>选择包含 Data\Mfx 的游戏目录，或直接选择 Data 目录。</value>
+  </data>
+  <data name="ChooseGameDirectoryPrompt" xml:space="preserve">
+    <value>请选择游戏目录以开始编辑，也可以取消后稍后设置。</value>
+  </data>
+  <data name="ChooseLegacyMap" xml:space="preserve">
+    <value>选择 Online、WA、WWP、海底版地图 IMG/DAT/WAM 或 Level.dir</value>
+  </data>
+  <data name="ChooseMapPng" xml:space="preserve">
+    <value>选择导入地图的 PNG 图片</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>清空</value>
+  </data>
+  <data name="ClearSpawns" xml:space="preserve">
+    <value>清空出生点</value>
+  </data>
+  <data name="ClosedMap" xml:space="preserve">
+    <value>封闭地图</value>
+  </data>
+  <data name="ConfirmDeleteTitle" xml:space="preserve">
+    <value>确认永久删除</value>
+  </data>
+  <data name="ConfirmOverwriteTitle" xml:space="preserve">
+    <value>确认覆盖</value>
+  </data>
+  <data name="ConversionTimeout" xml:space="preserve">
+    <value>PNG 转换超过 120 秒，编辑器已尝试终止转换进程。请检查 PNG 后重试。</value>
+  </data>
+  <data name="ConverterFailed" xml:space="preserve">
+    <value>PNG 转换失败（退出代码 {0}）。
+
+{1}</value>
+  </data>
+  <data name="ConverterNoDetails" xml:space="preserve">
+    <value>未返回详细错误信息。</value>
+  </data>
+  <data name="CreatingFromPng" xml:space="preserve">
+    <value>正在从 PNG 新建地图...</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteFilesWarning" xml:space="preserve">
+    <value>确定永久删除 {0:00} 号地图吗？
+
+DAT 文件：
+{1}
+
+整个 Tmap 目录，包括其中所有文件和子目录：
+{2}
+
+当前地图的未保存修改也会被丢弃。此操作不会移入回收站，无法撤销。</value>
+  </data>
+  <data name="DeletingMap" xml:space="preserve">
+    <value>正在删除地图...</value>
+  </data>
+  <data name="DiscardChanges" xml:space="preserve">
+    <value>确定放弃尚未保存的地图修改吗？</value>
+  </data>
+  <data name="EmptyMap" xml:space="preserve">
+    <value>导入 PNG 新建地图</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>地图编辑器错误</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="ExportMapPng" xml:space="preserve">
+    <value>导出地图 PNG</value>
+  </data>
+  <data name="ExportResource" xml:space="preserve">
+    <value>导出 {0}</value>
+  </data>
+  <data name="GameDirectory" xml:space="preserve">
+    <value>设置游戏目录</value>
+  </data>
+  <data name="GameDirectoryStatus" xml:space="preserve">
+    <value>游戏目录：{0}</value>
+  </data>
+  <data name="GifFilter" xml:space="preserve">
+    <value>GIF 动图 (*.gif)|*.gif</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="ImportMap" xml:space="preserve">
+    <value>导入地图</value>
+  </data>
+  <data name="ImportResource" xml:space="preserve">
+    <value>导入 {0}</value>
+  </data>
+  <data name="ImportingPng" xml:space="preserve">
+    <value>正在导入 PNG...</value>
+  </data>
+  <data name="InvalidDirectoryTitle" xml:space="preserve">
+    <value>目录无效</value>
+  </data>
+  <data name="InvalidGameDirectory" xml:space="preserve">
+    <value>请选择包含 Data\Mfx 的游戏根目录，或其 Data 目录。</value>
+  </data>
+  <data name="Legacy" xml:space="preserve">
+    <value>旧版</value>
+  </data>
+  <data name="LegacyMapFilter" xml:space="preserve">
+    <value>支持的地图和资源 (*.img;*.dat;*.wam;Level.dir)|*.img;*.dat;*.wam;Level.dir|所有文件 (*.*)|*.*</value>
+  </data>
+  <data name="LegacyMapImported" xml:space="preserve">
+    <value>已导入{0}地图：{1}</value>
+  </data>
+  <data name="MapCleared" xml:space="preserve">
+    <value>已清空编辑器中的地图，未删除任何文件。</value>
+  </data>
+  <data name="MapDeleted" xml:space="preserve">
+    <value>已删除 {0} 和 Mfx\Tmap{1:00}。</value>
+  </data>
+  <data name="MapLoaded" xml:space="preserve">
+    <value>已加载 land{0:00}.dat。</value>
+  </data>
+  <data name="MapNotCreated" xml:space="preserve">
+    <value>地图 {0:00} 尚未创建。</value>
+  </data>
+  <data name="MapNumber" xml:space="preserve">
+    <value>编号</value>
+  </data>
+  <data name="MapPngSize" xml:space="preserve">
+    <value>地图 PNG 尺寸必须为 {0}x{1}，当前图片为 {2}x{3}。</value>
+  </data>
+  <data name="MapRequired" xml:space="preserve">
+    <value>请先导入 PNG 新建地图。</value>
+  </data>
+  <data name="MissingSpawnsTitle" xml:space="preserve">
+    <value>缺少出生点</value>
+  </data>
+  <data name="NoGameDirectory" xml:space="preserve">
+    <value>尚未选择游戏目录。请点击“设置游戏目录”开始编辑。</value>
+  </data>
+  <data name="NoMapTitle" xml:space="preserve">
+    <value>尚未设置地图</value>
+  </data>
+  <data name="OperationInProgress" xml:space="preserve">
+    <value>请等待当前操作完成后再关闭编辑器。</value>
+  </data>
+  <data name="OperationInProgressTitle" xml:space="preserve">
+    <value>操作正在进行</value>
+  </data>
+  <data name="OverwriteFiles" xml:space="preserve">
+    <value>保存会覆盖以下路径中已有的文件：
+
+{0}
+{1}
+
+是否继续？Tmap 目录中的其他文件会保留。</value>
+  </data>
+  <data name="PngExported" xml:space="preserve">
+    <value>已导出 PNG：{0}</value>
+  </data>
+  <data name="PngFilter" xml:space="preserve">
+    <value>PNG 图片 (*.png)|*.png</value>
+  </data>
+  <data name="PngGifFilter" xml:space="preserve">
+    <value>PNG 图片或 GIF 动图 (*.png;*.gif)|*.png;*.gif</value>
+  </data>
+  <data name="PngImported" xml:space="preserve">
+    <value>已导入 PNG：{0}。遮罩已自动生成。</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>就绪。</value>
+  </data>
+  <data name="ResourceCleared" xml:space="preserve">
+    <value>已清空 {0}。</value>
+  </data>
+  <data name="ResourceDimensions" xml:space="preserve">
+    <value>{0}×{1} {2}</value>
+  </data>
+  <data name="ResourceExported" xml:space="preserve">
+    <value>已导出资源：{0}</value>
+  </data>
+  <data name="ResourceImported" xml:space="preserve">
+    <value>已导入资源：{0}</value>
+  </data>
+  <data name="ResourceLoadFailedTitle" xml:space="preserve">
+    <value>Level.Dir 加载失败</value>
+  </data>
+  <data name="ResourceNotFound" xml:space="preserve">
+    <value>未找到</value>
+  </data>
+  <data name="ResourceSize" xml:space="preserve">
+    <value>{0:0.#} KB</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SaveCleanupWarning" xml:space="preserve">
+    <value>地图已保存，但无法清理 {0} 中的临时文件。</value>
+  </data>
+  <data name="SaveRecoveryRequired" xml:space="preserve">
+    <value>保存失败，且部分文件无法恢复。再次保存前请检查以下路径：
+{0}
+
+备份和暂存文件保留在：
+{1}
+
+{2}</value>
+  </data>
+  <data name="SaveRestored" xml:space="preserve">
+    <value>保存失败。本次保存已替换的文件已恢复到之前的状态。
+
+{0}</value>
+  </data>
+  <data name="SaveSucceeded" xml:space="preserve">
+    <value>已保存 {0} 和 Mfx\Tmap{1:00}\Level.Dir。</value>
+  </data>
+  <data name="SavedTitle" xml:space="preserve">
+    <value>保存成功</value>
+  </data>
+  <data name="SavingMap" xml:space="preserve">
+    <value>正在保存地图...</value>
+  </data>
+  <data name="SettingsLoadFailed" xml:space="preserve">
+    <value>无法读取保存的游戏目录设置。你可以重新选择目录。
+
+{0}</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>编辑器设置</value>
+  </data>
+  <data name="SourcePngMissing" xml:space="preserve">
+    <value>源 PNG 不存在，保存前无法重新生成碰撞体。请重新导入地图 PNG。</value>
+  </data>
+  <data name="SpawnPointsRequired" xml:space="preserve">
+    <value>保存前请至少设置 12 个出生点。</value>
+  </data>
+  <data name="SpawnsCleared" xml:space="preserve">
+    <value>已清空所有出生点。</value>
+  </data>
+  <data name="Underwater" xml:space="preserve">
+    <value>海底版</value>
+  </data>
+  <data name="UnsafeDeletePath" xml:space="preserve">
+    <value>Tmap 删除路径不在当前游戏 Data\Mfx 目录下。</value>
+  </data>
+  <data name="UnsavedChangesTitle" xml:space="preserve">
+    <value>存在未保存修改</value>
+  </data>
+  <data name="Water" xml:space="preserve">
+    <value>水</value>
+  </data>
+  <data name="WorldParty" xml:space="preserve">
+    <value>世界派对</value>
+  </data>
+  <data name="SavedResourceReloadFailed" xml:space="preserve">
+    <value>地图文件已保存，但无法重新加载已保存的资源预览。请重新打开地图以刷新预览。
+
+{0}</value>
+  </data>
+</root>
