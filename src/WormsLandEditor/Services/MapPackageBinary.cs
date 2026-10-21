@@ -90,7 +90,7 @@ internal static class MapPackageBinary
         reader.Position = directoryStart + 4100;
         var names = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var ranges = new List<(int Start, int End)>();
-        long decodedPixels = 0;
+        long decodedPixels = 0, indexedBytes = 0;
         while (reader.Position < dataEnd)
         {
             int entryStart = reader.Position;
@@ -104,8 +104,14 @@ internal static class MapPackageBinary
                 && names.Add(normalized));
             string extension = Path.GetExtension(name).ToLowerInvariant();
             reader.Require(extension is ".img" or ".spr" or ".txt");
-            reader.Require(offset >= 12 && length >= 8 && offset <= directoryStart && length <= directoryStart - offset);
-            ranges.Add((offset, offset + length));
+            bool text = extension == ".txt";
+            reader.Require(offset >= 12 && length >= (text ? 0 : 8) && offset <= directoryStart && length <= directoryStart - offset);
+            // Legacy TXT entries are opaque spans, not image blocks. A short
+            // index.txt may alias bytes in an IMG. Do not resolve its name as a
+            // path; bound the total copied bytes even when spans are shared.
+            indexedBytes += length;
+            reader.Require(indexedBytes <= 64L * 1024 * 1024);
+            if (!text) ranges.Add((offset, offset + length));
             var block = new Reader(bytes.AsMemory(offset, length), "InvalidDirectory");
             if (extension == ".img")
             {

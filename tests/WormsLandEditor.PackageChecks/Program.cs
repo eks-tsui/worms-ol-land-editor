@@ -65,6 +65,18 @@ try
     JsonObject exportedManifest = JsonNode.Parse(originalEntries["manifest.json"])!.AsObject();
     Check(exportedManifest["version"]!.GetValue<int>() == 1 && exportedManifest["water"]!["included"]!.GetValue<bool>() == false, "Manifest declares version 1 and external water");
 
+    foreach (int textLength in new[] { 0, 1, 7 })
+    {
+        byte[] aliasedDirectory = Fixtures.Directory(aliasTextLength: textLength);
+        string aliasSource = Folder("alias-source-" + textLength), aliasTarget = Folder("alias-target-" + textLength);
+        WriteMap(aliasSource, 1, resources: aliasedDirectory);
+        string aliasZip = Path.Combine(root, "alias-" + textLength + ".zip");
+        MapPackageService.Export(aliasSource, 1, aliasZip);
+        _ = MapPackageService.Import(aliasZip, aliasTarget, 100, _ => true);
+        Check(File.ReadAllBytes(Dir(aliasTarget, 100)).SequenceEqual(aliasedDirectory),
+            $"Legacy {textLength}-byte index.txt alias inside IMG data exports/imports with all DIR bytes unchanged");
+    }
+
     string cancelled = Folder("cancelled");
     bool callback = false;
     MapPackageImportResult cancel = MapPackageService.Import(zipPath, cancelled, 100, info =>
@@ -194,6 +206,18 @@ try
     Reject("Wrong DAT mask dimensions", e => e[landKey] = Fixtures.Land(1, maskWidth: 1919));
     Reject("Wrong DAT terrain depth", e => e[landKey] = Fixtures.Land(1, terrainDepth: 1));
     Reject("Non-ASCII DAT resource path", e => { byte[] b = e[landKey]; int name = MapPackageBinary.ValidateLand(b, 1).NameOffset; b[name + 1] = 255; });
+    Reject("TXT alias outside the data region", e =>
+    {
+        e[dirKey] = Fixtures.Directory(aliasTextLength: 1);
+        byte[] b = e[dirKey]; int table = Fixtures.R32(b, 8);
+        int entry = Fixtures.FindEntry(b, "index.txt"); Fixtures.I32(b, entry + 4, table);
+    });
+    Reject("Negative TXT length", e =>
+    {
+        e[dirKey] = Fixtures.Directory(aliasTextLength: 1);
+        Fixtures.I32(e[dirKey], Fixtures.FindEntry(e[dirKey], "index.txt") + 8, -1);
+    });
+    Reject("Oversized aggregate aliased TXT allocations", e => e[dirKey] = Fixtures.Directory(largeTextAliases: true));
     Reject("Wrong DIR magic", e => e[dirKey][0] = 0);
     Reject("Wrong DIR data end", e => Fixtures.I32(e[dirKey], 4, e[dirKey].Length + 1));
     Reject("Wrong DIR table offset", e => Fixtures.I32(e[dirKey], 8, int.MaxValue));
@@ -365,7 +389,7 @@ static class Fixtures
         return Finish(stream);
     }
     internal static byte[] Directory(string text = "configuration preserved", bool overlap = false, bool duplicate = false,
-        string firstName = "soil.img", byte[]? firstImage = null, byte[]? sprite = null, int extraImages = 0)
+        string firstName = "soil.img", byte[]? firstImage = null, byte[]? sprite = null, int extraImages = 0, int? aliasTextLength = null, bool largeTextAliases = false)
     {
         var resources = new List<(string Name, byte[] Bytes)>
         {
@@ -374,6 +398,12 @@ static class Fixtures
             ("back.spr", sprite ?? Sprite()), ("settings.txt", Encoding.ASCII.GetBytes(text.PadRight(8)))
         };
         for (int i = 0; i < extraImages; i++) resources.Add(($"extra{i}.img", Image("", 4096, 4096, 8)));
+        if (aliasTextLength.HasValue) resources.Add(("index.txt", new byte[aliasTextLength.Value]));
+        if (largeTextAliases)
+        {
+            resources[0] = (firstName, Image("soil", 4096, 4096, 8));
+            for (int i = 0; i < 4; i++) resources.Add(($"alias{i}.txt", Array.Empty<byte>()));
+        }
         using var stream = new MemoryStream(); using var w = new BinaryWriter(stream);
         Magic(w, "DIR\x1A"); w.Write(0); w.Write(0);
         var offsets = new List<int>();
@@ -383,10 +413,24 @@ static class Fixtures
         for (int i = 0; i < resources.Count; i++)
         {
             long entryStart = stream.Position;
-            w.Write(0); w.Write(overlap && i == 1 ? offsets[0] : offsets[i]); w.Write(resources[i].Bytes.Length); Name(w, resources[i].Name);
+            bool textAlias = resources[i].Name == "index.txt" || (largeTextAliases && resources[i].Name.StartsWith("alias", StringComparison.Ordinal));
+            int fileOffset = textAlias ? offsets[0] + 8 : overlap && i == 1 ? offsets[0] : offsets[i];
+            int fileLength = largeTextAliases && textAlias ? resources[0].Bytes.Length - 8 : resources[i].Bytes.Length;
+            w.Write(0); w.Write(fileOffset); w.Write(fileLength); Name(w, resources[i].Name);
             while ((stream.Position - entryStart) % 4 != 0) w.Write((byte)0);
         }
         byte[] bytes = Finish(stream); I32(bytes, 8, table); return bytes;
+    }
+    internal static int FindEntry(byte[] bytes, string name)
+    {
+        int offset = R32(bytes, 8) + 4100;
+        while (offset + 13 < bytes.Length)
+        {
+            int end = Array.IndexOf(bytes, (byte)0, offset + 12);
+            if (Encoding.ASCII.GetString(bytes, offset + 12, end - offset - 12) == name) return offset;
+            offset += (end - offset + 1 + 3) & ~3;
+        }
+        throw new InvalidOperationException("Missing synthesized directory entry");
     }
     internal static void ChangeZipShort(string path, int centralField, int localField, ushort value)
     {

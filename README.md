@@ -183,6 +183,9 @@ Choose **Import map** and select a ZIP produced by this editor. The editor valid
 
 The importer stages both files and uses backups for failure recovery. It does not extract arbitrary archive paths or overwrite other maps. As with ordinary saving, recovery cannot guarantee atomicity across crashes, power loss, or a failure while restoring backups. Keep independent backups. See [the package format and limits](docs/map-packages.md).
 
+The ZIP workflow preserves the saved binary formats: export copies the DAT and DIR without conversion, and import preserves the entire DIR byte for byte while changing only the DAT map-number reference and any required length field. Short or shared legacy TXT records are retained. Editing and saving remains a separate operation that can change palettes and resource offsets within the existing formats; compatibility still needs testing in the target game.
+
+
 ## Compatibility map import
 
 Use “Import map” on the toolbar to select a supported IMG, DAT, WAM, or `Level.dir` file.

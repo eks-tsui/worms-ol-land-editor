@@ -44,6 +44,14 @@ The DIR hash-table prefix is preserved, not semantically reinterpreted. Structur
 
 DIR 哈希表前缀原样保留，不重新解释其全部语义。结构校验针对编辑器读取的顺序索引条目和受支持二进制变体，不代表所有使用方的兼容性验收。
 
+Legacy TXT index records may be empty, shorter than an image header, or reference bytes also used by another resource. They are retained as bounded opaque byte spans, never opened as file paths. IMG and SPR records must still be structurally valid and must not overlap each other. The sum of all indexed payload lengths is limited to 64 MiB, including repeated references.
+
+旧 DIR 的 TXT 索引记录可以为空、短于图像文件头，或引用其他资源共用的字节。它们按有边界的原始字节保留，不作为文件路径打开。IMG 和 SPR 仍需通过结构校验，彼此不能重叠；所有索引载荷长度之和（包括重复引用）最多为64 MiB。
+
+ZIP export copies the saved DAT and DIR bytes without converting their binary formats. ZIP import preserves the complete DIR byte for byte and changes only the DAT's numbered resource reference and, if necessary, its length. Editing and saving is a separate operation: it may remap palettes or rebuild resource offsets within the existing formats. These checks do not replace testing in the target game.
+
+ZIP 导出不转换已保存 DAT 和 DIR 的二进制格式。ZIP 导入逐字节保留完整 DIR，仅改写 DAT 的地图编号引用及必要的长度字段。编辑并保存是另一项操作，可能在原格式内重映射调色板或重建资源偏移；结构检查不能代替目标游戏实测。
+
 ## Number mapping / 编号映射
 
 Importing source map 1 into selected map 100 writes only:

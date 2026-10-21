@@ -386,7 +386,7 @@ public sealed class DirFile
         int dataOffset = HeaderSize;
         foreach (DirResourceEntry entry in Resources.OrderBy(r => r.OriginalOffset))
         {
-            if (entry.Data.Length < 8)
+            if (entry.Data.Length < 8 && !entry.Name.EndsWith(".txt", StringComparison.OrdinalIgnoreCase))
                 throw new InvalidDataException(L10n.Core("ResourceBlockTooShort", entry.Name));
 
             BinaryPrimitivesWriteInt32(directory, entry.DirectoryEntryOffset + 4, dataOffset);
@@ -424,7 +424,10 @@ public sealed class DirFile
         if (_directoryBytes.Length < DirectoryPrefixSize)
             throw new InvalidDataException(L10n.Core("DirTableTooSmall"));
 
-        var seenOffsets = new HashSet<int>();
+        var seenBinaryOffsets = new HashSet<int>();
+        var seenNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var binaryRanges = new List<(int Start, int End, string Name)>();
+        long copiedBytes = 0;
         for (int entryOffset = DirectoryPrefixSize; entryOffset + 13 < _directoryBytes.Length;)
         {
             int fileOffset = BitConverter.ToInt32(_directoryBytes, entryOffset + 4);
@@ -439,13 +442,20 @@ public sealed class DirFile
 
             string name = Encoding.ASCII.GetString(_directoryBytes, nameOffset, nameEnd - nameOffset);
             int entrySize = Align4(12 + name.Length + 1);
+            bool text = name.EndsWith(".txt", StringComparison.OrdinalIgnoreCase);
             if (IsResourceEntryName(name) &&
                 fileOffset >= HeaderSize &&
-                length >= 8 &&
+                length >= (text ? 0 : 8) &&
                 fileOffset <= DirectoryStart &&
                 length <= DirectoryStart - fileOffset &&
-                seenOffsets.Add(fileOffset))
+                length <= 64L * 1024 * 1024 - copiedBytes &&
+                seenNames.Add(name.Replace('\\', '/')) &&
+                (text || seenBinaryOffsets.Add(fileOffset)))
             {
+                // TXT records can be short aliases into another resource. Copy
+                // only their bounded bytes; never interpret them as IMG/SPR.
+                copiedBytes += length;
+                if (!text) binaryRanges.Add((fileOffset, fileOffset + length, name));
                 Resources.Add(new DirResourceEntry(name, fileOffset, length, entryOffset, fileBytes[fileOffset..(fileOffset + length)]));
                 EntryNames.Add(name);
             }
@@ -457,6 +467,12 @@ public sealed class DirFile
             }
 
             entryOffset += Math.Max(entrySize, 16);
+        }
+        binaryRanges.Sort((a, b) => a.Start.CompareTo(b.Start));
+        for (int i = 1; i < binaryRanges.Count; i++)
+        {
+            if (binaryRanges[i].Start < binaryRanges[i - 1].End)
+                _unsafeDirectoryEntry ??= binaryRanges[i].Name;
         }
     }
 
