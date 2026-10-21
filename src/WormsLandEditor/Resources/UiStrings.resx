@@ -312,33 +312,27 @@ Saving writes land{0:00}.dat and Mfx\Tmap{0:00}\Level.Dir and requires at least 
     <value>Exported map package: {0}. Shared water resources are not included.</value>
   </data>
   <data name="ValidatingMapPackage" xml:space="preserve">
-    <value>Validating map package before import...</value>
+    <value>Validating map package for the editor...</value>
   </data>
   <data name="MapPackageImportCancelled" xml:space="preserve">
     <value>Map package import cancelled. Map files and editor contents were not changed.</value>
   </data>
   <data name="MapPackageImported" xml:space="preserve">
-    <value>Imported map package as map {0:00}; its DAT and Level.Dir were replaced. Shared water resources were not imported.</value>
-  </data>
-  <data name="MapPackageImportedReloadFailed" xml:space="preserve">
-    <value>The files for map {0:00} were imported, but the editor could not reload them. Your previous editor contents were retained. Reopen this map before saving, so the old editor contents do not overwrite the imported files.</value>
+    <value>Loaded the package into map {0:00} as unsaved changes. Click Save to write its DAT and Level.Dir. Shared water resources were not imported.</value>
   </data>
   <data name="MapPackageImportTitle" xml:space="preserve">
     <value>Import map package</value>
   </data>
   <data name="MapPackageDiscardUnsavedChanges" xml:space="preserve">
-    <value>Your unsaved edits will be discarded only after a successful import. Cancel keeps your edits.</value>
+    <value>A successful import replaces your unsaved editor changes. Cancel or failure keeps your current edits and previews.</value>
   </data>
-  <data name="MapPackageReloadAfterImport" xml:space="preserve">
-    <value>The editor will load the imported map after import succeeds.</value>
+  <data name="MapPackageReplaceEditor" xml:space="preserve">
+    <value>A successful import replaces the current editor contents and marks the map as unsaved.</value>
   </data>
   <data name="ConfirmImportMapPackage" xml:space="preserve">
-    <value>Import source map {0:00} from this ZIP as the currently selected map {1:00}?
+    <value>Load source map {0:00} from this ZIP into the currently selected map {1:00}?
 
-This will replace these target files and renumber the map resource paths:
-land{1:00}.dat
-Mfx\Tmap{1:00}\Level.Dir
-Other files in the target Tmap folder will be kept.
+This changes only the editor contents and renumbers the map resource paths in memory. The selected map number stays the same. No game files will be created or overwritten until you explicitly save.
 
 External shared water resource reference: {2}
 Water resources are not included in the ZIP and must be supplied separately in your game data.
@@ -348,6 +342,6 @@ Water resources are not included in the ZIP and must be supplied separately in y
 Continue?</value>
   </data>
   <data name="ImportingMapPackage" xml:space="preserve">
-    <value>Importing map package and replacing target map files...</value>
+    <value>Loading map package into the editor...</value>
   </data>
 </root>

@@ -37,9 +37,10 @@ public sealed class LandFile
     public string NameA { get; set; } = "CustomMap";
     public string NameB { get; set; } = "CustomMap";
 
-    public static LandFile Load(string path)
+    public static LandFile Load(string path) => Load(File.ReadAllBytes(path), path);
+
+    public static LandFile Load(ReadOnlySpan<byte> bytes, string? sourcePath = null)
     {
-        byte[] bytes = File.ReadAllBytes(path);
         int offset = 0;
         string magic = Encoding.ASCII.GetString(BinaryUtil.ReadBytes(bytes, ref offset, 4));
         if (magic != Magic)
@@ -51,7 +52,7 @@ public sealed class LandFile
 
         var land = new LandFile
         {
-            SourcePath = path,
+            SourcePath = sourcePath,
             Width = BinaryUtil.ReadInt32(bytes, ref offset),
             Height = BinaryUtil.ReadInt32(bytes, ref offset),
             ClosedMapFlag = BinaryUtil.ReadInt32(bytes, ref offset)

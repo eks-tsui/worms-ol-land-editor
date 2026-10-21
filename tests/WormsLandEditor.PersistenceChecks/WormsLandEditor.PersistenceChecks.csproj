@@ -8,6 +8,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../../src/WormsLandEditor/Services/MapPackage*.cs" Link="Services/%(Filename)%(Extension)" />
     <Compile Include="../../src/WormsLandEditor/Services/MapSaveService.cs" Link="MapSaveService.cs" />
     <Compile Include="../../src/WormsLandEditor/Services/FileSetTransaction.cs" Link="FileSetTransaction.cs" />
   </ItemGroup>

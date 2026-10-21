@@ -1,6 +1,7 @@
 using WormsLandEditor.Controls;
 using WormsLandEditor.Formats;
 using WormsLandEditor.Localization;
+using WormsLandEditor.Services;
 
 namespace WormsLandEditor;
 
@@ -29,14 +30,16 @@ public sealed partial class MainForm : Form
     private readonly ComboBox _waterResource = new() { DropDownStyle = ComboBoxStyle.DropDownList, FlatStyle = FlatStyle.Flat };
     private readonly CheckBox _closedMap = new() { Text = L10n.Ui("ClosedMap"), AutoSize = true, Enabled = false };
     private readonly AppSettings _settings = AppSettings.Load();
-    private LandFile? _land;
-    private DirFile? _levelResources;
-    private string? _currentMapPngPath;
-    private bool _dirty;
+    private readonly EditorSession<LandFile, DirFile, PreparedMapPackage> _session = new(40);
+    private LandFile? _land { get => _session.Current.Map; set => _session.Update(state => state with { Map = value }); }
+    private DirFile? _levelResources { get => _session.Current.Resources; set => _session.Update(state => state with { Resources = value }); }
+    private string? _currentMapPngPath { get => _session.Current.SourcePngPath; set => _session.Update(state => state with { SourcePngPath = value }); }
+    private bool _dirty { get => _session.Current.IsDirty; set => _session.Update(state => state with { IsDirty = value }); }
+    private PreparedMapPackage? _originalPackage { get => _session.Current.OriginalPackage; set => _session.Update(state => state with { OriginalPackage = value }); }
     private bool _loadingWaterResources;
     private bool _loadingMapOptions;
     private bool _changingMapNumber;
-    private int _loadedMapNumber = 40;
+    private int _loadedMapNumber { get => _session.Current.MapNumber; set => _session.Update(state => state with { MapNumber = value }); }
     private bool _operationInProgress;
     private Control? _editorLayout;
     private readonly ToolStripStatusLabel _statusLabel = new() { Spring = true, TextAlign = ContentAlignment.MiddleLeft };
@@ -113,6 +116,7 @@ public sealed partial class MainForm : Form
         _levelResources = null;
         _currentMapPngPath = null;
         _dirty = false;
+        _originalPackage = null;
         _canvas.Land = null;
         RefreshMapOptions();
         RefreshResourcePanel();

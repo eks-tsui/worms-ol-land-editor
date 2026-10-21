@@ -8,70 +8,46 @@ public sealed partial class MainForm
 {
     private void RefreshWaterResources(bool updatePalettePreview = true)
     {
+        var selection = PrepareWaterResourceSelection(_land);
         _loadingWaterResources = true;
         try
         {
-            string? current = TryGetWaterResourceName(_land?.NameB);
-            if (string.IsNullOrWhiteSpace(current) && _waterResource.SelectedItem is string selected)
-                current = selected;
-
-            var names = new List<string>();
-            if (!string.IsNullOrWhiteSpace(CurrentGameDirectory()))
-            {
-                string waterDirectory = Path.Combine(CurrentDataDirectory(), "Water");
-                if (Directory.Exists(waterDirectory))
-                {
-                    foreach (string directory in Directory.EnumerateDirectories(waterDirectory).OrderBy(Path.GetFileName, StringComparer.OrdinalIgnoreCase))
-                        names.Add(Path.GetFileName(directory));
-                }
-            }
-
-            if (names.Count == 0)
-                names.AddRange(["Red", "Blue", "Green", "Purple", "yellow"]);
-
-            // Missing preview assets must not silently change the map's water path.
-            if (!string.IsNullOrWhiteSpace(current) && !names.Contains(current, StringComparer.OrdinalIgnoreCase))
-                names.Add(current);
-
             _waterResource.Items.Clear();
-            _waterResource.Items.AddRange(names.Cast<object>().ToArray());
-            SelectWaterResource(current);
+            _waterResource.Items.AddRange(selection.Items);
+            _waterResource.SelectedIndex = selection.SelectedIndex;
         }
         finally
         {
             _loadingWaterResources = false;
         }
-
         RefreshWaterPreview(updatePalettePreview);
     }
 
-    private void SelectWaterResource(string? name)
+    private (object[] Items, int SelectedIndex) PrepareWaterResourceSelection(LandFile? land)
     {
-        if (!string.IsNullOrWhiteSpace(name))
+        string? current = TryGetWaterResourceName(land?.NameB);
+        if (string.IsNullOrWhiteSpace(current) && _waterResource.SelectedItem is string selected)
+            current = selected;
+
+        var names = new List<string>();
+        if (!string.IsNullOrWhiteSpace(CurrentGameDirectory()))
         {
-            for (int i = 0; i < _waterResource.Items.Count; i++)
+            string waterDirectory = Path.Combine(CurrentDataDirectory(), "Water");
+            if (Directory.Exists(waterDirectory))
             {
-                if (_waterResource.Items[i] is string item &&
-                    string.Equals(item, name, StringComparison.OrdinalIgnoreCase))
-                {
-                    _waterResource.SelectedIndex = i;
-                    return;
-                }
+                foreach (string directory in Directory.EnumerateDirectories(waterDirectory).OrderBy(Path.GetFileName, StringComparer.OrdinalIgnoreCase))
+                    names.Add(Path.GetFileName(directory));
             }
         }
-
-        for (int i = 0; i < _waterResource.Items.Count; i++)
-        {
-            if (_waterResource.Items[i] is string item &&
-                string.Equals(item, "Red", StringComparison.OrdinalIgnoreCase))
-            {
-                _waterResource.SelectedIndex = i;
-                return;
-            }
-        }
-
-        if (_waterResource.Items.Count > 0)
-            _waterResource.SelectedIndex = 0;
+        if (names.Count == 0)
+            names.AddRange(["Red", "Blue", "Green", "Purple", "yellow"]);
+        // Missing preview assets must not silently change the map's water path.
+        if (!string.IsNullOrWhiteSpace(current) && !names.Contains(current, StringComparer.OrdinalIgnoreCase))
+            names.Add(current);
+        int index = names.FindIndex(name => string.Equals(name, current, StringComparison.OrdinalIgnoreCase));
+        if (index < 0)
+            index = names.FindIndex(name => string.Equals(name, "Red", StringComparison.OrdinalIgnoreCase));
+        return (names.Cast<object>().ToArray(), Math.Max(0, index));
     }
 
     private void ApplyWaterSelectionToLand()
@@ -105,20 +81,23 @@ public sealed partial class MainForm
 
     private void RefreshWaterPreview(bool updatePalettePreview = true)
     {
-        if (string.IsNullOrWhiteSpace(CurrentGameDirectory()) || _waterResource.SelectedItem is not string waterName)
+        LoadWaterPreview(_canvas, _waterResource.SelectedItem as string);
+        if (updatePalettePreview)
+            RefreshPalettePreview();
+    }
+
+    private void LoadWaterPreview(WormsLandEditor.Controls.MapCanvas canvas, string? waterName)
+    {
+        if (string.IsNullOrWhiteSpace(CurrentGameDirectory()) || string.IsNullOrWhiteSpace(waterName))
         {
-            _canvas.SetWaterPreview(null, []);
-            if (updatePalettePreview)
-                RefreshPalettePreview();
+            canvas.SetWaterPreview(null, []);
             return;
         }
 
         string waterDirPath = Path.Combine(CurrentDataDirectory(), "Water", waterName, "Water.dir");
         if (!File.Exists(waterDirPath))
         {
-            _canvas.SetWaterPreview(null, []);
-            if (updatePalettePreview)
-                RefreshPalettePreview();
+            canvas.SetWaterPreview(null, []);
             return;
         }
 
@@ -135,14 +114,10 @@ public sealed partial class MainForm
             fillPreview?.Dispose();
             foreach (Bitmap frame in surfaceFrames)
                 frame.Dispose();
-
             fillPreview = null;
             surfaceFrames = [];
         }
-
-        _canvas.SetWaterPreview(fillPreview, surfaceFrames);
-        if (updatePalettePreview)
-            RefreshPalettePreview();
+        canvas.SetWaterPreview(fillPreview, surfaceFrames);
     }
 
     private void RefreshPalettePreview()
@@ -174,31 +149,27 @@ public sealed partial class MainForm
 
     private void LoadResourcesForCurrentMap(bool useTemplateIfMissing = true, bool refreshPanel = true)
     {
-        if (string.IsNullOrWhiteSpace(CurrentGameDirectory()))
-        {
-            _levelResources = null;
-            if (refreshPanel)
-                RefreshResourcePanel();
-            return;
-        }
+        _levelResources = ReadResourcesForMap((int)_mapNumber.Value, useTemplateIfMissing);
+        if (refreshPanel)
+            RefreshResourcePanel();
+    }
 
-        int mapNumber = (int)_mapNumber.Value;
+    private DirFile? ReadResourcesForMap(int mapNumber, bool useTemplateIfMissing)
+    {
+        if (string.IsNullOrWhiteSpace(CurrentGameDirectory()))
+            return null;
         string levelPath = Path.Combine(CurrentDataDirectory(), "Mfx", $"Tmap{mapNumber:00}", "Level.Dir");
         bool hasMapResources = File.Exists(levelPath);
         try
         {
-            _levelResources = hasMapResources
+            return hasMapResources
                 ? DirFile.Load(levelPath)
                 : useTemplateIfMissing ? DirFile.LoadTemplate(CurrentDataDirectory()) : null;
-            if (refreshPanel)
-                RefreshResourcePanel();
         }
         catch (Exception ex) when (!hasMapResources)
         {
-            _levelResources = null;
             MessageBox.Show(this, ex.Message, L10n.Ui("ResourceLoadFailedTitle"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            if (refreshPanel)
-                RefreshResourcePanel();
+            return null;
         }
     }
 
@@ -209,12 +180,12 @@ public sealed partial class MainForm
             _resourcePanel.Controls[0].Dispose();
         string[] resourceNames = ["gradient.img", "back.spr", "debris.spr", "soil.img", "grass.img"];
         foreach (string name in resourceNames)
-            _resourcePanel.Controls.Add(BuildResourceCard(name));
+            _resourcePanel.Controls.Add(BuildResourceCard(name, _levelResources));
     }
 
-    private Control BuildResourceCard(string name)
+    private Control BuildResourceCard(string name, DirFile? resources, bool failOnPreviewError = false)
     {
-        DirResourceEntry? entry = _levelResources?.Find(name);
+        DirResourceEntry? entry = resources?.Find(name);
         var card = new Panel
         {
             Width = 220,
@@ -223,77 +194,96 @@ public sealed partial class MainForm
             Margin = new Padding(0, 0, 8, 0)
         };
 
-        var preview = new PictureBox
+        try
         {
-            Location = new Point(8, 8),
-            Size = new Size(72, 64),
-            BackColor = Color.FromArgb(15, 23, 42),
-            SizeMode = PictureBoxSizeMode.Zoom,
-            Cursor = entry is null ? Cursors.Default : Cursors.Hand
-        };
-        if (entry is not null)
-            preview.MouseClick += (sender, e) =>
+            var preview = new PictureBox
             {
-                if (e.Button == MouseButtons.Left)
-                    ReplaceResource(name);
+                Location = new Point(8, 8),
+                Size = new Size(72, 64),
+                BackColor = Color.FromArgb(15, 23, 42),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Cursor = entry is null ? Cursors.Default : Cursors.Hand
+            };
+            if (entry is not null)
+                preview.MouseClick += (sender, e) =>
+                {
+                    if (e.Button == MouseButtons.Left)
+                        ReplaceResource(name);
+                };
+
+            card.Controls.Add(preview);
+            preview.Disposed += (_, _) =>
+            {
+                if (preview.Tag is ResourceAnimation animation)
+                {
+                    preview.Image = null;
+                    preview.Tag = null;
+                    foreach (Image frame in animation.Frames)
+                        frame.Dispose();
+                }
             };
 
-        List<Image> frames = TryCreateResourcePreviewFrames(name);
-        if (frames.Count > 0)
-        {
-            preview.Image = frames[0];
-            preview.Tag = new ResourceAnimation(frames);
+            List<Image> frames = TryCreateResourcePreviewFrames(name, resources, failOnPreviewError);
+            if (frames.Count > 0)
+            {
+                preview.Image = frames[0];
+                preview.Tag = new ResourceAnimation(frames);
+            }
+
+            var title = new Label
+            {
+                Text = name,
+                Location = new Point(90, 7),
+                Size = new Size(128, 20),
+                ForeColor = Color.FromArgb(15, 23, 42),
+                Font = new Font(SystemFonts.MessageBoxFont!.FontFamily, 8.5f, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            card.Controls.Add(title);
+
+            string detail = entry is null ? L10n.Ui("ResourceNotFound") : ResourceDetailText(name, entry, resources);
+            var info = new Label
+            {
+                Text = detail,
+                Location = new Point(90, 28),
+                Size = new Size(128, 18),
+                ForeColor = Color.FromArgb(100, 116, 139),
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            card.Controls.Add(info);
+
+            var export = Button(L10n.Ui("Export"), (_, _) => ExportResource(name));
+            export.Enabled = entry is not null && frames.Count > 0;
+            export.Location = new Point(90, 51);
+            export.Size = new Size(54, 24);
+            export.Dock = DockStyle.None;
+            export.Margin = new Padding(0);
+            export.Font = new Font(SystemFonts.MessageBoxFont!.FontFamily, 8f, FontStyle.Bold);
+            card.Controls.Add(export);
+
+            var clear = Button(L10n.Ui("Clear"), (_, _) => ClearResource(name));
+            clear.Enabled = entry is not null;
+            clear.Location = new Point(150, 51);
+            clear.Size = new Size(60, 24);
+            clear.Dock = DockStyle.None;
+            clear.Margin = new Padding(0);
+            clear.Font = new Font(SystemFonts.MessageBoxFont!.FontFamily, 8f, FontStyle.Bold);
+            card.Controls.Add(clear);
+
+            return card;
         }
-        card.Controls.Add(preview);
-
-        var title = new Label
+        catch
         {
-            Text = name,
-            Location = new Point(90, 7),
-            Size = new Size(128, 20),
-            ForeColor = Color.FromArgb(15, 23, 42),
-            Font = new Font(SystemFonts.MessageBoxFont!.FontFamily, 8.5f, FontStyle.Bold),
-            TextAlign = ContentAlignment.MiddleLeft
-        };
-        card.Controls.Add(title);
-
-        string detail = entry is null ? L10n.Ui("ResourceNotFound") : ResourceDetailText(name, entry);
-        var info = new Label
-        {
-            Text = detail,
-            Location = new Point(90, 28),
-            Size = new Size(128, 18),
-            ForeColor = Color.FromArgb(100, 116, 139),
-            TextAlign = ContentAlignment.MiddleLeft
-        };
-        card.Controls.Add(info);
-
-        var export = Button(L10n.Ui("Export"), (_, _) => ExportResource(name));
-        export.Enabled = entry is not null && frames.Count > 0;
-        export.Location = new Point(90, 51);
-        export.Size = new Size(54, 24);
-        export.Dock = DockStyle.None;
-        export.Margin = new Padding(0);
-        export.Font = new Font(SystemFonts.MessageBoxFont!.FontFamily, 8f, FontStyle.Bold);
-        card.Controls.Add(export);
-
-        var clear = Button(L10n.Ui("Clear"), (_, _) => ClearResource(name));
-        clear.Enabled = entry is not null;
-        clear.Location = new Point(150, 51);
-        clear.Size = new Size(60, 24);
-        clear.Dock = DockStyle.None;
-        clear.Margin = new Padding(0);
-        clear.Font = new Font(SystemFonts.MessageBoxFont!.FontFamily, 8f, FontStyle.Bold);
-        card.Controls.Add(clear);
-
-        return card;
+            card.Dispose();
+            throw;
+        }
     }
 
-    private string ResourceDetailText(string name, DirResourceEntry entry)
+    private static string ResourceDetailText(string name, DirResourceEntry entry, DirFile? resources)
     {
         try
         {
-            Size? size = _levelResources?.GetResourceDimensions(name);
+            Size? size = resources?.GetResourceDimensions(name);
             string fileSize = L10n.Ui("ResourceSize", entry.Data.Length / 1024.0);
             return size.HasValue ? L10n.Ui("ResourceDimensions", size.Value.Width, size.Value.Height, fileSize) : fileSize;
         }
@@ -303,13 +293,23 @@ public sealed partial class MainForm
         }
     }
 
-    private List<Image> TryCreateResourcePreviewFrames(string name)
+    private static List<Image> TryCreateResourcePreviewFrames(string name, DirFile? resources, bool failOnPreviewError)
     {
         try
         {
-            return _levelResources?.CreatePreviewFrames(name, preserveSpriteCanvas: true).Cast<Image>().ToList() ?? [];
+            DirResourceEntry? entry = resources?.Find(name);
+            if (entry?.Name.EndsWith(".img", StringComparison.OrdinalIgnoreCase) == true)
+            {
+                int offset = 0;
+                WolImage image = WolImage.Read(entry.Data, ref offset);
+                // Legacy resources may deliberately contain an empty IMG placeholder.
+                // Parse it fully, but do not ask GDI+ to render a zero-sized bitmap.
+                if ((image.Width == 0 || image.Height == 0) && offset == entry.Data.Length)
+                    return [];
+            }
+            return resources?.CreatePreviewFrames(name, preserveSpriteCanvas: true).Cast<Image>().ToList() ?? [];
         }
-        catch
+        catch when (!failOnPreviewError)
         {
             return [];
         }
@@ -433,14 +433,18 @@ public sealed partial class MainForm
         }
     }
 
-    private void DisposeResourcePreviewImages()
+    private void DisposeResourcePreviewImages() => DisposeResourcePreviewImages(_resourcePanel.Controls.Cast<Control>());
+
+    private static void DisposeResourcePreviewImages(IEnumerable<Control> controls)
     {
-        foreach (Control control in _resourcePanel.Controls)
+        foreach (Control control in controls)
         {
             foreach (PictureBox picture in control.Controls.OfType<PictureBox>())
             {
                 if (picture.Tag is ResourceAnimation animation)
                 {
+                    picture.Image = null;
+                    picture.Tag = null;
                     foreach (Image frame in animation.Frames)
                         frame.Dispose();
                 }

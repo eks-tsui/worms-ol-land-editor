@@ -6,7 +6,24 @@ using WormsLandEditor.Localization;
 namespace WormsLandEditor.Services;
 
 internal sealed record MapPackageInfo(int SourceMapNumber, int TargetMapNumber, string WaterResourcePath, int Width, int Height);
-internal sealed record MapPackageImportResult(bool Imported, string? CleanupWarning);
+
+/// <summary>A validated in-memory package snapshot, retained until the editor changes its contents.</summary>
+internal sealed class PreparedMapPackage
+{
+    private readonly byte[] _landBytes;
+    private readonly byte[] _directoryBytes;
+
+    internal PreparedMapPackage(MapPackageInfo info, byte[] landBytes, byte[] directoryBytes)
+    {
+        Info = info;
+        _landBytes = (byte[])landBytes.Clone();
+        _directoryBytes = (byte[])directoryBytes.Clone();
+    }
+
+    public MapPackageInfo Info { get; }
+    public ReadOnlySpan<byte> LandBytes => _landBytes;
+    public ReadOnlySpan<byte> DirectoryBytes => _directoryBytes;
+}
 
 internal static class MapPackageService
 {
@@ -65,50 +82,19 @@ internal static class MapPackageService
         }
     }
 
-    public static MapPackageImportResult Import(string zipPath, string dataDirectory, int targetMapNumber,
-        Func<MapPackageInfo, bool> confirm) => Import(zipPath, dataDirectory, targetMapNumber, confirm, null);
-
-    internal static MapPackageImportResult Import(string zipPath, string dataDirectory, int targetMapNumber,
-        Func<MapPackageInfo, bool> confirm, IMapPackageFileOperations? operations)
+    /// <summary>
+    /// Validates and remaps a package without accessing any destination directory.
+    /// Loading or cancelling this snapshot never stages or writes game files.
+    /// </summary>
+    public static PreparedMapPackage? PrepareImport(string zipPath, int targetMapNumber,
+        Func<MapPackageInfo, bool> confirm)
     {
         ArgumentNullException.ThrowIfNull(confirm);
         ValidateMapNumber(targetMapNumber);
-        string root = ValidateDataDirectory(dataDirectory);
-        string landPath = LandPath(root, targetMapNumber), resourcesPath = ResourcePath(root, targetMapNumber);
-        MapPackagePaths.CheckFile(landPath);
-        MapPackagePaths.CheckFile(resourcesPath);
         Package package = ReadPackage(zipPath);
         byte[] land = MapPackageBinary.RemapLand(package.Land, package.Metadata, targetMapNumber);
         var info = new MapPackageInfo(package.MapNumber, targetMapNumber, package.Metadata.WaterResourcePath, 1920, 696);
-        // No stage directory or destination directory is created before this decision.
-        if (!confirm(info)) return new(false, null);
-        MapPackagePaths.CheckFile(landPath);
-        MapPackagePaths.CheckFile(resourcesPath);
-        string stage = Path.Combine(root, $".worms-map-import-{Guid.NewGuid():N}");
-        bool prepared = false;
-        try
-        {
-            MapPackagePaths.Check(stage);
-            Directory.CreateDirectory(stage);
-            string stagedLand = Path.Combine(stage, "new-land.dat"), stagedResources = Path.Combine(stage, "new-Level.Dir");
-            WriteStaged(stagedLand, land);
-            WriteStaged(stagedResources, package.Resources);
-            prepared = true; // The common helper now owns cleanup and recovery files.
-            string? warning = FileSetTransaction.CommitPrepared(stage,
-                [new(stagedLand, landPath), new(stagedResources, resourcesPath)],
-                (key, args) => key switch
-                {
-                    "Restored" => L10n.Package("ImportRestored", args),
-                    "RecoveryRequired" => L10n.Package("ImportRecoveryRequired", args),
-                    "CleanupWarning" => L10n.Package("ImportCleanupWarning", args),
-                    _ => throw new ArgumentOutOfRangeException(nameof(key))
-                }, MapPackagePaths.Check, operations);
-            return new(true, warning);
-        }
-        finally
-        {
-            if (!prepared && Directory.Exists(stage)) Directory.Delete(stage, recursive: true);
-        }
+        return confirm(info) ? new PreparedMapPackage(info, land, package.Resources) : null;
     }
 
     private static Package ReadPackage(string path)
@@ -191,12 +177,6 @@ internal static class MapPackageService
         file.ReadExactly(bytes);
         Require(file.ReadByte() == -1, "SizeLimit");
         return bytes;
-    }
-    private static void WriteStaged(string path, byte[] bytes)
-    {
-        using var file = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-        file.Write(bytes);
-        file.Flush(flushToDisk: true);
     }
     private static void WriteEntry(ZipArchive zip, string name, byte[] bytes)
     {

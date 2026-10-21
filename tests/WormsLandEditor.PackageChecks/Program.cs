@@ -72,21 +72,24 @@ try
         WriteMap(aliasSource, 1, resources: aliasedDirectory);
         string aliasZip = Path.Combine(root, "alias-" + textLength + ".zip");
         MapPackageService.Export(aliasSource, 1, aliasZip);
-        _ = MapPackageService.Import(aliasZip, aliasTarget, 100, _ => true);
+        PreparedMapPackage aliased = MapPackageService.PrepareImport(aliasZip, 100, _ => true)!;
+        Check(aliased.DirectoryBytes.SequenceEqual(aliasedDirectory) && !Directory.EnumerateFileSystemEntries(aliasTarget).Any(),
+            $"Legacy {textLength}-byte index.txt alias loads with all DIR bytes unchanged and no target writes");
+        _ = MapSaveService.Save(aliased, Dat(aliasTarget, 100), Dir(aliasTarget, 100));
         Check(File.ReadAllBytes(Dir(aliasTarget, 100)).SequenceEqual(aliasedDirectory),
-            $"Legacy {textLength}-byte index.txt alias inside IMG data exports/imports with all DIR bytes unchanged");
+            $"Explicit Save preserves the {textLength}-byte TXT alias and complete original DIR container");
     }
 
     string cancelled = Folder("cancelled");
     bool callback = false;
-    MapPackageImportResult cancel = MapPackageService.Import(zipPath, cancelled, 100, info =>
+    PreparedMapPackage? cancel = MapPackageService.PrepareImport(zipPath, 100, info =>
     {
         callback = true;
         Check(!Directory.EnumerateFileSystemEntries(cancelled).Any(), "Validated confirmation occurs before staging or target-directory creation");
         Check(info.SourceMapNumber == 1 && info.TargetMapNumber == 100 && info.WaterResourcePath == @"data\water\Red" && info.Width == 1920 && info.Height == 696, "Confirmation receives validated source, target, dimensions, and external water");
         return false;
     });
-    Check(callback && !cancel.Imported && cancel.CleanupWarning is null && !Directory.EnumerateFileSystemEntries(cancelled).Any(), "Cancellation leaves an empty target completely unchanged");
+    Check(callback && cancel is null && !Directory.EnumerateFileSystemEntries(cancelled).Any(), "Cancellation leaves an empty target completely unchanged");
 
     string target = Folder("target");
     WriteMap(target, 100, Fixtures.Land(100, "Blue"), Fixtures.Directory("old resources"));
@@ -95,17 +98,52 @@ try
     File.WriteAllText(Dat(target, 2), "other map");
     Directory.CreateDirectory(Path.Combine(target, "Water", "Red"));
     File.WriteAllText(Path.Combine(target, "Water", "Red", "Water.dir"), "shared water");
-    MapPackageImportResult imported = MapPackageService.Import(zipPath, target, 100, _ => true);
-    Check(imported.Imported && imported.CleanupWarning is null, "Import commits both target files without warning");
+    string[] beforeImport = Directory.GetFileSystemEntries(root, "*", SearchOption.AllDirectories).Order().ToArray();
+    PreparedMapPackage imported = MapPackageService.PrepareImport(zipPath, 100, _ => true)!;
+    Check(Directory.GetFileSystemEntries(root, "*", SearchOption.AllDirectories).Order().SequenceEqual(beforeImport),
+        "Confirmed import creates no files or directories anywhere in the source or target trees");
+    Check(imported.LandBytes.SequenceEqual(Fixtures.Land(100)) && imported.DirectoryBytes.SequenceEqual(Fixtures.Directory()),
+        "Preparation returns mapped DAT and byte-identical complete DIR in memory");
+    Check(File.ReadAllBytes(Dat(target, 100)).SequenceEqual(Fixtures.Land(100, "Blue"))
+        && File.ReadAllBytes(Dir(target, 100)).SequenceEqual(Fixtures.Directory("old resources"))
+        && !Directory.EnumerateDirectories(target, ".worms-map-*").Any(),
+        "Confirmed import leaves existing DAT, DIR, and destination directories unchanged");
+    string missingTarget = Path.Combine(root, "not-created-by-import");
+    PreparedMapPackage newMap = MapPackageService.PrepareImport(zipPath, 999, _ => true)!;
+    Check(!Directory.Exists(missingTarget) && newMap.LandBytes.SequenceEqual(Fixtures.Land(999)),
+        "Preparing a new map never creates its target root or numbered resource directory");
+    bool confirmationFailed = false;
+    try { MapPackageService.PrepareImport(zipPath, 100, _ => throw new IOException("Injected confirmation failure")); }
+    catch (IOException) { confirmationFailed = true; }
+    Check(confirmationFailed && !Directory.EnumerateFileSystemEntries(cancelled).Any(),
+        "Failed confirmation creates no target files or stage directories");
+    foreach (int invalidNumber in new[] { -1, 0, 1000 })
+    {
+        bool confirmedInvalid = false, rejectedNumber = false;
+        try { MapPackageService.PrepareImport(zipPath, invalidNumber, _ => { confirmedInvalid = true; return true; }); }
+        catch (ArgumentOutOfRangeException) { rejectedNumber = true; }
+        Check(rejectedNumber && !confirmedInvalid && !Directory.EnumerateFileSystemEntries(cancelled).Any(),
+            $"Invalid target number {invalidNumber} is rejected before confirmation without target writes");
+    }
+    byte[] landCopy = imported.LandBytes.ToArray(), directoryCopy = imported.DirectoryBytes.ToArray();
+    landCopy[0] = 0; directoryCopy[0] = 0;
+    Check(imported.LandBytes[0] == 'L' && imported.DirectoryBytes[0] == 'D',
+        "Editable byte copies cannot mutate the retained imported snapshot");
+    File.Delete(zipPath);
+    Check(MapSaveService.Save(imported, Dat(target, 100), Dir(target, 100)) is null,
+        "Only explicit Save writes both files, without rereading the removed ZIP or running model serializers");
+    WriteZip(zipPath, originalEntries.Select(p => (p.Key, p.Value, (int?)null)));
     Check(File.ReadAllBytes(Dat(target, 100)).SequenceEqual(Fixtures.Land(100)), "Actual DAT NameA maps 01 to 100 with byte preservation outside length and numbered path");
     Check(File.ReadAllBytes(Dir(target, 100)).SequenceEqual(Fixtures.Directory()), "Complete DIR remains byte-identical on overwrite");
     Check(File.ReadAllText(unrelated) == "untouched" && File.ReadAllText(Dat(target, 2)) == "other map" && File.ReadAllText(Path.Combine(target, "Water", "Red", "Water.dir")) == "shared water", "Unrelated Tmap files, other map numbers, and shared water are untouched");
-    Check(!Directory.EnumerateDirectories(target, ".worms-map-*").Any(), "Successful import cleans its owned stage");
+    Check(!Directory.EnumerateDirectories(target, ".worms-map-*").Any(), "Successful explicit Save cleans its owned stage");
     string secondZip = Path.Combine(root, "land100.zip");
     MapPackageService.Export(target, 100, secondZip);
     string third = Folder("third");
-    _ = MapPackageService.Import(secondZip, third, 2, _ => true);
-    Check(File.ReadAllBytes(Dat(third, 2)).SequenceEqual(Fixtures.Land(2)) && File.ReadAllBytes(Dir(third, 2)).SequenceEqual(Fixtures.Directory()), "Export/import round trip 1 to 100 to 2 preserves binary map and water path");
+    PreparedMapPackage remapped = MapPackageService.PrepareImport(secondZip, 2, _ => true)!;
+    Check(!Directory.EnumerateFileSystemEntries(third).Any(), "Second import remains in memory until explicit Save");
+    _ = MapSaveService.Save(remapped, Dat(third, 2), Dir(third, 2));
+    Check(File.ReadAllBytes(Dat(third, 2)).SequenceEqual(Fixtures.Land(2)) && File.ReadAllBytes(Dir(third, 2)).SequenceEqual(Fixtures.Directory()), "Export/import/Save round trip 1 to 100 to 2 preserves binary map and water path");
 
     foreach (int failure in new[] { 1, 2 })
     foreach (bool afterWrite in new[] { false, true })
@@ -114,20 +152,20 @@ try
         byte[] oldLand = Fixtures.Land(100, "Blue"), oldDirectory = Fixtures.Directory("original");
         WriteMap(folder, 100, oldLand, oldDirectory);
         File.WriteAllText(Path.Combine(Path.GetDirectoryName(Dir(folder, 100))!, "unrelated"), "safe");
-        try { MapPackageService.Import(zipPath, folder, 100, _ => true, new InjectedOperations(failure, afterWrite)); throw new Exception("Expected failure"); }
+        try { MapSaveService.Save(imported, Dat(folder, 100), Dir(folder, 100), new InjectedOperations(failure, afterWrite)); throw new Exception("Expected failure"); }
         catch (IOException ex) { Check(ex.Message.Contains("restored", StringComparison.OrdinalIgnoreCase), $"Write {failure} {(afterWrite ? "partial" : "pre-write")} failure reports recovery"); }
         Check(File.ReadAllBytes(Dat(folder, 100)).SequenceEqual(oldLand) && File.ReadAllBytes(Dir(folder, 100)).SequenceEqual(oldDirectory), $"Write {failure} {(afterWrite ? "partial" : "pre-write")} failure restores both originals");
         Check(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Dir(folder, 100))!, "unrelated")) == "safe" && !Directory.EnumerateDirectories(folder, ".worms-map-*").Any(), "Failure preserves unrelated files and cleans stage");
     }
     string newFailure = Folder("new-failure");
-    try { MapPackageService.Import(zipPath, newFailure, 100, _ => true, new InjectedOperations(2, false)); throw new Exception("Expected failure"); }
+    try { MapSaveService.Save(imported, Dat(newFailure, 100), Dir(newFailure, 100), new InjectedOperations(2, false)); throw new Exception("Expected failure"); }
     catch (IOException) { }
-    Check(!Directory.EnumerateFileSystemEntries(newFailure).Any(), "Failed new-map import removes only its own new files and empty directories");
+    Check(!Directory.EnumerateFileSystemEntries(newFailure).Any(), "Failed explicit new-map Save removes only its own new files and empty directories");
     string restoreFailure = Folder("restore-failure");
     WriteMap(restoreFailure, 100, Fixtures.Land(100, "Blue"), Fixtures.Directory("backup"));
-    try { MapPackageService.Import(zipPath, restoreFailure, 100, _ => true, new InjectedOperations(2, false, failRestore: true)); throw new Exception("Expected recovery failure"); }
-    catch (IOException ex) { Check(ex.Message.Contains("recovery folder", StringComparison.OrdinalIgnoreCase), "Rollback failure explicitly reports recovery directory"); }
-    string recovery = Directory.GetDirectories(restoreFailure, ".worms-map-import-*").Single();
+    try { MapSaveService.Save(imported, Dat(restoreFailure, 100), Dir(restoreFailure, 100), new InjectedOperations(2, false, failRestore: true)); throw new Exception("Expected recovery failure"); }
+    catch (IOException ex) { Check(ex.Message.Contains(".worms-map-save-", StringComparison.OrdinalIgnoreCase), "Rollback failure explicitly reports recovery directory"); }
+    string recovery = Directory.GetDirectories(restoreFailure, ".worms-map-save-*").Single();
     Check(File.ReadAllBytes(Path.Combine(recovery, "original-0")).SequenceEqual(Fixtures.Land(100, "Blue")) && File.ReadAllBytes(Path.Combine(recovery, "original-1")).SequenceEqual(Fixtures.Directory("backup")), "Failed rollback retains both original backups");
 
     void Reject(string label, Action<Dictionary<string, byte[]>>? mutate = null,
@@ -143,7 +181,7 @@ try
         string destination = Folder("bad-target-" + rejected);
         File.WriteAllText(Path.Combine(destination, "sentinel"), "untouched");
         bool confirmed = false, failed = false;
-        try { MapPackageService.Import(path, destination, 100, _ => { confirmed = true; return true; }); }
+        try { MapPackageService.PrepareImport(path, 100, _ => { confirmed = true; return true; }); }
         catch (InvalidDataException) { failed = true; }
         Check(failed && !confirmed && Directory.EnumerateFileSystemEntries(destination).Count() == 1 && File.ReadAllText(Path.Combine(destination, "sentinel")) == "untouched", label + " rejected before confirmation and target writes");
     }
@@ -236,7 +274,7 @@ try
 
     string existingCancel = Folder("existing-cancel");
     WriteMap(existingCancel, 100, Fixtures.Land(100, "Blue"), Fixtures.Directory("cancelled original"));
-    _ = MapPackageService.Import(zipPath, existingCancel, 100, _ => false);
+    _ = MapPackageService.PrepareImport(zipPath, 100, _ => false);
     Check(File.ReadAllBytes(Dat(existingCancel, 100)).SequenceEqual(Fixtures.Land(100, "Blue"))
         && File.ReadAllBytes(Dir(existingCancel, 100)).SequenceEqual(Fixtures.Directory("cancelled original"))
         && !Directory.EnumerateDirectories(existingCancel, ".worms-map-*").Any(), "Overwrite cancellation preserves both originals and creates no stage");
@@ -255,8 +293,9 @@ try
         File.WriteAllBytes(descriptorZip, memory.ToArray());
     }
     string descriptorTarget = Folder("descriptor-target");
-    _ = MapPackageService.Import(descriptorZip, descriptorTarget, 2, _ => true);
-    Check(File.ReadAllBytes(Dat(descriptorTarget, 2)).SequenceEqual(Fixtures.Land(2)), "Valid streaming ZIP data descriptors are accepted and validated");
+    PreparedMapPackage streamed = MapPackageService.PrepareImport(descriptorZip, 2, _ => true)!;
+    Check(streamed.LandBytes.SequenceEqual(Fixtures.Land(2)) && !Directory.EnumerateFileSystemEntries(descriptorTarget).Any(),
+        "Valid streaming ZIP data descriptors are accepted and validated without target writes");
 
     byte[] savedZip = File.ReadAllBytes(zipPath);
     File.WriteAllBytes(Dat(source, 1), [1, 2, 3]);
@@ -291,12 +330,18 @@ try
             if (kind == "broken") File.CreateSymbolicLink(Dat(destination, 100), Path.Combine(outside, "missing.dat"));
             if (kind == "tmap") Directory.CreateSymbolicLink(Path.Combine(destination, "Mfx"), outside);
             if (kind == "root") { destination = Path.Combine(root, "linked-root"); Directory.CreateSymbolicLink(destination, outside); }
-            bool rejectedLink = false, called = false;
-            try { MapPackageService.Import(zipPath, destination, 100, _ => { called = true; return true; }); } catch (InvalidDataException) { rejectedLink = true; }
-            Check(rejectedLink && !called && File.ReadAllText(Path.Combine(outside, "land100.dat")) == "outside original", "Destination " + kind + " symlink rejected without touching its target");
+            bool rejectedLink = false;
+            PreparedMapPackage linked = MapPackageService.PrepareImport(zipPath, 100, _ => true)!;
+            try { MapSaveService.Save(linked, Dat(destination, 100), Dir(destination, 100)); } catch (InvalidDataException) { rejectedLink = true; }
+            Check(rejectedLink && File.ReadAllText(Path.Combine(outside, "land100.dat")) == "outside original",
+                "Explicit Save rejects destination " + kind + " symlink without touching its target");
         }
         string outLink = Path.Combine(root, "output-link.zip");
         File.CreateSymbolicLink(outLink, zipPath);
+        bool rejectedSourceLink = false, confirmedSourceLink = false;
+        try { MapPackageService.PrepareImport(outLink, 100, _ => { confirmedSourceLink = true; return true; }); }
+        catch (InvalidDataException) { rejectedSourceLink = true; }
+        Check(rejectedSourceLink && !confirmedSourceLink, "Import rejects a symbolic-link ZIP source before confirmation");
         WriteMap(source, 1);
         bool rejectedOutputLink = false;
         try { MapPackageService.Export(source, 1, outLink); } catch (InvalidDataException) { rejectedOutputLink = true; }
@@ -307,7 +352,7 @@ try
         CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(culture);
         Check(!string.IsNullOrWhiteSpace(L10n.Package("ImportRecoveryRequired", "a", "b", "c")), "Package recovery diagnostic available for " + culture);
     }
-    Console.WriteLine($"PASS {checks} package checks with real synthesized DAT/IMG/SPR/DIR binaries and ZIP I/O. No image rendering or Windows GUI is exercised.");
+    Console.WriteLine($"PASS {checks} package checks with real synthesized DAT/IMG/SPR/DIR binaries and ZIP I/O. Raw snapshot saves bypass fail-fast model serializers; no image rendering or Windows GUI is exercised.");
     return 0;
 }
 catch (Exception ex) { Console.Error.WriteLine($"FAIL after {checks} checks: {ex}"); return 1; }

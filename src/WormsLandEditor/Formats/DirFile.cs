@@ -19,9 +19,10 @@ public sealed class DirFile
     public List<DirResourceEntry> Resources { get; } = [];
     public List<string> EntryNames { get; } = [];
 
-    public static DirFile Load(string path)
+    public static DirFile Load(string path) => Load(File.ReadAllBytes(path), path);
+
+    public static DirFile Load(ReadOnlySpan<byte> bytes, string? sourcePath = null)
     {
-        byte[] bytes = File.ReadAllBytes(path);
         int offset = 0;
         string magic = Encoding.ASCII.GetString(BinaryUtil.ReadBytes(bytes, ref offset, 4));
         if (magic != "DIR\x1A")
@@ -29,7 +30,7 @@ public sealed class DirFile
 
         var dir = new DirFile
         {
-            SourcePath = path,
+            SourcePath = sourcePath,
             DataEnd = BinaryUtil.ReadInt32(bytes, ref offset),
             DirectoryStart = BinaryUtil.ReadInt32(bytes, ref offset)
         };
@@ -37,7 +38,7 @@ public sealed class DirFile
         if (dir.DirectoryStart < HeaderSize || dir.DataEnd > bytes.Length || dir.DirectoryStart > dir.DataEnd)
             throw new InvalidDataException(L10n.Core("InvalidDirDataRange"));
 
-        dir._directoryBytes = bytes[dir.DirectoryStart..dir.DataEnd];
+        dir._directoryBytes = bytes[dir.DirectoryStart..dir.DataEnd].ToArray();
         dir.ParseDirectoryEntries(bytes);
         return dir;
     }
@@ -415,7 +416,7 @@ public sealed class DirFile
         return L10n.Core("DirDescription", DirectoryStart, DataEnd, DirectorySize, names);
     }
 
-    private void ParseDirectoryEntries(byte[] fileBytes)
+    private void ParseDirectoryEntries(ReadOnlySpan<byte> fileBytes)
     {
         Resources.Clear();
         EntryNames.Clear();
@@ -456,7 +457,7 @@ public sealed class DirFile
                 // only their bounded bytes; never interpret them as IMG/SPR.
                 copiedBytes += length;
                 if (!text) binaryRanges.Add((fileOffset, fileOffset + length, name));
-                Resources.Add(new DirResourceEntry(name, fileOffset, length, entryOffset, fileBytes[fileOffset..(fileOffset + length)]));
+                Resources.Add(new DirResourceEntry(name, fileOffset, length, entryOffset, fileBytes[fileOffset..(fileOffset + length)].ToArray()));
                 EntryNames.Add(name);
             }
             else

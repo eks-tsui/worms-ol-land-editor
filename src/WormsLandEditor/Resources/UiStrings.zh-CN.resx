@@ -312,33 +312,27 @@ DAT 文件：
     <value>已导出地图包：{0}。包内不包含共享水资源。</value>
   </data>
   <data name="ValidatingMapPackage" xml:space="preserve">
-    <value>正在验证地图包，尚未写入目标地图...</value>
+    <value>正在验证地图包，准备加载到编辑器...</value>
   </data>
   <data name="MapPackageImportCancelled" xml:space="preserve">
     <value>已取消导入地图包，地图文件和编辑器内容均未更改。</value>
   </data>
   <data name="MapPackageImported" xml:space="preserve">
-    <value>已将地图包导入为 {0:00} 号地图，并覆盖其 DAT 和 Level.Dir。未导入共享水资源。</value>
-  </data>
-  <data name="MapPackageImportedReloadFailed" xml:space="preserve">
-    <value>{0:00} 号地图文件已导入，但编辑器无法重新加载，已保留之前的编辑内容。请重新打开此地图后再保存，以免用旧的编辑内容覆盖已导入的文件。</value>
+    <value>已将地图包加载到当前 {0:00} 号地图，尚未保存。点击“保存”后才会写入 DAT 和 Level.Dir；未导入共享水资源。</value>
   </data>
   <data name="MapPackageImportTitle" xml:space="preserve">
     <value>导入地图包</value>
   </data>
   <data name="MapPackageDiscardUnsavedChanges" xml:space="preserve">
-    <value>当前未保存的修改仅在导入成功后丢弃；取消会保留这些修改。</value>
+    <value>导入成功会替换当前未保存的编辑内容；取消或失败会保留当前编辑内容和预览。</value>
   </data>
-  <data name="MapPackageReloadAfterImport" xml:space="preserve">
-    <value>导入成功后，编辑器将加载导入的地图。</value>
+  <data name="MapPackageReplaceEditor" xml:space="preserve">
+    <value>导入成功会替换当前编辑内容，并将地图标记为未保存。</value>
   </data>
   <data name="ConfirmImportMapPackage" xml:space="preserve">
-    <value>是否将 ZIP 中的源地图 {0:00} 导入为当前选中的 {1:00} 号地图？
+    <value>是否将 ZIP 中的源地图 {0:00} 加载到当前选中的 {1:00} 号地图？
 
-这会覆盖以下目标文件，并按目标编号修改地图资源路径：
-land{1:00}.dat
-Mfx\Tmap{1:00}\Level.Dir
-目标 Tmap 目录中的其他文件会保留。
+此操作只更改编辑器内容，并在内存中按目标编号调整地图资源路径，当前选中编号不变。只有明确点击保存后，才会创建或覆盖游戏文件。
 
 外部共享水资源引用：{2}
 ZIP 中不包含水资源，需在游戏数据中另行提供。
@@ -348,6 +342,6 @@ ZIP 中不包含水资源，需在游戏数据中另行提供。
 是否继续？</value>
   </data>
   <data name="ImportingMapPackage" xml:space="preserve">
-    <value>正在导入地图包并覆盖目标地图文件...</value>
+    <value>正在将地图包加载到编辑器...</value>
   </data>
 </root>

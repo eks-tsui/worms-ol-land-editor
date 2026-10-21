@@ -41,7 +41,10 @@ public sealed partial class MainForm
             }
             else
             {
-                _land.Save(inputDat);
+                if (_originalPackage is not null)
+                    File.WriteAllBytes(inputDat, _originalPackage.LandBytes.ToArray());
+                else
+                    _land.Save(inputDat);
                 await RunConverterAsync(L10n.Ui("ImportingPng"), "--replacepng", inputDat, dialog.FileName, outputDat);
                 edited = LandFile.Load(outputDat);
                 edited.SourcePath = _land.SourcePath;
@@ -100,15 +103,21 @@ public sealed partial class MainForm
             int mapNumber = (int)_mapNumber.Value;
             LegacyMapKind kind = LegacyMapImporter.DetectKind(dialog.FileName);
             LegacyMapImportResult result = LegacyMapImporter.Import(kind, dialog.FileName, CurrentDataDirectory(), mapNumber, SelectedWaterResourcePath());
-            _land = result.Land;
-            _levelResources = result.Resources;
-            _currentMapPngPath = null;
-            MarkDirty();
-            RefreshMapOptions();
-            RefreshWaterResources();
-            _canvas.Land = _land;
-            _canvas.SetSourcePreview(null);
-            RefreshResourcePanel();
+            PreparedEditorView? view = null;
+            try
+            {
+                _session.TryReplace(() =>
+                {
+                    var candidate = new EditorState<LandFile, DirFile, PreparedMapPackage>(
+                        result.Land, result.Resources, null, true, mapNumber, null);
+                    view = PrepareEditorView(candidate);
+                    return candidate;
+                }, candidate => InstallPreparedEditorView(view!, candidate));
+            }
+            finally
+            {
+                view?.Dispose();
+            }
             UpdateStatus(L10n.Ui("LegacyMapImported", LegacyMapKindDisplayName(kind), result.SourceDescription));
         }
         catch (Exception ex)
@@ -165,21 +174,34 @@ public sealed partial class MainForm
             string? cleanupWarning = null;
             RunWithWait(L10n.Ui("SavingMap"), () =>
             {
-                DirFile levelResources = _levelResources ?? DirFile.LoadTemplate(dataDirectory);
-                MarkDirty();
-                _land.SetClientResourcePaths(mapNumber, SelectedWaterResourcePath());
-                _levelResources = levelResources;
-                RefreshCurrentLandFromSourcePngIfAvailable();
-                RemapCurrentLandToGamePalette();
-                cleanupWarning = MapSaveService.Save(_land, levelResources, landPath, levelPath);
+                PreparedMapPackage? original = _originalPackage;
+                if (original is not null && original.Info.TargetMapNumber == mapNumber)
+                {
+                    // The import is dirty because it is unsaved, not because its content was edited.
+                    // Keep the validated, renumbered DAT and complete legacy DIR byte-for-byte.
+                    cleanupWarning = MapSaveService.Save(original, landPath, levelPath);
+                }
+                else
+                {
+                    DirFile levelResources = _levelResources ?? DirFile.LoadTemplate(dataDirectory);
+                    MarkDirty();
+                    _land.SetClientResourcePaths(mapNumber, SelectedWaterResourcePath());
+                    _levelResources = levelResources;
+                    RefreshCurrentLandFromSourcePngIfAvailable();
+                    RemapCurrentLandToGamePalette();
+                    cleanupWarning = MapSaveService.Save(_land, levelResources, landPath, levelPath);
+                }
                 _land.SourcePath = landPath;
-                _dirty = false;
+                _session.MarkSaved();
                 _loadedMapNumber = mapNumber;
                 try
                 {
-                    _levelResources = DirFile.Load(levelPath);
-                    _canvas.Land = _land;
-                    RefreshResourcePanel();
+                    if (original is null || original.Info.TargetMapNumber != mapNumber)
+                    {
+                        _levelResources = DirFile.Load(levelPath);
+                        _canvas.Land = _land;
+                        RefreshResourcePanel();
+                    }
                 }
                 catch (Exception reloadError)
                 {

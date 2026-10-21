@@ -8,7 +8,7 @@ public sealed partial class MainForm
 {
     private void MarkDirty()
     {
-        _dirty = true;
+        _session.MarkEdited();
         RefreshWindowTitle();
     }
 

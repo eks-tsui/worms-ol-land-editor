@@ -36,9 +36,9 @@ The manifest has these fields:
 | `water.path` | The DAT's external water resource reference |
 | `water.included` | Must be `false` |
 
-Payload lengths, hashes, dimensions, resource paths and binary structure are checked before asking to overwrite the destination. Hashes detect corruption, not trust: a malicious author can construct matching hashes. Only import packages from sources you trust.
+Payload lengths, hashes, dimensions, resource paths and binary structure are checked before asking to replace the current editing contents. Hashes detect corruption, not trust: a malicious author can construct matching hashes. Only import packages from sources you trust.
 
-覆盖确认前会检查载荷长度、哈希、尺寸、资源路径和二进制结构。哈希用于检查完整性，不能证明来源可信，请仅导入可信来源的地图包。
+替换当前编辑内容前会检查载荷长度、哈希、尺寸、资源路径和二进制结构。哈希用于检查完整性，不能证明来源可信，请仅导入可信来源的地图包。
 
 The DIR hash-table prefix is preserved, not semantically reinterpreted. Structural validation follows the sequential index entries and binary variants supported by this editor; it does not establish compatibility with every possible consumer.
 
@@ -54,20 +54,22 @@ ZIP 导出不转换已保存 DAT 和 DIR 的二进制格式。ZIP 导入逐字�
 
 ## Number mapping / 编号映射
 
-Importing source map 1 into selected map 100 writes only:
+Importing source map 1 into selected map 100 maps the in-memory document to the following paths. No game files are written until explicit Save:
+
+把来源编号1导入当前编号100时，内存文档映射到以下目标路径；只有明确保存后才写入游戏文件：
 
 ```text
 Data/land100.dat
 Data/Mfx/Tmap100/Level.Dir
 ```
 
-The DAT's numbered terrain-resource reference (`NameA`) is rewritten to map 100 and its total-length field is adjusted if necessary. Terrain pixels, masks, spawn points, settings and the external water reference (`NameB`) are preserved. `Level.Dir` is copied intact; its indexed paths are relative resource names rather than map-number paths.
+The DAT's numbered terrain-resource reference (`NameA`) is rewritten in memory to map 100 and its total-length field is adjusted if necessary. Terrain pixels, masks, spawn points, settings and the external water reference (`NameB`) are preserved. `Level.Dir` is copied intact; its indexed paths are relative resource names rather than map-number paths.
 
-导入时改写 DAT 的编号地形资源引用 `NameA`，必要时更新文件长度字段。地形像素、遮罩、出生点、地图选项和外部水引用 `NameB` 保持不变；`Level.Dir` 原样复制，其内部索引使用相对资源条目名，不是地图编号路径。
+导入时在内存中改写 DAT 的编号地形资源引用 `NameA`，必要时更新文件长度字段。地形像素、遮罩、出生点、地图选项和外部水引用 `NameB` 保持不变；`Level.Dir` 原样复制，其内部索引使用相对资源条目名，不是地图编号路径。
 
-No shared water directory is written or changed. If the referenced water is unavailable at the destination, its preview is unavailable until the user supplies the appropriate authorized resources. Files outside the two destination paths remain untouched, including extra files in the target Tmap folder.
+Import changes no game-directory files. Explicit Save changes only the selected DAT and DIR; no shared water directory is written or changed. If the referenced water is unavailable at the destination, its preview is unavailable until the user supplies the appropriate authorized resources. Files outside the two destination paths remain untouched, including extra files in the target Tmap folder.
 
-导入不会写入或修改共享水目录。目标缺少所引用的水资源时，需自行提供有权使用的对应素材才能预览。除了两个目标文件，不会修改其他文件，目标 Tmap 目录中的额外文件也会保留。
+导入不会更改任何游戏目录文件；明确保存仅写入所选 DAT 和 DIR，不会写入或修改共享水目录。目标缺少所引用的水资源时，需自行提供有权使用的对应素材才能预览。除了两个目标文件，不会修改其他文件，目标 Tmap 目录中的额外文件也会保留。
 
 ## Limits / 限制
 
@@ -88,6 +90,10 @@ Archive entries are read through bounded streams; their paths are never passed t
 
 导入通过有上限的流读取 ZIP，不按归档路径直接解压。绝对路径、路径穿越、反斜杠归档路径、重复条目、符号链接/重解析点以及不安全的目标祖先路径都会被拒绝。
 
-Cancellation happens before destination writes. After confirmation, both payloads are staged, originals are backed up, and the two destinations are replaced. An ordinary commit failure triggers restoration; failed recovery retains backups and reports where they are. This is not a crash-proof filesystem transaction. A process interruption, power loss or recovery failure can require manual restoration from an independent backup.
+Import validation and number mapping produce an immutable in-memory package. Candidate models and previews are prepared before replacing the editor state. Cancelling or failing this preparation leaves the previous editor state and disk untouched. An accepted import is dirty and follows the normal unsaved-change prompts. Neither importing nor viewing the new map stages destination files.
 
-取消发生在任何目标写入之前。确认后先暂存两个文件、备份原件，再替换目标；普通提交失败会尝试恢复，恢复失败则保留备份并报告位置。这不是防断电的文件系统事务，进程中断、断电或恢复失败时仍可能需要手工恢复。
+导入校验和编号映射得到不可变的内存地图包，候选模型和预览准备成功后才替换编辑状态。取消或准备失败时，旧编辑状态和磁盘均不变。成功导入标记为未保存，并沿用未保存修改确认；导入或查看新地图都不会暂存目标文件。
+
+Explicit Save persists the current editor document. For an unedited imported package, it uses the already validated mapped DAT and full original DIR bytes without rereading the ZIP or substituting a template. Further editing invalidates this original-byte snapshot and uses normal model serialization. Both save paths stage both payloads, back up originals, and then replace the destinations. An ordinary commit failure triggers restoration; failed recovery retains backups and reports where they are. This is not a crash-proof filesystem transaction. Keep independent backups.
+
+明确保存时才持久化当前文档。刚导入且未进一步编辑时，使用已验证的映射 DAT 和完整原始 DIR 字节，不重新读取 ZIP，也不回退替换为模板。后续编辑会使原始字节快照失效，改为正常模型序列化。两种保存路径都先暂存两个文件、备份原件，再替换目标；普通提交失败会尝试恢复，恢复失败则保留备份并报告位置。这不是防断电的文件系统事务，请保留独立备份。

@@ -53,6 +53,33 @@ try
     catch (IOException e) { Check(e.Message.StartsWith("SaveRestored"), "New DAT rollback is reported"); }
     Check(!File.Exists(newRollback.dat), "Failed two-file save removes only the newly created DAT");
     NoStage(newRollback.folder);
+
+    if (!OperatingSystem.IsWindows())
+    {
+        string outside = Path.Combine(root, "outside");
+        Directory.CreateDirectory(outside);
+        string original = Path.Combine(outside, "land01.dat");
+        File.WriteAllText(original, "outside-original");
+        foreach (string kind in new[] { "file", "tmap", "root", "broken" })
+        {
+            string folder = Path.Combine(root, "symlink-" + kind);
+            Directory.CreateDirectory(folder);
+            if (kind == "file") File.CreateSymbolicLink(Path.Combine(folder, "land01.dat"), original);
+            if (kind == "broken") File.CreateSymbolicLink(Path.Combine(folder, "land01.dat"), Path.Combine(outside, "missing.dat"));
+            if (kind == "tmap") Directory.CreateSymbolicLink(Path.Combine(folder, "Mfx"), outside);
+            if (kind == "root")
+            {
+                Directory.Delete(folder);
+                Directory.CreateSymbolicLink(folder, outside);
+            }
+            bool rejected = false;
+            try { MapSaveService.Save(new(), new(), Path.Combine(folder, "land01.dat"), Path.Combine(folder, "Mfx", "Tmap01", "Level.Dir")); }
+            catch (InvalidDataException) { rejected = true; }
+            Check(rejected && File.ReadAllText(original) == "outside-original",
+                "Edited-map Save rejects destination " + kind + " symlink before staging or writes");
+            NoStage(folder);
+        }
+    }
     Console.WriteLine($"{checks} checks passed. Save service checks use test serializers; file-format and GUI behavior are not covered.");
 }
 finally { Directory.Delete(root, recursive:true); }
@@ -80,6 +107,7 @@ namespace WormsLandEditor.Localization
 {
     public static class L10n
     {
+        public static string Package(string key, params object?[] args) => key + ": " + string.Join("; ", args);
         public static string Ui(string key, params object?[] args) => key + ": " + string.Join("; ", args);
     }
 }

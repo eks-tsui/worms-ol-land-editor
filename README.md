@@ -9,7 +9,7 @@ Supports map PNG import, spawn point editing, water resource previews, map resou
 ## Features
 
 - Load and edit maps numbered `1–999`.
-- Export a numbered map as a ZIP package and import it into another map number with overwrite confirmation.
+- Export a numbered map as a ZIP package and load it into the current editor; files change only when you save.
 - Import fixed-size terrain PNGs and automatically generate collision and auxiliary masks.
 - Edit spawn points and choose open or closed maps.
 - Select water resources and preview water surface animations.
@@ -179,12 +179,13 @@ If the map is new or has unsaved changes, export requires saving the current map
 
 A package contains exactly a versioned `manifest.json`, `Data/landNN.dat`, and `Data/Mfx/TmapNN/Level.Dir`. The complete `Level.Dir` is included, not just the resource cards visible in the editor. Unrelated files in the map folder, other maps, and shared water resources are not included. The water resource remains an external dependency identified in the manifest and confirmation; the destination needs the corresponding `Data/Water/<name>/Water.dir` for its preview.
 
-Choose **Import map** and select a ZIP produced by this editor. The editor validates the package before asking to replace the currently selected map number. For example, importing `land01.zip` while map 100 is selected writes `land100.dat` and `Mfx/Tmap100/Level.Dir`, and rewrites the DAT's internal terrain resource path to `data\mfx\Tmap100`. The external water reference is preserved. Cancelling leaves the destination files unchanged.
+Choose **Import map** and select a ZIP produced by this editor. After validation, confirm replacing the current editing contents. Import loads the map and its complete resource archive into memory at the currently selected number and marks it as unsaved. It does not create, stage, or overwrite game files. Cancelling or a failed import keeps the previous editing state and files.
 
-The importer stages both files and uses backups for failure recovery. It does not extract arbitrary archive paths or overwrite other maps. As with ordinary saving, recovery cannot guarantee atomicity across crashes, power loss, or a failure while restoring backups. Keep independent backups. See [the package format and limits](docs/map-packages.md).
+For example, importing `land01.zip` while map 100 is selected keeps number 100 and maps the in-memory DAT resource reference to `data\mfx\Tmap100`. The external water reference is preserved. Click **Save** to write `land100.dat` and `Mfx/Tmap100/Level.Dir`; existing files still require the normal save-overwrite confirmation. Saving still requires at least 12 spawn points. Until then, switching maps or folders, closing the window, or importing again follows the unsaved-changes confirmation.
 
-The ZIP workflow preserves the saved binary formats: export copies the DAT and DIR without conversion, and import preserves the entire DIR byte for byte while changing only the DAT map-number reference and any required length field. Short or shared legacy TXT records are retained. Editing and saving remains a separate operation that can change palettes and resource offsets within the existing formats; compatibility still needs testing in the target game.
+The first save of an unedited imported package writes its mapped DAT and complete original DIR without binary-format conversion, preserving hidden resources and short/shared TXT records. Further edits invalidate that original-byte snapshot and are saved from the edited models; ordinary editing may remap palettes or rebuild resource offsets within the existing formats. These checks do not replace testing in the target game.
 
+Only explicit saving stages destination files and uses backups for failure recovery. The importer never extracts arbitrary archive paths. Recovery cannot guarantee atomicity across crashes, power loss, or a failure while restoring backups. Keep independent backups. See [the package format and limits](docs/map-packages.md).
 
 ## Compatibility map import
 

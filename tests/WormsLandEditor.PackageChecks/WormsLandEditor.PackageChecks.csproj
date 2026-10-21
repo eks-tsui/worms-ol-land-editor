@@ -10,8 +10,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../src/WormsLandEditor/Services/MapPackage*.cs" Link="Services/%(Filename)%(Extension)" />
+    <Compile Include="../../src/WormsLandEditor/Services/MapSaveService.cs" Link="Services/MapSaveService.cs" />
     <Compile Include="../../src/WormsLandEditor/Services/FileSetTransaction.cs" Link="Services/FileSetTransaction.cs" />
     <Compile Include="../../src/WormsLandEditor/Localization/L10n.cs" Link="Localization/L10n.cs" />
+    <EmbeddedResource Include="../../src/WormsLandEditor/Resources/UiStrings*.resx" Link="Resources/%(Filename)%(Extension)" />
     <EmbeddedResource Include="../../src/WormsLandEditor/Resources/PackageStrings*.resx" Link="Resources/%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

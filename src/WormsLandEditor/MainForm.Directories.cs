@@ -1,5 +1,6 @@
 using WormsLandEditor.Formats;
 using WormsLandEditor.Localization;
+using WormsLandEditor.Services;
 
 namespace WormsLandEditor;
 
@@ -104,65 +105,29 @@ public sealed partial class MainForm
             return false;
         int mapNumber = (int)_mapNumber.Value;
         string landPath = CurrentLandPath();
-        LandFile? previousLand = _land;
-        DirFile? previousResources = _levelResources;
-        string? previousPng = _currentMapPngPath;
-        bool previousDirty = _dirty;
-        int previousNumber = _loadedMapNumber;
-        object[] previousWaterItems = _waterResource.Items.Cast<object>().ToArray();
-        int previousWaterIndex = _waterResource.SelectedIndex;
-
+        PreparedEditorView? view = null;
         try
         {
-            LandFile? loadedLand = File.Exists(landPath) ? LandFile.Load(landPath) : null;
-            _land = loadedLand;
-            RefreshMapOptions();
-            _currentMapPngPath = null;
-            LoadResourcesForCurrentMap(useTemplateIfMissing: true, refreshPanel: false);
-            RefreshWaterResources(updatePalettePreview: false);
-            _canvas.Land = _land;
-            _canvas.SetSourcePreview(null);
-            _canvas.SetPalettePreview(null);
-            _dirty = false;
-            _loadedMapNumber = mapNumber;
-            Text = L10n.Ui("AppTitle");
-            RefreshResourcePanel();
+            _session.TryReplace(() =>
+            {
+                LandFile? land = File.Exists(landPath) ? LandFile.Load(landPath) : null;
+                DirFile? resources = ReadResourcesForMap(mapNumber, useTemplateIfMissing: true);
+                var candidate = new EditorState<LandFile, DirFile, PreparedMapPackage>(
+                    land, resources, null, false, mapNumber, null);
+                view = PrepareEditorView(candidate);
+                return candidate;
+            }, candidate => InstallPreparedEditorView(view!, candidate));
             UpdateStatus(_land is null ? L10n.Ui("MapNotCreated", mapNumber) : L10n.Ui("MapLoaded", mapNumber));
             return true;
         }
         catch (Exception ex)
         {
-            // Keep the loaded number and model together if preview/resource initialization fails.
-            _land = previousLand;
-            _levelResources = previousResources;
-            _currentMapPngPath = previousPng;
-            _dirty = previousDirty;
-            _loadedMapNumber = previousNumber;
-            try
-            {
-                _loadingWaterResources = true;
-                try
-                {
-                    _waterResource.Items.Clear();
-                    _waterResource.Items.AddRange(previousWaterItems);
-                    _waterResource.SelectedIndex = previousWaterIndex;
-                }
-                finally { _loadingWaterResources = false; }
-                _canvas.Land = previousLand;
-                if (!string.IsNullOrWhiteSpace(previousPng) && File.Exists(previousPng))
-                    _canvas.SetSourcePreview(previousPng);
-                RefreshMapOptions();
-                RefreshWindowTitle();
-                RefreshWaterPreview();
-                RefreshResourcePanel();
-            }
-            catch (Exception previewError)
-            {
-                // The model is retained even when rendering the old preview also fails.
-                ex = new AggregateException(ex.Message + Environment.NewLine + previewError.Message, ex, previewError);
-            }
             ShowError(failureContext is null ? ex : new InvalidOperationException(failureContext + Environment.NewLine + Environment.NewLine + ex.Message, ex));
             return false;
+        }
+        finally
+        {
+            view?.Dispose();
         }
     }
 

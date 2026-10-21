@@ -17,7 +17,7 @@ public sealed class MapCanvas : Control
     private Bitmap? _waterFillPreview;
     private List<Bitmap> _waterSurfaceFrames = [];
     private int _waterSurfaceFrameIndex;
-    private readonly SortedSet<int> _freeSpawnPointIndexes = [];
+    private SortedSet<int> _freeSpawnPointIndexes = [];
 
     public event EventHandler? SpawnPointsChanged;
 
@@ -39,6 +39,21 @@ public sealed class MapCanvas : Control
             RebuildPreviewCache();
             Invalidate();
         }
+    }
+
+    // Swap only owned editor state, not the visible control or its overlay buttons.
+    // The detached candidate then owns the previous images until commit or rollback.
+    internal void SwapEditorState(MapCanvas candidate)
+    {
+        ArgumentNullException.ThrowIfNull(candidate);
+        (_land, candidate._land) = (candidate._land, _land);
+        (_terrainPreview, candidate._terrainPreview) = (candidate._terrainPreview, _terrainPreview);
+        (_palettePreview, candidate._palettePreview) = (candidate._palettePreview, _palettePreview);
+        (_sourcePreview, candidate._sourcePreview) = (candidate._sourcePreview, _sourcePreview);
+        (_waterFillPreview, candidate._waterFillPreview) = (candidate._waterFillPreview, _waterFillPreview);
+        (_waterSurfaceFrames, candidate._waterSurfaceFrames) = (candidate._waterSurfaceFrames, _waterSurfaceFrames);
+        (_waterSurfaceFrameIndex, candidate._waterSurfaceFrameIndex) = (candidate._waterSurfaceFrameIndex, _waterSurfaceFrameIndex);
+        (_freeSpawnPointIndexes, candidate._freeSpawnPointIndexes) = (candidate._freeSpawnPointIndexes, _freeSpawnPointIndexes);
     }
 
     public void RebuildPreviewCache()
